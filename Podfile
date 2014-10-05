@@ -1,0 +1,5 @@
+platform :ios, '6.0'
+pod 'RestKit', '~> 0.23.3'
+pod 'Objective-LevelDB', '~> 2.1.0'
+pod 'Reachability', '~> 3.1.1'
+pod 'SDWebImage', '~> 3.7.1'
