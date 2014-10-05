@@ -105,6 +105,13 @@
     return [components minute];
 }
 
+- (NSInteger)zb_getWeekDay
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSWeekdayCalendarUnit fromDate:self];
+    return [components weekday];
+}
+
 - (NSInteger)zb_numberOfDayOfCurrentMonth
 {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];

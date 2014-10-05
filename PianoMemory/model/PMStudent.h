@@ -1,5 +1,5 @@
 //
-//  FMStudent.h
+//  PMStudent.h
 //  PianoMemory
 //
 //  Created by 张 波 on 14-10-4.
@@ -8,7 +8,7 @@
 
 #import "FMObject.h"
 
-@interface FMStudent : FMObject
+@interface PMStudent : FMObject
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *phone;
 @property (nonatomic) NSString *qq;

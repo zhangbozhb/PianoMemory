@@ -1,5 +1,5 @@
 //
-//  FMCourseSchedule.h
+//  PMCourseSchedule.h
 //  PianoMemory
 //
 //  Created by 张 波 on 14-10-4.
@@ -8,7 +8,7 @@
 
 #import "FMObject.h"
 
-@interface FMCourseSchedule : FMObject
+@interface PMCourseSchedule : FMObject
 @property (nonatomic) NSString *courseId;
 @property (nonatomic) NSMutableArray *students;
 @property (nonatomic) NSInteger startTime;

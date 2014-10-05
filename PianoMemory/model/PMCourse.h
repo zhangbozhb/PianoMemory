@@ -1,5 +1,5 @@
 //
-//  FMCourse.h
+//  PMCourse.h
 //  PianoMemory
 //
 //  Created by 张 波 on 14-10-4.
@@ -9,7 +9,7 @@
 #import "FMObject.h"
 #import <CoreGraphics/CGBase.h>
 
-@interface FMCourse : FMObject
+@interface PMCourse : FMObject
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *briefDescription;
 @property (nonatomic) NSInteger type;

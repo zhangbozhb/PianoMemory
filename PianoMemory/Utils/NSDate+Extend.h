@@ -31,6 +31,7 @@
 //获取分钟
 - (NSInteger)zb_getMinute;
 
+- (NSInteger)zb_getWeekDay;
 
 - (NSInteger)zb_numberOfDayOfCurrentMonth;
 
