@@ -7,26 +7,41 @@
 //
 
 #import "PMStudentBrowseViewController.h"
-#import "PMStudent.h"
+#import "PMStudent+Wrapper.h"
 #import "PMStudentBrowseTableViewCell.h"
 #import "PMManualAddStudentUIViewController.h"
-#import "PMLocalServer.h"
+#import "PMServerWrapper.h"
 #import <AddressBookUI/AddressBookUI.h>
+#import <APAddressBook/APContact.h>
+#import <MBProgressHUD/MBProgressHUD.h>
+#import "UIViewController+DataUpdate.h"
+#import "PMDateUpdte.h"
+#import "UISearchBar+Extend.h"
 
 static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBrowseTableViewCelReuseIdentifier";
 
 
 @interface PMStudentBrowseViewController () <UITableViewDataSource, UITableViewDelegate,
                                             UISearchBarDelegate,
-                                            ABPeoplePickerNavigationControllerDelegate>
+                                            ABPeoplePickerNavigationControllerDelegate,
+                                            UIActionSheetDelegate,
+                                            UIAlertViewDelegate>
 @property (nonatomic) UITableViewCellEditingStyle studentEditingStyle;
 @property (nonatomic) NSMutableArray *studentArray;
+@property (nonatomic) BOOL shouldFetchData;
+
+//search
+@property (nonatomic) NSString *lastSearchText;
+@property (nonatomic) BOOL waitingSearch;
+
+@property (nonatomic) APContact *processingContact;
+@property (nonatomic) PMStudent *toSaveStudent;
 
 //xib reference
 @property (weak, nonatomic) IBOutlet UINavigationItem *myNavigationItem;
 @property (weak, nonatomic) IBOutlet UITableView *studentsTableView;
-
 @property (weak, nonatomic) IBOutlet UIView *addContactViewContainer;
+@property (weak, nonatomic) IBOutlet UISearchBar *mySearchBar;
 @end
 
 @implementation PMStudentBrowseViewController
@@ -34,6 +49,9 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self registerForDataUpdate];
+    self.shouldFetchData = YES;
+    self.waitingSearch = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -90,20 +108,6 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
     [self.studentsTableView setEditing:YES];
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    NSMutableArray *students = [NSMutableArray array];
-    NSInteger mokeNumber = 10 - searchText.length;
-    for (NSInteger index = 0; index < mokeNumber; ++index) {
-        PMStudent *student = [[PMStudent alloc] init];
-        student.name = @"测试名";
-        student.phone = [NSString stringWithFormat:@"电话%10ld", (long)index];
-        [students addObject:student];
-    }
-    self.studentArray = students;
-    [self.studentsTableView reloadData];
-}
-
 #pragma add contact
 - (IBAction)addContactFromContactsAction:(id)sender {
     ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
@@ -151,24 +155,7 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
 //ios 7
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
 {
-//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"手机号码"
-//                                                       delegate:self
-//                                              cancelButtonTitle:nil
-//                                         destructiveButtonTitle:nil
-//                                              otherButtonTitles:nil];
-//    sheet.actionSheetStyle = UIActionSheetStyleAutomatic;
-//    for(NSString *pho in phones)
-//    {
-//        [sheet addButtonWithTitle:pho];
-//    }
-//    [sheet addButtonWithTitle:@"取消"];
-//    sheet.cancelButtonIndex = phones.count;
-//
-//    if(phones.count>0){
-//        [sheet showInView:[UIApplication sharedApplication].keyWindow];
-//    }else{
-//        //[peoplePicker dismissModalViewControllerAnimated:YES];
-//    }
+    [self handleABRecord:person];
     return NO;
 }
 
@@ -187,15 +174,200 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
 
 }
 
+- (void)handleABRecord:(ABRecordRef)person
+{
+    APContact *contact = [[APContact alloc] initWithRecordRef:person fieldMask:APContactFieldAll];
+
+
+
+    NSArray *phones =  contact.phones;
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"手机号码"
+                                                       delegate:self
+                                              cancelButtonTitle:nil
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:nil];
+    sheet.actionSheetStyle = UIActionSheetStyleAutomatic;
+    for(NSString *pho in phones)
+    {
+        [sheet addButtonWithTitle:pho];
+    }
+    [sheet addButtonWithTitle:@"取消"];
+    sheet.cancelButtonIndex = phones.count;
+
+    if (0 < [contact.phones count]) {
+        self.processingContact = contact;
+        [sheet showInView:[UIApplication sharedApplication].keyWindow];
+    } else {
+        self.processingContact = nil;
+        [self showAlertViewForNoPhoneOfContact];
+    }
+}
+
+#pragma delagte activesheet
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    self.toSaveStudent = nil;
+    if (self.processingContact &&
+        buttonIndex < [self.processingContact.phones count]) {
+        PMStudent *student = [[PMStudent alloc] init];
+        student.name = self.processingContact.compositeName;
+        student.phone = [self.processingContact.phones objectAtIndex:buttonIndex];
+        self.toSaveStudent = student;
+
+        [self showSaveAlertViewForStudent:student];
+    }
+}
+
+- (void)showSaveAlertViewForStudent:(PMStudent*)student
+{
+    NSString *message = [NSString stringWithFormat:@"%@\n%@",student.name, student.phone];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"添加联系人"
+                                                        message:message
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"确定", nil];
+    [alertView show];
+}
+
+- (void)showAlertViewForNoPhoneOfContact
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"失败"
+                                                        message:@"该联系人没有电话号码，请选择其它联系人"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil];
+    [alertView show];
+}
+#pragma delegate alertview
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (1 == buttonIndex) {
+        __weak PMStudentBrowseViewController *pSelf = self;
+        [self dismissViewControllerAnimated:YES completion:^{
+            [pSelf saveStudent:pSelf.toSaveStudent];
+        }];
+    }
+}
+
+- (void)saveStudent:(PMStudent*)student
+{
+    [student updateShortcut];
+    __weak PMStudentBrowseViewController *pSelf = self;
+    [[PMServerWrapper defaultServer] createStudent:student success:^(PMStudent *student) {
+        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功添加学生"];
+        [toast showAnimated:YES whileExecutingBlock:^{
+            sleep(2);
+        } completionBlock:^{
+            [toast removeFromSuperview];
+        }];
+    } failure:^(HCErrorMessage *error) {
+        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
+        [toast showAnimated:YES whileExecutingBlock:^{
+            sleep(2);
+        } completionBlock:^{
+            [toast removeFromSuperview];
+        }];
+    }];
+}
+
+#pragma convenience method
+- (MBProgressHUD*)getSimpleToastWithTitle:(NSString*)title message:(NSString*)message
+{
+    MBProgressHUD *toast = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:toast];
+    toast.mode = MBProgressHUDModeText;
+    toast.animationType = MBProgressHUDAnimationZoomOut;
+    [toast setLabelText:title];
+    [toast setDetailsLabelText:message];
+    return toast;
+}
+
+#pragma data update
+- (void)handleDataUpdated:(NSNotification *)notification
+{
+    [super handleDataUpdated:notification];
+    if (PMLocalServer_DateUpateType_Student == [PMDateUpdte dateUpdateType:notification.object] ||
+        PMLocalServer_DateUpateType_ALL == [PMDateUpdte dateUpdateType:notification.object]) {
+        self.shouldFetchData = YES;
+        [self loadCustomerData];
+    }
+}
+
+#pragma search
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:YES];
+    UIButton *cancelButton = [searchBar zb_getCancelButton];
+    if (cancelButton) {
+        [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+    }
+}
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar setText:@""];
+    [searchBar setShowsCancelButton:NO animated:YES];
+    [searchBar resignFirstResponder];
+    self.shouldFetchData = YES;
+    [self loadCustomerData];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    [self searchStudentWithNameOrPhoneWrapper];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [self searchStudentWithNameOrPhone:[searchBar text]];
+}
+
+- (void)searchStudentWithNameOrPhone:(NSString *)searchText
+{
+    if (self.lastSearchText == searchText || [self.lastSearchText isEqualToString:searchText]) {
+        return;
+    }
+    searchText = [searchText lowercaseString];
+    self.lastSearchText = searchText;
+
+    NSDictionary *params = nil;
+    if (0 < [searchText length]) {
+        params = @{@"name" : searchText,
+                   @"phone" : searchText,
+                   @"nameShortcut": searchText};
+    }
+    __weak PMStudentBrowseViewController *pSelf = self;
+    [[PMServerWrapper defaultServer] queryStudents:params success:^(NSArray *array) {
+        pSelf.studentArray = [NSMutableArray arrayWithArray:array];
+        [pSelf refreshUI];
+    } failure:^(HCErrorMessage *error) {
+    }];
+}
+
+- (void)searchStudentWithNameOrPhoneWrapper
+{
+    if (!self.waitingSearch) {
+        self.waitingSearch = YES;
+        // dispatch_time使用的时间是纳秒，
+        dispatch_time_t delayInNanoSeconds =dispatch_time(DISPATCH_TIME_NOW, 0.15 * NSEC_PER_SEC);
+        __weak PMStudentBrowseViewController *pSelf = self;
+        dispatch_after(delayInNanoSeconds, dispatch_get_main_queue(), ^{
+            pSelf.waitingSearch = NO;
+            [pSelf searchStudentWithNameOrPhone:pSelf.mySearchBar.text];
+        });
+    }
+}
+
 - (void)loadCustomerData
 {
-    __weak PMStudentBrowseViewController *pSelf = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSArray *students = [[PMLocalServer defaultLocalServer] queryStudents:nil phone:nil];
-        pSelf.studentArray = [NSMutableArray arrayWithArray:students];
-        [pSelf refreshUI];
-
-    });
+    if (self.shouldFetchData) {
+        __weak PMStudentBrowseViewController *pSelf = self;
+        [[PMServerWrapper defaultServer] queryStudents:nil success:^(NSArray *array) {
+            pSelf.studentArray = [NSMutableArray arrayWithArray:array];
+            [pSelf refreshUI];
+            pSelf.shouldFetchData = NO;
+        } failure:^(HCErrorMessage *error) {
+        }];
+    }
 }
 
 - (void)refreshUI

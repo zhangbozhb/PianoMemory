@@ -8,7 +8,8 @@
 
 #import "PMManualAddStudentUIViewController.h"
 #import "PMStudent+Wrapper.h"
-#import "PMLocalServer.h"
+#import "PMServerWrapper.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 
 @interface PMManualAddStudentUIViewController () <UITextFieldDelegate>
 @property (nonatomic) PMStudent *changedStudent;
@@ -90,6 +91,36 @@
         [alertView show];
         return;
     }
-    [[PMLocalServer defaultLocalServer] saveStudent:self.changedStudent];
+    [self.changedStudent updateShortcut];
+
+    __weak PMManualAddStudentUIViewController *pSelf = self;
+     [[PMServerWrapper defaultServer] createStudent:self.changedStudent success:^(PMStudent *student) {
+        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功添加学生"];
+        [toast showAnimated:YES whileExecutingBlock:^{
+            sleep(2);
+        } completionBlock:^{
+            [toast removeFromSuperview];
+            [pSelf.navigationController popViewControllerAnimated:YES];
+        }];
+    } failure:^(HCErrorMessage *error) {
+        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
+        [toast showAnimated:YES whileExecutingBlock:^{
+            sleep(2);
+        } completionBlock:^{
+            [toast removeFromSuperview];
+        }];
+    }];
 }
+
+#pragma convenience method
+     - (MBProgressHUD*)getSimpleToastWithTitle:(NSString*)title message:(NSString*)message
+    {
+        MBProgressHUD *toast = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:toast];
+        toast.mode = MBProgressHUDModeText;
+        toast.animationType = MBProgressHUDAnimationZoomOut;
+        [toast setLabelText:title];
+        [toast setDetailsLabelText:message];
+        return toast;
+    }
 @end

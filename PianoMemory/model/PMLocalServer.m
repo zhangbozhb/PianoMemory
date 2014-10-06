@@ -8,7 +8,6 @@
 
 #import "PMLocalServer.h"
 #import "PMLocalStorage.h"
-#import "PMDateUpdte.h"
 
 @interface PMLocalServer ()
 @property (nonatomic) PMLocalStorage *localStorage;
@@ -37,7 +36,11 @@
 #pragma students
 - (BOOL)isStudentExist:(PMStudent *)student
 {
-    return [self.localStorage isStudentExist:student];
+    BOOL isExist = [self.localStorage isStudentExist:student];
+    if (!isExist) {
+        isExist = (nil != [self.localStorage getStudentWithId:[student syncCreateLocalId]])?YES:NO;
+    }
+    return isExist;
 }
 - (BOOL)saveStudent:(PMStudent*)student
 {
@@ -52,7 +55,7 @@
     return [self.localStorage getStudentWithId:studentId];
 }
 
-- (NSArray *)queryStudents:(NSString*)name phone:(NSString*)phone
+- (NSArray *)queryStudents:(NSString*)name phone:(NSString*)phone nameShortcut:(NSString *)nameShortcut
 {
     NSMutableArray *students = [NSMutableArray array];
     NSDictionary *viewStudent = [self.localStorage viewStudent];
@@ -68,8 +71,13 @@
                 student.phone &&
                 NSNotFound != [student.phone rangeOfString:phone].location) {
                 isMatch = YES;
+            } else if (0 != [nameShortcut length] &&
+                        student.nameShortcut &&
+                        NSNotFound != [student.nameShortcut rangeOfString:nameShortcut].location) {
+                isMatch = YES;
             } else if (0 ==  [name length]
-                       && 0 == [phone length]){
+                       && 0 == [phone length] &&
+                       0 == [nameShortcut length]){
                 isMatch = YES;
             }
             if (isMatch) {

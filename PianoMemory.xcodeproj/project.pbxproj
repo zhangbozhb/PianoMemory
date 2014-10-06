@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E08E83C19E2981800DFD7CA /* UISearchBar+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E83B19E2981800DFD7CA /* UISearchBar+Extend.m */; };
+		9E08E83F19E29E1B00DFD7CA /* UIViewController+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E83E19E29E1B00DFD7CA /* UIViewController+Extend.m */; };
 		9EF130E819E029A900843F02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF130E719E029A900843F02 /* main.m */; };
 		9EF130EB19E029A900843F02 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF130EA19E029A900843F02 /* AppDelegate.m */; };
 		9EF130EE19E029AA00843F02 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF130ED19E029AA00843F02 /* ViewController.m */; };
@@ -32,7 +34,6 @@
 		9EF1315E19E02FF200843F02 /* UITableViewCell+CellHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1313C19E02FF200843F02 /* UITableViewCell+CellHeader.m */; };
 		9EF1315F19E02FF200843F02 /* UITableViewCell+SelectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1313E19E02FF200843F02 /* UITableViewCell+SelectedView.m */; };
 		9EF1316019E02FF200843F02 /* UIView+ScreenShot.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1314019E02FF200843F02 /* UIView+ScreenShot.m */; };
-		9EF1316219E02FF200843F02 /* UIViewController+Just.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1314419E02FF200843F02 /* UIViewController+Just.m */; };
 		9EF1316419E02FF200843F02 /* ZBStyleUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1314819E02FF200843F02 /* ZBStyleUtils.m */; };
 		9EF1316719E0308900843F02 /* PMLocalStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1316619E0308900843F02 /* PMLocalStorage.m */; };
 		9EF1316A19E0318000843F02 /* PMStudent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1316919E0318000843F02 /* PMStudent.m */; };
@@ -55,6 +56,8 @@
 		9EF131A719E24B9300843F02 /* PMDateUpdte.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF131A619E24B9300843F02 /* PMDateUpdte.m */; };
 		9EF131A919E2507400843F02 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EF131A819E2507400843F02 /* AddressBookUI.framework */; };
 		9EF131AB19E2656900843F02 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EF131AA19E2656900843F02 /* AddressBook.framework */; };
+		9EF131AE19E27C0000843F02 /* PMServerWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF131AD19E27C0000843F02 /* PMServerWrapper.m */; };
+		9EF131B119E27D0A00843F02 /* HCErrorMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF131B019E27D0A00843F02 /* HCErrorMessage.m */; };
 		C0601CA3FA524D3EB97B1A2F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39148A87FCEC484AB9A68338 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +74,10 @@
 /* Begin PBXFileReference section */
 		39148A87FCEC484AB9A68338 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F31BCE0235B414E8512474C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		9E08E83A19E2981800DFD7CA /* UISearchBar+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISearchBar+Extend.h"; sourceTree = "<group>"; };
+		9E08E83B19E2981800DFD7CA /* UISearchBar+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchBar+Extend.m"; sourceTree = "<group>"; };
+		9E08E83D19E29E1B00DFD7CA /* UIViewController+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Extend.h"; sourceTree = "<group>"; };
+		9E08E83E19E29E1B00DFD7CA /* UIViewController+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Extend.m"; sourceTree = "<group>"; };
 		9EF130E219E029A900843F02 /* PianoMemory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PianoMemory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EF130E619E029A900843F02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EF130E719E029A900843F02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -120,8 +127,6 @@
 		9EF1313E19E02FF200843F02 /* UITableViewCell+SelectedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+SelectedView.m"; sourceTree = "<group>"; };
 		9EF1313F19E02FF200843F02 /* UIView+ScreenShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ScreenShot.h"; sourceTree = "<group>"; };
 		9EF1314019E02FF200843F02 /* UIView+ScreenShot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ScreenShot.m"; sourceTree = "<group>"; };
-		9EF1314319E02FF200843F02 /* UIViewController+Just.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Just.h"; sourceTree = "<group>"; };
-		9EF1314419E02FF200843F02 /* UIViewController+Just.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Just.m"; sourceTree = "<group>"; };
 		9EF1314719E02FF200843F02 /* ZBStyleUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBStyleUtils.h; sourceTree = "<group>"; };
 		9EF1314819E02FF200843F02 /* ZBStyleUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBStyleUtils.m; sourceTree = "<group>"; };
 		9EF1316519E0308900843F02 /* PMLocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMLocalStorage.h; sourceTree = "<group>"; };
@@ -161,6 +166,10 @@
 		9EF131A619E24B9300843F02 /* PMDateUpdte.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMDateUpdte.m; sourceTree = "<group>"; };
 		9EF131A819E2507400843F02 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		9EF131AA19E2656900843F02 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		9EF131AC19E27C0000843F02 /* PMServerWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMServerWrapper.h; sourceTree = "<group>"; };
+		9EF131AD19E27C0000843F02 /* PMServerWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMServerWrapper.m; sourceTree = "<group>"; };
+		9EF131AF19E27D0A00843F02 /* HCErrorMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCErrorMessage.h; sourceTree = "<group>"; };
+		9EF131B019E27D0A00843F02 /* HCErrorMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCErrorMessage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +284,8 @@
 		9EF1311A19E02FF200843F02 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9E08E83D19E29E1B00DFD7CA /* UIViewController+Extend.h */,
+				9E08E83E19E29E1B00DFD7CA /* UIViewController+Extend.m */,
 				9EF1319F19E24AEC00843F02 /* UIViewController+WithKeyboardNotification.h */,
 				9EF131A019E24AEC00843F02 /* UIViewController+WithKeyboardNotification.m */,
 				9EF1311B19E02FF200843F02 /* Checkbox.h */,
@@ -307,10 +318,10 @@
 				9EF1313E19E02FF200843F02 /* UITableViewCell+SelectedView.m */,
 				9EF1313F19E02FF200843F02 /* UIView+ScreenShot.h */,
 				9EF1314019E02FF200843F02 /* UIView+ScreenShot.m */,
-				9EF1314319E02FF200843F02 /* UIViewController+Just.h */,
-				9EF1314419E02FF200843F02 /* UIViewController+Just.m */,
 				9EF1314719E02FF200843F02 /* ZBStyleUtils.h */,
 				9EF1314819E02FF200843F02 /* ZBStyleUtils.m */,
+				9E08E83A19E2981800DFD7CA /* UISearchBar+Extend.h */,
+				9E08E83B19E2981800DFD7CA /* UISearchBar+Extend.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -343,6 +354,8 @@
 		9EF1317C19E0CC1300843F02 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				9EF131AF19E27D0A00843F02 /* HCErrorMessage.h */,
+				9EF131B019E27D0A00843F02 /* HCErrorMessage.m */,
 				9EF1311219E02FF200843F02 /* FMObject.h */,
 				9EF1311319E02FF200843F02 /* FMObject.m */,
 				9EF1311619E02FF200843F02 /* FMSyncStorage.h */,
@@ -413,6 +426,8 @@
 				9EF1316619E0308900843F02 /* PMLocalStorage.m */,
 				9EF1319719E2322300843F02 /* PMLocalServer.h */,
 				9EF1319819E2322300843F02 /* PMLocalServer.m */,
+				9EF131AC19E27C0000843F02 /* PMServerWrapper.h */,
+				9EF131AD19E27C0000843F02 /* PMServerWrapper.m */,
 			);
 			name = localserver;
 			sourceTree = "<group>";
@@ -579,10 +594,13 @@
 				9EF1315D19E02FF200843F02 /* UINavigationItem+iOS7.m in Sources */,
 				9EF1315F19E02FF200843F02 /* UITableViewCell+SelectedView.m in Sources */,
 				9EF1314D19E02FF200843F02 /* HCObject.m in Sources */,
+				9E08E83F19E29E1B00DFD7CA /* UIViewController+Extend.m in Sources */,
 				9EF1317B19E0C9BA00843F02 /* PMStudentBrowseViewController.m in Sources */,
 				9EF1318319E103D300843F02 /* LunarCalendar.m in Sources */,
 				9EF1319919E2322300843F02 /* PMLocalServer.m in Sources */,
+				9EF131AE19E27C0000843F02 /* PMServerWrapper.m in Sources */,
 				9EF1315319E02FF200843F02 /* HCUtils.m in Sources */,
+				9E08E83C19E2981800DFD7CA /* UISearchBar+Extend.m in Sources */,
 				9EF1316419E02FF200843F02 /* ZBStyleUtils.m in Sources */,
 				9EF1315719E02FF200843F02 /* NSString+Extend.m in Sources */,
 				9EF131A719E24B9300843F02 /* PMDateUpdte.m in Sources */,
@@ -590,6 +608,7 @@
 				9EF1319519E2299E00843F02 /* PMStudent+Wrapper.m in Sources */,
 				9EF130EE19E029AA00843F02 /* ViewController.m in Sources */,
 				9EF130EB19E029A900843F02 /* AppDelegate.m in Sources */,
+				9EF131B119E27D0A00843F02 /* HCErrorMessage.m in Sources */,
 				9EF1315919E02FF200843F02 /* UIDevice+Extend.m in Sources */,
 				9EF1318719E1103B00843F02 /* FMWeekCalendarView.m in Sources */,
 				9EF1315C19E02FF200843F02 /* UINavigationBar+Extend.m in Sources */,
@@ -608,7 +627,6 @@
 				9EF1315419E02FF200843F02 /* MathExtend.m in Sources */,
 				9EF1315819E02FF200843F02 /* UIColor+Extend.m in Sources */,
 				9EF1314A19E02FF200843F02 /* FMObject.m in Sources */,
-				9EF1316219E02FF200843F02 /* UIViewController+Just.m in Sources */,
 				9EF1314E19E02FF200843F02 /* Checkbox.m in Sources */,
 				9EF1318A19E1744A00843F02 /* PMCourseScheduleTableViewCell.m in Sources */,
 				9EF1314C19E02FF200843F02 /* FMSyncStorage.m in Sources */,

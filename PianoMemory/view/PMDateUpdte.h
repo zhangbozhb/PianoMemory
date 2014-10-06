@@ -19,6 +19,5 @@ typedef enum {
 @interface PMDateUpdte : NSObject
 + (NSString *)dateUpdateTypeToString:(PMLocalServer_DateUpateType)dateType;
 + (PMLocalServer_DateUpateType)dateUpdateType:(NSString *)typeString;
-
-- (void)notificationDataUpated:(id)object;
++ (void)notificationDataUpated:(id)object;
 @end

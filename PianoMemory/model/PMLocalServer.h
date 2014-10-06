@@ -11,7 +11,6 @@
 #import "PMCourse.h"
 #import "PMCourseSchedule.h"
 
-
 @interface PMLocalServer : NSObject
 + (instancetype)defaultLocalServer;
 // clear local db
@@ -22,5 +21,6 @@
 - (BOOL)saveStudent:(PMStudent*)student;
 - (BOOL)deleteStudent:(PMStudent*)student;
 - (PMStudent*)queryStudentWithId:(NSString*)studentId;
-- (NSArray*)queryStudents:(NSString*)name phone:(NSString*)phone;
+- (NSArray*)queryStudents:(NSString*)name phone:(NSString*)phone nameShortcut:(NSString *)nameShortcut;
+
 @end
