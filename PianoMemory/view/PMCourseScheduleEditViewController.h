@@ -1,5 +1,5 @@
 //
-//  PMManualAddCourseSchedule.h
+//  PMCourseScheduleEditViewController.h
 //  PianoMemory
 //
 //  Created by 张 波 on 14-10-6.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PMManualAddCourseSchedule : UIViewController
+@interface PMCourseScheduleEditViewController : UIViewController
 
 @end

@@ -123,4 +123,60 @@
         }
     }];
 }
+
+#pragma course
+- (void)createCourse:(PMCourse*)course success:(void(^)(PMCourse *course))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    [self asyncProcessing:^{
+        if ([self.localServer saveCourse:course]) {
+            if (success) {
+                success(course);
+            }
+            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_Course]];
+        } else {
+            if (failure) {
+                failure([self errorUnknown]);
+            }
+        }
+    }];
+}
+
+- (void)updateCourse:(PMCourse*)course success:(void(^)(PMCourse *course))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    if ([self.localServer saveCourse:course]) {
+        if (success) {
+            success(course);
+        }
+        [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_Course]];
+    } else {
+        if (failure) {
+            failure([self errorUnknown]);
+        }
+    }
+}
+
+- (void)deleteCourse:(PMCourse*)course success:(void(^)(PMCourse *course))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    if ([self.localServer deleteCourse:course]) {
+        if (success) {
+            success(course);
+        }
+        [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_Course]];
+    } else {
+        if (failure) {
+            failure([self errorUnknown]);
+        }
+    }
+}
+
+- (void)queryCourses:(NSDictionary *)parameters success:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    NSString *name = [parameters objectForKey:@"name"];
+    [self asyncProcessing:^{
+        NSArray *array = [self.localServer queryCourses:name];
+        if (success) {
+            success(array);
+        }
+    }];
+}
 @end

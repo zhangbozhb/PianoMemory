@@ -13,6 +13,8 @@ extern NSString * const kPianoMemoryLocalDataUpdatedNotification;
 typedef enum {
     PMLocalServer_DateUpateType_Undefined = 1,
     PMLocalServer_DateUpateType_Student,
+    PMLocalServer_DateUpateType_Course,
+    PMLocalServer_DateUpateType_CourseSchedule,
     PMLocalServer_DateUpateType_ALL,
 } PMLocalServer_DateUpateType;
 

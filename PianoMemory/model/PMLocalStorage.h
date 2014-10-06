@@ -25,8 +25,12 @@
 #pragma course
 - (BOOL)storeCourse:(PMCourse*)course;
 - (BOOL)removeCourse:(PMCourse*)course;
+- (PMCourse*)getCourseWithId:(NSString*)courseId;
+- (NSDictionary *)viewCourse;
 
 #pragma course schedule
 - (BOOL)storeCourseSchedule:(PMCourseSchedule*)courseSchedule;
 - (BOOL)removeCourseSchedule:(PMCourseSchedule*)courseSchedule;
+- (PMCourseSchedule*)getCourseScheduleWithId:(NSString*)courseScheduleId;
+- (NSDictionary *)viewCourseSchedule;
 @end

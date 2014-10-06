@@ -23,4 +23,15 @@
 - (PMStudent*)queryStudentWithId:(NSString*)studentId;
 - (NSArray*)queryStudents:(NSString*)name phone:(NSString*)phone nameShortcut:(NSString *)nameShortcut;
 
+#pragma course
+- (BOOL)saveCourse:(PMCourse*)course;
+- (BOOL)deleteCourse:(PMCourse*)course;
+- (PMCourse*)queryCourseWithId:(NSString*)courseId;
+- (NSArray*)queryCourses:(NSString*)name;
+
+#pragma courseSchedule
+- (BOOL)saveCourseSchedule:(PMCourseSchedule*)courseSchedule;
+- (BOOL)deleteCourseSchedule:(PMCourseSchedule*)courseSchedule;
+- (PMCourseSchedule*)queryCourseScheduleWithId:(NSString*)courseScheduleId;
+- (NSArray*)queryAllCourseSchedule;
 @end

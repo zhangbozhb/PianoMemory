@@ -97,6 +97,14 @@ static NSString *const klocal_courseschedule_view_key = @"org.plam4fun.fm1017.lo
 {
     return [self.syncStorage removeHCObject:course];
 }
+- (PMCourse*)getCourseWithId:(NSString*)courseId
+{
+    return (PMCourse*)[self.syncStorage objectForKey:courseId];
+}
+- (NSDictionary *)viewCourse
+{
+    return [self.syncStorage viewOfClass:[PMCourse class]];
+}
 
 #pragma course schedule
 - (BOOL)storeCourseSchedule:(PMCourseSchedule*)courseSchedule
@@ -106,5 +114,13 @@ static NSString *const klocal_courseschedule_view_key = @"org.plam4fun.fm1017.lo
 - (BOOL)removeCourseSchedule:(PMCourseSchedule*)courseSchedule
 {
     return [self.syncStorage removeHCObject:courseSchedule];
+}
+- (PMCourseSchedule*)getCourseScheduleWithId:(NSString*)courseScheduleId
+{
+    return (PMCourseSchedule*)[self.syncStorage objectForKey:courseScheduleId];
+}
+- (NSDictionary *)viewCourseSchedule
+{
+    return [self.syncStorage viewOfClass:[PMCourseSchedule class]];
 }
 @end

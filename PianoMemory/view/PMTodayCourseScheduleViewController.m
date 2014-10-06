@@ -18,6 +18,9 @@ static NSString *const courseScheduleTableViewCellReuseIdentifier = @"PMCourseSc
 @property (nonatomic) UITableViewCellEditingStyle studentEditingStyle;
 @property (nonatomic) NSMutableArray *courseScheduleArray;
 
+//xib reference
+@property (weak, nonatomic) IBOutlet UINavigationItem *myNavigationitem;
+
 @end
 
 @implementation PMTodayCourseScheduleViewController

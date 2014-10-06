@@ -62,7 +62,7 @@
     for (NSString *studentId in viewStudent) {
         PMStudent *student = [self.localStorage getStudentWithId:studentId];
         BOOL isMatch = NO;
-        if (studentId) {
+        if (student) {
             if (0 != [name length] &&
                 student.name &&
                 NSNotFound != [student.name rangeOfString:name].location) {
@@ -86,5 +86,62 @@
         }
     }
     return students;
+}
+
+#pragma course
+- (BOOL)saveCourse:(PMCourse*)course
+{
+    return [self.localStorage storeCourse:course];
+}
+- (BOOL)deleteCourse:(PMCourse*)course
+{
+    return [self.localStorage removeCourse:course];
+}
+- (PMCourse*)queryCourseWithId:(NSString*)courseId
+{
+    return [self.localStorage getCourseWithId:courseId];
+}
+- (NSArray*)queryCourses:(NSString*)name
+{
+    NSMutableArray *courses = [NSMutableArray array];
+    NSDictionary *viewCourse = [self.localStorage viewCourse];
+    for (NSString *courseId in viewCourse) {
+        PMCourse *course = [self.localStorage getCourseWithId:courseId];
+        if (course) {
+            if (0 == [name length] ||
+                NSNotFound != [course.name rangeOfString:name].location) {
+                [courses addObject:course];
+            }
+        }
+    }
+    return courses;
+
+}
+
+#pragma courseSchedule
+- (BOOL)saveCourseSchedule:(PMCourseSchedule*)courseSchedule
+{
+    return [self.localStorage storeCourseSchedule:courseSchedule];
+}
+- (BOOL)deleteCourseSchedule:(PMCourseSchedule*)courseSchedule
+{
+    return [self.localStorage removeCourseSchedule:courseSchedule];
+}
+- (PMCourseSchedule*)queryCourseScheduleWithId:(NSString*)courseScheduleId
+{
+    return [self.localStorage getCourseScheduleWithId:courseScheduleId];
+}
+- (NSArray*)queryAllCourseSchedule
+{
+    NSMutableArray *courseSchedules = [NSMutableArray array];
+    NSDictionary *viewCourseSchedule = [self.localStorage viewCourseSchedule];
+    for (NSString *courseScheduleId in viewCourseSchedule) {
+        PMCourseSchedule *courseSchedule = [self.localStorage getCourseScheduleWithId:courseScheduleId];
+        if (courseSchedule) {
+            [courseSchedules addObject:courseSchedule];
+        }
+    }
+    return courseSchedules;
+
 }
 @end
