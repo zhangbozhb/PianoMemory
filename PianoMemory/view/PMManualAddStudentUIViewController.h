@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PMStudent.h"
 
 @interface PMManualAddStudentUIViewController : UIViewController
-
+@property (nonatomic) PMStudent *student;
 @end

@@ -7,18 +7,19 @@
 //
 
 #import "UIViewController+DataUpdate.h"
+#import "PMDateUpdte.h"
 
 @implementation UIViewController (DataUpdate)
 
 
 - (void)registerForDataUpdate
 {
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataUpdated:) name:kHairCutLocalDataUpdatedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataUpdated:) name:kPianoMemoryLocalDataUpdatedNotification object:nil];
 }
 
 - (void)unRegisterForDataUpdate
 {
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kHairCutLocalDataUpdatedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPianoMemoryLocalDataUpdatedNotification object:nil];
 }
 
 - (void)handleDataUpdated:(NSNotification *)notification {

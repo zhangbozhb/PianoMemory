@@ -10,8 +10,10 @@
 
 @interface PMStudent : FMObject
 @property (nonatomic) NSString *name;
+@property (nonatomic) NSString *nameShortcut;
 @property (nonatomic) NSString *phone;
 @property (nonatomic) NSString *qq;
+@property (nonatomic) NSString *weixin;
 @property (nonatomic) NSString *email;
 @property (nonatomic) NSString *level;
 @end

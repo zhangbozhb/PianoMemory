@@ -201,10 +201,10 @@
 - (NSArray*)getWeekDays
 {
     NSInteger weekDay = [self.visiableDate zb_getWeekDay];
-    NSInteger startDayOff = (1 == weekDay)?0:weekDay-PMDAYNUMBEROFWEEK;
+    NSInteger startDayOff = 1 - weekDay;
     NSDate *startDay = [self.visiableDate zb_dateAfterDay:startDayOff];
     NSMutableArray *weekDays = [NSMutableArray array];
-    for (NSInteger index = 0; index < 7; ++index) {
+    for (NSInteger index = 0; index < PMDAYNUMBEROFWEEK; ++index) {
         [weekDays addObject:[startDay zb_dateAfterDay:index]];
     }
     return weekDays;

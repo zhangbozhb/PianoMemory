@@ -36,6 +36,5 @@
     NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:self.courseSchedule.endTime];
     [self.startTimeLabel setText:[dateFormattor stringFromDate:startDate]];
     [self.endTimeLabel setText:[dateFormattor stringFromDate:endDate]];
-
 }
 @end

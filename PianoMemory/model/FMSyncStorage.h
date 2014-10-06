@@ -9,7 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "HCObject.h"
 
+@protocol FMSyncStorageDelate <NSObject>
+@required
+- (NSString*)mappingKeyOfClass:(Class)objectClass;
+- (NSString*)viewKeyOfClass:(Class)objectClass;
+@optional
+- (NSObject*)viewValueInViewOfHCObject:(HCObject*)object;
+@end
+
 @interface FMSyncStorage : NSObject
+@property (nonatomic) id<FMSyncStorageDelate> storeDelgate;
 
 - (instancetype)initWithDBName:(NSString*)dbName;
 
@@ -21,7 +30,7 @@
 - (BOOL)removeObjectsForKeys:(NSArray*)keys;
 
 #pragma encapsulate mapping methods
-- (NSString*)mappingKeyOfClass:(Class)objectClass;      //should override
+- (NSString*)mappingKeyOfClass:(Class)objectClass;      //be carefull to override
 - (NSMutableDictionary*)mappingOfClass:(Class)objectClass;
 //- (NSString *)mappingKeyOfHCObject:(HCObject *)object;
 //- (NSMutableDictionary*)mappingOfHCObject:(HCObject*)object;
@@ -37,12 +46,12 @@
 - (BOOL)isExistHCObject:(HCObject *)object;
 
 #pragma encapsulate view methods
-- (NSString*)viewKeyOfClass:(Class)objectClass;     //should override
-
+- (NSString*)viewKeyOfClass:(Class)objectClass;     //be carefull to override
+- (NSMutableDictionary*)viewOfClass:(Class)objectClass;
 //- (NSString*)viewKeyOfHCObject:(HCObject*)object;
-- (NSMutableDictionary*)viewOfHCObject:(HCObject*)object;
+//- (NSMutableDictionary*)viewOfHCObject:(HCObject*)object;
 //- (NSString*)viewKeyInViewOfHCObject:(HCObject*)object;
-- (NSObject*)viewValueInViewOfHCObject:(HCObject*)object;   //can be ovrride
+//- (NSObject*)viewValueInViewOfHCObject:(HCObject*)object;
 //- (void)viewStoreForHCObject:(HCObject*)object;
 //- (void)viewRemoveForHCObject:(HCObject*)object;
 

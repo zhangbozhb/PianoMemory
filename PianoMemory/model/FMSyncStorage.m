@@ -77,17 +77,21 @@
 #pragma encapsulate mapping methods
 - (NSString*)mappingKeyOfClass:(Class)objectClass
 {
+    if (self.storeDelgate &&
+        [self.storeDelgate respondsToSelector:@selector(mappingKeyOfClass:)]) {
+        return [self.storeDelgate mappingKeyOfClass:objectClass];
+    }
     return nil;
 }
 
 - (NSMutableDictionary*)mappingOfClass:(Class)objectClass
 {
-    NSMutableDictionary *targetView = nil;
-    NSString *viewKey = [self viewKeyOfClass:objectClass];
-    if (viewKey) {
-        targetView = (NSMutableDictionary*)[self objectForKey:viewKey];
+    NSMutableDictionary *targetMapping = nil;
+    NSString *mappingKey = [self mappingKeyOfClass:objectClass];
+    if (mappingKey) {
+        targetMapping = (NSMutableDictionary*)[self objectForKey:mappingKey];
     }
-    return targetView;
+    return targetMapping;
 }
 
 - (NSString *)mappingKeyOfHCObject:(HCObject *)object
@@ -160,7 +164,7 @@
             NSObject *oldMappingValue = [mapping objectForKey:keyInMapping];
             if ([oldMappingValue isKindOfClass:[NSString class]] &&
                 [mappingValue isKindOfClass:[NSString class]]) {
-                NSString *mappingValueString =  (NSString*)mapping;
+                NSString *mappingValueString =  (NSString*)mappingValue;
                 NSString *oldMappingValueString = (NSString*)oldMappingValue;
                 if (mappingValueString &&
                     ![mappingValueString isEqualToString:oldMappingValueString]) {
@@ -230,10 +234,14 @@
 #pragma encapsulate view methods
 - (NSString*)viewKeyOfClass:(Class)objectClass
 {
+    if (self.storeDelgate &&
+        [self.storeDelgate respondsToSelector:@selector(viewKeyOfClass:)]) {
+        return [self.storeDelgate viewKeyOfClass:objectClass];
+    }
     return nil;
 }
 
-- (NSMutableDictionary*)viewOfClass:(Class)objectClass;
+- (NSMutableDictionary*)viewOfClass:(Class)objectClass
 {
     NSMutableDictionary *targetView = nil;
     NSString *viewKey = [self viewKeyOfClass:objectClass];
@@ -260,6 +268,10 @@
 
 - (NSObject*)viewValueInViewOfHCObject:(HCObject*)object
 {
+    if (self.storeDelgate &&
+        [self.storeDelgate respondsToSelector:@selector(viewValueInViewOfHCObject:)]) {
+        return [self.storeDelgate viewValueInViewOfHCObject:object];
+    }
     return @"";
 }
 
