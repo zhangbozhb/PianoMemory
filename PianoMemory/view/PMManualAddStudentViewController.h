@@ -1,5 +1,5 @@
 //
-//  PMManualAddStudentUIViewController.h
+//  PMManualAddStudentViewController.h
 //  PianoMemory
 //
 //  Created by 张 波 on 14-10-5.
@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "PMStudent.h"
 
-@interface PMManualAddStudentUIViewController : UIViewController
+@interface PMManualAddStudentViewController : UIViewController
 @property (nonatomic) PMStudent *student;
 @end

@@ -16,4 +16,5 @@
 + (BOOL)zb_systemVersion5Latter;
 + (BOOL)zb_systemVersion6Latter;
 + (BOOL)zb_systemVersion7Latter;
++ (BOOL)zb_systemVersion8Latter;
 @end

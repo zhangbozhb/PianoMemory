@@ -9,7 +9,7 @@
 #import "PMStudentBrowseViewController.h"
 #import "PMStudent+Wrapper.h"
 #import "PMStudentBrowseTableViewCell.h"
-#import "PMManualAddStudentUIViewController.h"
+#import "PMManualAddStudentViewController.h"
 #import "PMServerWrapper.h"
 #import <AddressBookUI/AddressBookUI.h>
 #import <APAddressBook/APContact.h>
@@ -17,6 +17,7 @@
 #import "UIViewController+DataUpdate.h"
 #import "PMDateUpdte.h"
 #import "UISearchBar+Extend.h"
+#import "UIDevice+Extend.h"
 
 static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBrowseTableViewCelReuseIdentifier";
 
@@ -26,7 +27,6 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
                                             ABPeoplePickerNavigationControllerDelegate,
                                             UIActionSheetDelegate,
                                             UIAlertViewDelegate>
-@property (nonatomic) UITableViewCellEditingStyle studentEditingStyle;
 @property (nonatomic) NSMutableArray *studentArray;
 @property (nonatomic) BOOL shouldFetchData;
 
@@ -88,24 +88,17 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.studentEditingStyle != UITableViewCellEditingStyleInsert) {
-        return UITableViewCellEditingStyleDelete;
-    }
-    return UITableViewCellEditingStyleInsert;
+    return UITableViewCellEditingStyleDelete;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (UITableViewCellEditingStyleDelete == editingStyle) {
+        PMStudent *toDeleteStudent = [self.studentArray objectAtIndex:indexPath.row];
         [self.studentArray removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self deleteStudent:toDeleteStudent];
     }
-}
-
-
-- (IBAction)performEditAction:(id)sender {
-    self.studentEditingStyle = UITableViewCellEditingStyleDelete;
-    [self.studentsTableView setEditing:YES];
 }
 
 #pragma add contact
@@ -132,7 +125,7 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
     if ([[segue identifier] isEqualToString:@"contactManualAdd"]) {
-        PMManualAddStudentUIViewController *addStudentVC = (PMManualAddStudentUIViewController*)[segue destinationViewController];
+        PMManualAddStudentViewController *addStudentVC = (PMManualAddStudentViewController*)[segue destinationViewController];
         [addStudentVC setStudent:nil];
         [self hideAddContactView];
     }
@@ -233,10 +226,14 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (1 == buttonIndex) {
-        __weak PMStudentBrowseViewController *pSelf = self;
-        [self dismissViewControllerAnimated:YES completion:^{
-            [pSelf saveStudent:pSelf.toSaveStudent];
-        }];
+        if ([UIDevice zb_systemVersion8Latter]) {
+            [self saveStudent:self.toSaveStudent];
+        } else {
+            __weak PMStudentBrowseViewController *pSelf = self;
+            [self dismissViewControllerAnimated:YES completion:^{
+                [pSelf saveStudent:pSelf.toSaveStudent];
+            }];
+        }
     }
 }
 
@@ -246,6 +243,27 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
     __weak PMStudentBrowseViewController *pSelf = self;
     [[PMServerWrapper defaultServer] createStudent:student success:^(PMStudent *student) {
         MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功添加学生"];
+        [toast showAnimated:YES whileExecutingBlock:^{
+            sleep(2);
+        } completionBlock:^{
+            [toast removeFromSuperview];
+        }];
+    } failure:^(HCErrorMessage *error) {
+        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
+        [toast showAnimated:YES whileExecutingBlock:^{
+            sleep(2);
+        } completionBlock:^{
+            [toast removeFromSuperview];
+        }];
+    }];
+}
+
+- (void)deleteStudent:(PMStudent*)student
+{
+    [student updateShortcut];
+    __weak PMStudentBrowseViewController *pSelf = self;
+    [[PMServerWrapper defaultServer] deleteStudent:student success:^(PMStudent *student) {
+        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功删除学生"];
         [toast showAnimated:YES whileExecutingBlock:^{
             sleep(2);
         } completionBlock:^{

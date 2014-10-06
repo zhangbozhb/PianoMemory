@@ -46,4 +46,11 @@
     }
     return NO;
 }
++ (BOOL)zb_systemVersion8Latter
+{
+    if ([self zb_systemVersion] >= 8.0f) {
+        return YES;
+    }
+    return NO;
+}
 @end

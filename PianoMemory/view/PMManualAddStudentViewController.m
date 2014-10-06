@@ -1,17 +1,17 @@
 //
-//  PMManualAddStudentUIViewController.m
+//  PMManualAddStudentViewController.m
 //  PianoMemory
 //
 //  Created by 张 波 on 14-10-5.
 //  Copyright (c) 2014年 yue. All rights reserved.
 //
 
-#import "PMManualAddStudentUIViewController.h"
+#import "PMManualAddStudentViewController.h"
 #import "PMStudent+Wrapper.h"
 #import "PMServerWrapper.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 
-@interface PMManualAddStudentUIViewController () <UITextFieldDelegate>
+@interface PMManualAddStudentViewController () <UITextFieldDelegate>
 @property (nonatomic) PMStudent *changedStudent;
 
 //xib reference
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation PMManualAddStudentUIViewController
+@implementation PMManualAddStudentViewController
 
 #pragma override
 - (void)setStudent:(PMStudent *)student
@@ -93,7 +93,7 @@
     }
     [self.changedStudent updateShortcut];
 
-    __weak PMManualAddStudentUIViewController *pSelf = self;
+    __weak PMManualAddStudentViewController *pSelf = self;
      [[PMServerWrapper defaultServer] createStudent:self.changedStudent success:^(PMStudent *student) {
         MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功添加学生"];
         [toast showAnimated:YES whileExecutingBlock:^{
