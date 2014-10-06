@@ -112,15 +112,7 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
 - (IBAction)addContactFromContactsAction:(id)sender {
     ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
     picker.peoplePickerDelegate = self;
-    NSArray *displayedItems = [NSArray arrayWithObjects:
-                               [NSNumber numberWithInt:kABPersonPhoneProperty],
-                               [NSNumber numberWithInt:kABPersonEmailProperty],
-                               [NSNumber numberWithInt:kABPersonBirthdayProperty],
-                               nil];
-    picker.displayedProperties = displayedItems;
-    [self presentViewController:picker animated:YES completion:^{
-
-    }];
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
 - (void)hideAddContactView
@@ -167,18 +159,17 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
 //ios8
 - (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker didSelectPerson:(ABRecordRef)person
 {
-
+    [self handleABRecord:person];
 }
 - (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker didSelectPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
 {
-
+    [self handleABRecord:person];
 }
 
 - (void)handleABRecord:(ABRecordRef)person
 {
-    APContact *contact = [[APContact alloc] initWithRecordRef:person fieldMask:APContactFieldAll];
-
-
+    APContact *contact = [[APContact alloc] initWithRecordRef:person
+                                                    fieldMask:APContactFieldDefault|APContactFieldEmails|APContactFieldCompositeName|APContactFieldCompany];
 
     NSArray *phones =  contact.phones;
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"手机号码"
