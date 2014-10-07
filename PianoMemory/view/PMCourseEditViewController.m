@@ -12,6 +12,7 @@
 #import "PMCourse+Wrapper.h"
 #import "PMServerWrapper.h"
 #import <MBProgressHUD/MBProgressHUD.h>
+#import "UIViewController+WithKeyboardNotification.h"
 
 @interface PMCourseEditViewController () <UITextFieldDelegate, UITextViewDelegate>
 @property (nonatomic) PMCourse *changedCourse;
@@ -190,5 +191,31 @@
     }
 }
 
+#pragma add keyboard appear and dissappear
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    //register keyboard notification
+    [self registerForKeyboardNotifications];
+}
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self unRegisterForKeyboardNotifications];
+}
+
+- (void)handleKeyboardAppear:(NSTimeInterval)duration keyboardHeight:(CGFloat)keyboardHeight
+{
+    if ([self.startTimeTextField isFirstResponder] ||
+        [self.endTimeTextField isFirstResponder] ||
+        [self.priceTextField isFirstResponder]) {
+        [super handleKeyboardAppear:duration keyboardHeight:keyboardHeight-60];
+    }
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
 @end

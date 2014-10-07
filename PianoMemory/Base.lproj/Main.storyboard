@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rdw-8e-04x">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
@@ -203,7 +202,7 @@
         <!--添加课程-->
         <scene sceneID="RAY-0I-SdA">
             <objects>
-                <viewController title="添加课程" id="74Q-lZ-nrB" sceneMemberID="viewController">
+                <viewController title="添加课程" id="74Q-lZ-nrB" customClass="PMCourseScheduleEditViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ptg-Y1-PVf"/>
                         <viewControllerLayoutGuide type="bottom" id="9si-z5-oxj"/>
@@ -267,6 +266,9 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="74Q-lZ-nrB" id="Pig-l5-7Dx"/>
+                                </connections>
                             </textView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="giH-pz-kn2">
                                 <rect key="frame" x="100" y="80" width="440" height="30"/>
@@ -275,6 +277,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="74Q-lZ-nrB" id="zWp-gd-BAp"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sph-5V-W5P">
                                 <rect key="frame" x="550" y="79" width="30" height="30"/>
@@ -291,6 +296,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="74Q-lZ-nrB" id="iqZ-7F-iJu"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7rU-UL-Pwc">
                                 <rect key="frame" x="550" y="116" width="30" height="30"/>
@@ -307,6 +315,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="74Q-lZ-nrB" id="8JJ-f5-89z"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fab-7T-4ds">
                                 <rect key="frame" x="550" y="160" width="30" height="30"/>
@@ -323,6 +334,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="74Q-lZ-nrB" id="xmI-Vo-bPH"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Kz-Pr-Z6f">
                                 <rect key="frame" x="550" y="200" width="30" height="30"/>
@@ -336,8 +350,10 @@
                                 <rect key="frame" x="220" y="500" width="160" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="I0r-s3-pPu"/>
+                                    <constraint firstAttribute="width" constant="160" id="I7b-c0-SYD"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="Qep-rg-LhW"/>
                                 </constraints>
-                                <state key="normal" title="Button">
+                                <state key="normal" title="提交">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
@@ -345,7 +361,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="fab-7T-4ds" firstAttribute="top" secondItem="7rU-UL-Pwc" secondAttribute="bottom" constant="14" id="0kL-FE-qOW"/>
+                            <constraint firstItem="9si-z5-oxj" firstAttribute="top" secondItem="nGm-YG-eYE" secondAttribute="bottom" constant="21" id="2yz-Fb-jOc"/>
                             <constraint firstAttribute="trailing" secondItem="3Kz-Pr-Z6f" secondAttribute="trailing" constant="20" id="3oQ-H3-T1E"/>
+                            <constraint firstAttribute="centerX" secondItem="nGm-YG-eYE" secondAttribute="centerX" id="4Jy-TA-954"/>
                             <constraint firstItem="C1J-M3-Aex" firstAttribute="top" secondItem="xud-57-108" secondAttribute="bottom" constant="10" id="4p2-K8-BOF"/>
                             <constraint firstItem="7rU-UL-Pwc" firstAttribute="top" secondItem="Sph-5V-W5P" secondAttribute="bottom" constant="7" id="6E2-Z2-2eB"/>
                             <constraint firstAttribute="trailing" secondItem="Sph-5V-W5P" secondAttribute="trailing" constant="20" id="AT2-cA-8fW"/>
@@ -355,6 +373,7 @@
                             <constraint firstItem="C1J-M3-Aex" firstAttribute="leading" secondItem="Pqn-uJ-6kn" secondAttribute="leading" constant="20" id="DUo-10-G8B"/>
                             <constraint firstItem="Pxr-5d-3hB" firstAttribute="top" secondItem="C1J-M3-Aex" secondAttribute="bottom" constant="10" id="G8D-n6-z6d"/>
                             <constraint firstItem="WR1-bQ-FBr" firstAttribute="top" secondItem="Pxr-5d-3hB" secondAttribute="bottom" constant="10" id="HS5-7v-ygY"/>
+                            <constraint firstItem="nGm-YG-eYE" firstAttribute="top" secondItem="V3e-vo-AfG" secondAttribute="bottom" constant="10" id="I5T-Q3-M5C"/>
                             <constraint firstItem="Sph-5V-W5P" firstAttribute="top" secondItem="ptg-Y1-PVf" secondAttribute="bottom" constant="15" id="Qys-jv-vYc"/>
                             <constraint firstItem="Sph-5V-W5P" firstAttribute="leading" secondItem="giH-pz-kn2" secondAttribute="trailing" constant="10" id="Slb-rU-cBc"/>
                             <constraint firstAttribute="trailing" secondItem="nGm-YG-eYE" secondAttribute="trailing" constant="220" id="SoQ-TP-qfa"/>
@@ -382,8 +401,25 @@
                             <constraint firstAttribute="trailing" secondItem="7rU-UL-Pwc" secondAttribute="trailing" constant="20" id="y7F-oc-S7A"/>
                             <constraint firstItem="7rU-UL-Pwc" firstAttribute="leading" secondItem="ii8-Mq-ZgA" secondAttribute="trailing" constant="10" id="z6W-1B-UdQ"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="SoQ-TP-qfa"/>
+                                <exclude reference="WWc-C6-cbl"/>
+                                <exclude reference="cjq-9m-UsV"/>
+                                <exclude reference="YOm-HP-EJC"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="课程安排" id="8zt-58-rWY"/>
+                    <connections>
+                        <outlet property="commitButton" destination="nGm-YG-eYE" id="7g5-ar-8rd"/>
+                        <outlet property="coureNameTextField" destination="giH-pz-kn2" id="7w0-vm-I9s"/>
+                        <outlet property="courseScheduleDescriptionTextView" destination="V3e-vo-AfG" id="XQv-74-Kty"/>
+                        <outlet property="endTimeTextField" destination="YWx-fN-gID" id="niW-st-pEw"/>
+                        <outlet property="myNavigationItem" destination="8zt-58-rWY" id="mz1-yR-K4L"/>
+                        <outlet property="startTimeTextField" destination="KSH-Zx-OqG" id="AG0-90-6D5"/>
+                        <outlet property="studentNameTextField" destination="ii8-Mq-ZgA" id="fYZ-dD-g1v"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="igY-br-9cX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -684,7 +720,7 @@
                                     <constraint firstAttribute="height" constant="30" id="fLn-Tk-n4n"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yIj-bO-mPa">
                                 <rect key="frame" x="220" y="503" width="160" height="30"/>
@@ -821,6 +857,7 @@
                                             <outlet property="decriptionLabel" destination="e8L-zZ-UMU" id="dh5-ET-JMU"/>
                                             <outlet property="nameLabel" destination="qsB-iM-Eb1" id="FbL-Pa-PFr"/>
                                             <outlet property="phoneLabel" destination="itY-ty-yaa" id="MTg-vk-xum"/>
+                                            <segue destination="bUA-np-tzm" kind="show" identifier="editStudentSegueIdentifier" id="J05-Ct-SpG"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -853,7 +890,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="bUA-np-tzm" kind="show" identifier="contactManualAdd" id="yjf-ok-jzk"/>
+                                            <segue destination="bUA-np-tzm" kind="show" identifier="addStudentSegueIdentifier" id="yjf-ok-jzk"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -904,7 +941,7 @@
         <!--添加学生-->
         <scene sceneID="hew-xJ-WuK">
             <objects>
-                <viewController id="bUA-np-tzm" customClass="PMManualAddStudentViewController" sceneMemberID="viewController">
+                <viewController id="bUA-np-tzm" customClass="PMStudentEditViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Rpt-25-qro"/>
                         <viewControllerLayoutGuide type="bottom" id="SOY-Aj-NbN"/>
@@ -1076,7 +1113,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="commitButton" destination="eEk-8c-K2W" id="JnV-sw-rmM"/>
                         <outlet property="emailTextField" destination="bRO-M0-m6m" id="d4D-Pq-ex1"/>
+                        <outlet property="myNavigationItem" destination="Tay-aq-J8w" id="La0-uh-VZt"/>
                         <outlet property="nameTextField" destination="LAh-Nx-TMz" id="dF8-NM-H3n"/>
                         <outlet property="phoneTextField" destination="ceA-L3-7f9" id="grO-NI-JUh"/>
                         <outlet property="qqTextField" destination="hIC-SG-i0R" id="0E5-YZ-8yW"/>
@@ -1108,6 +1147,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="J05-Ct-SpG"/>
         <segue reference="JJo-fG-Vw8"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PMCourseSchedule.h"
 
 @interface PMCourseScheduleEditViewController : UIViewController
-
+@property (nonatomic) PMCourseSchedule *courseSchedule;
 @end

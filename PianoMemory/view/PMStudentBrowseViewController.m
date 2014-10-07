@@ -9,7 +9,7 @@
 #import "PMStudentBrowseViewController.h"
 #import "PMStudent+Wrapper.h"
 #import "PMStudentBrowseTableViewCell.h"
-#import "PMManualAddStudentViewController.h"
+#import "PMStudentEditViewController.h"
 #import "PMServerWrapper.h"
 #import <AddressBookUI/AddressBookUI.h>
 #import <APAddressBook/APContact.h>
@@ -124,9 +124,18 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
 #pragma mark - Segue support
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
-    if ([[segue identifier] isEqualToString:@"contactManualAdd"]) {
-        PMManualAddStudentViewController *addStudentVC = (PMManualAddStudentViewController*)[segue destinationViewController];
+    if ([[segue identifier] isEqualToString:@"addStudentSegueIdentifier"]) {
+        PMStudentEditViewController *addStudentVC = (PMStudentEditViewController*)[segue destinationViewController];
         [addStudentVC setStudent:nil];
+        [self hideAddContactView];
+    } else if([[segue identifier] isEqualToString:@"editStudentSegueIdentifier"]) {
+        PMStudentEditViewController *addStudentVC = (PMStudentEditViewController*)[segue destinationViewController];
+        NSIndexPath *selectedIndexPath = [self.studentsTableView indexPathForSelectedRow];
+        if (selectedIndexPath && selectedIndexPath.row < [self.studentArray count]) {
+            [addStudentVC setStudent:[self.studentArray objectAtIndex:selectedIndexPath.row]];
+        } else {
+            [addStudentVC setStudent:nil];
+        }
         [self hideAddContactView];
     }
 }

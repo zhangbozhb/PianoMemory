@@ -70,7 +70,7 @@
     self.currentDateColor = [UIColor redColor];
     self.showLunar = YES;
 
-    self.contentEdgeInsets = UIEdgeInsetsMake(10, 0, 10, 0);
+    self.contentEdgeInsets = UIEdgeInsetsMake(4, 0, 4, 0);
 
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self addGestureRecognizer:singleTap];

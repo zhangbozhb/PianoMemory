@@ -1,29 +1,32 @@
 //
-//  PMManualAddStudentViewController.m
+//  PMStudentEditViewController.h
 //  PianoMemory
 //
 //  Created by 张 波 on 14-10-5.
 //  Copyright (c) 2014年 yue. All rights reserved.
 //
 
-#import "PMManualAddStudentViewController.h"
+#import "PMStudentEditViewController.h"
 #import "PMStudent+Wrapper.h"
 #import "PMServerWrapper.h"
 #import <MBProgressHUD/MBProgressHUD.h>
+#import "UIViewController+WithKeyboardNotification.h"
 
-@interface PMManualAddStudentViewController () <UITextFieldDelegate>
+@interface PMStudentEditViewController () <UITextFieldDelegate>
 @property (nonatomic) PMStudent *changedStudent;
 
 //xib reference
+@property (weak, nonatomic) IBOutlet UINavigationItem *myNavigationItem;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
 @property (weak, nonatomic) IBOutlet UITextField *qqTextField;
 @property (weak, nonatomic) IBOutlet UITextField *weixinTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UIButton *commitButton;
 
 @end
 
-@implementation PMManualAddStudentViewController
+@implementation PMStudentEditViewController
 
 - (void)viewDidLoad
 {
@@ -51,7 +54,6 @@
 - (void)updateStudentFromUI
 {
     [self.view endEditing:NO];
-
     self.changedStudent.name = (0 < [self.nameTextField.text length])?self.nameTextField.text:nil;
     self.changedStudent.phone = (0 < [self.phoneTextField.text length])?self.phoneTextField.text:nil;
     self.changedStudent.qq = (0 < [self.qqTextField.text length])?self.qqTextField.text:nil;
@@ -62,13 +64,19 @@
 
 - (void)refreshUI
 {
-    if (self.changedStudent) {
+    if (self.student) {
+        [self.myNavigationItem setTitle:@"修改学生信息"];
+        [self.commitButton setTitle:@"修改" forState:UIControlStateNormal];
+
         self.nameTextField.text = (nil!=self.changedStudent.name)?self.changedStudent.name:@"";
         self.phoneTextField.text = (nil!=self.changedStudent.phone)?self.changedStudent.phone:@"";
         self.qqTextField.text = (nil!=self.changedStudent.qq)?self.changedStudent.qq:@"";
         self.weixinTextField.text =(nil!=self.changedStudent.weixin)?self.changedStudent.weixin:@"";
         self.emailTextField.text = (nil!=self.changedStudent.email)?self.changedStudent.email:@"";
     } else {
+        [self.myNavigationItem setTitle:@"新增学生"];
+        [self.commitButton setTitle:@"添加" forState:UIControlStateNormal];
+
         self.nameTextField.text = @"";
         self.phoneTextField.text = @"";
         self.qqTextField.text = @"";
@@ -154,7 +162,7 @@
 
 - (void)createStudent:(PMStudent *)student
 {
-    __weak PMManualAddStudentViewController *pSelf = self;
+    __weak PMStudentEditViewController *pSelf = self;
     [[PMServerWrapper defaultServer] createStudent:self.changedStudent success:^(PMStudent *student) {
         MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功添加学生"];
         [toast showAnimated:YES whileExecutingBlock:^{
@@ -175,7 +183,7 @@
 
 - (void)updateStudent:(PMStudent *)student
 {
-    __weak PMManualAddStudentViewController *pSelf = self;
+    __weak PMStudentEditViewController *pSelf = self;
     [[PMServerWrapper defaultServer]  updateStudent:self.changedStudent success:^(PMStudent *student) {
         MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功修改学生信息"];
         [toast showAnimated:YES whileExecutingBlock:^{
@@ -194,4 +202,31 @@
     }];
 }
 
+
+#pragma add keyboard appear and dissappear
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    //register keyboard notification
+    [self registerForKeyboardNotifications];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self unRegisterForKeyboardNotifications];
+}
+
+- (void)handleKeyboardAppear:(NSTimeInterval)duration keyboardHeight:(CGFloat)keyboardHeight
+{
+    if ([self.weixinTextField isFirstResponder] ||
+        [self.emailTextField isFirstResponder]) {
+        [super handleKeyboardAppear:duration keyboardHeight:keyboardHeight-60];
+    }
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
 @end
