@@ -123,7 +123,18 @@
         return;
     }
     if (self.student) {
-        [self updateStudent:self.changedStudent];
+        if ( (self.student.name != self.changedStudent.name &&
+              [self.student.name isEqualToString:self.changedStudent.name]) ||
+             (self.student.phone != self.changedStudent.phone &&
+              [self.student.phone isEqualToString:self.changedStudent.phone]) ||
+            (self.student.qq != self.changedStudent.qq &&
+             [self.student.qq isEqualToString:self.changedStudent.qq]) ||
+            (self.student.email != self.changedStudent.email &&
+             [self.student.email isEqualToString:self.changedStudent.email]) ||
+            (self.student.weixin != self.changedStudent.weixin &&
+             [self.student.weixin isEqualToString:self.changedStudent.weixin])) {
+            [self updateStudent:self.changedStudent];
+        }
     } else {
         [self createStudent:self.changedStudent];
     }

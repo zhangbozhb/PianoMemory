@@ -7,10 +7,13 @@
 //
 
 #import "FMObject.h"
+#import "PMCourse.h"
+#import "PMStudent.h"
 
 @interface PMCourseSchedule : FMObject
-@property (nonatomic) NSString *courseId;
+@property (nonatomic) PMCourse *course;
 @property (nonatomic) NSMutableArray *students;
 @property (nonatomic) NSInteger startTime;
 @property (nonatomic) NSInteger endTime;
+@property (nonatomic) NSString *briefDescription;
 @end

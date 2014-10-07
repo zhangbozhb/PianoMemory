@@ -43,10 +43,12 @@
 
 - (NSObject *)objectForKey:(NSString *)localId
 {
-    __block NSObject *object;
-    dispatch_sync(self.queue, ^{
-        object = [self.localLevelDB objectForKey:localId];
-    });
+    __block NSObject *object = nil;
+    if (localId) {
+        dispatch_sync(self.queue, ^{
+            object = [self.localLevelDB objectForKey:localId];
+        });
+    }
     return object;
 }
 

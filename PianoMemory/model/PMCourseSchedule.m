@@ -12,7 +12,7 @@
 - (id)copyWithZone:(NSZone *)zone
 {
     PMCourseSchedule *another = [super copyWithZone:zone];
-    another.courseId = [self.courseId copy];
+    another.course = [self.course copy];
     if (nil != self.students) {
         another.students = [NSMutableArray arrayWithCapacity:[self.students count]];
         for (NSObject *student in self.students) {
@@ -21,6 +21,7 @@
     }
     another.startTime = self.startTime;
     another.endTime = self.endTime;
+    another.briefDescription = [self.briefDescription copy];
     return another;
 }
 @end

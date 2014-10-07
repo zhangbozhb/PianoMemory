@@ -62,6 +62,24 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
     return cell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (UITableViewCellEditingStyleDelete == editingStyle) {
+        PMCourse *toDeleteCourse = [self.courseArray objectAtIndex:indexPath.row];
+        [self deleteCourse:toDeleteCourse];
+    }
+}
+
 #pragma ui and customer data
 - (void)loadCustomerData
 {
@@ -84,22 +102,22 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
 
 - (void)deleteCourse:(PMCourse*)course
 {
-//    __weak PMCourseViewController *pSelf = self;
-//    [[PMServerWrapper defaultServer] deleteStudent:student success:^(PMStudent *student) {
-//        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功删除学生"];
-//        [toast showAnimated:YES whileExecutingBlock:^{
-//            sleep(2);
-//        } completionBlock:^{
-//            [toast removeFromSuperview];
-//        }];
-//    } failure:^(HCErrorMessage *error) {
-//        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
-//        [toast showAnimated:YES whileExecutingBlock:^{
-//            sleep(2);
-//        } completionBlock:^{
-//            [toast removeFromSuperview];
-//        }];
-//    }];
+    __weak PMCourseViewController *pSelf = self;
+    [[PMServerWrapper defaultServer]  deleteCourse:course success:^(PMCourse *course) {
+        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功删除课程"];
+        [toast showAnimated:YES whileExecutingBlock:^{
+            sleep(2);
+        } completionBlock:^{
+            [toast removeFromSuperview];
+        }];
+    } failure:^(HCErrorMessage *error) {
+        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
+        [toast showAnimated:YES whileExecutingBlock:^{
+            sleep(2);
+        } completionBlock:^{
+            [toast removeFromSuperview];
+        }];
+    }];
 }
 
 #pragma convenience method

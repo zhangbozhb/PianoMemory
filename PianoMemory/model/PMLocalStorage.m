@@ -109,6 +109,8 @@ static NSString *const klocal_courseschedule_view_key = @"org.plam4fun.fm1017.lo
 #pragma course schedule
 - (BOOL)storeCourseSchedule:(PMCourseSchedule*)courseSchedule
 {
+    //直接存放，这里存放的是冗余信息，所以在读取的时候，需要更新最新信息
+    //好处在于:外部依赖的东东可是随时删除，不影响已经的东东
     return [self.syncStorage storeHCObject:courseSchedule];
 }
 - (BOOL)removeCourseSchedule:(PMCourseSchedule*)courseSchedule
@@ -117,7 +119,26 @@ static NSString *const klocal_courseschedule_view_key = @"org.plam4fun.fm1017.lo
 }
 - (PMCourseSchedule*)getCourseScheduleWithId:(NSString*)courseScheduleId
 {
-    return (PMCourseSchedule*)[self.syncStorage objectForKey:courseScheduleId];
+    PMCourseSchedule *courseSchedule = (PMCourseSchedule*)[self.syncStorage objectForKey:courseScheduleId];
+    //获取最新的 course 信息
+    if (courseSchedule.course) {
+        PMCourse *latestCourse = [self getCourseWithId:courseSchedule.course.localDBId];
+        if (latestCourse) {
+            courseSchedule.course = latestCourse;
+        }
+    }
+    //获取 student 最新消息
+    NSMutableArray *latestStudents = [NSMutableArray array];
+    for (PMStudent *student in courseSchedule.students) {
+        PMStudent *latestStudent = [self getStudentWithId:student.localDBId];
+        if (latestStudent) {
+            [latestStudents addObject:latestStudent];
+        } else {
+            [latestStudents addObject:student];
+        }
+    }
+    courseSchedule.students = latestStudents;
+    return courseSchedule;
 }
 - (NSDictionary *)viewCourseSchedule
 {

@@ -176,7 +176,15 @@
         return;
     }
     if (self.course) {
-        [self updateCourse:self.changedCourse];
+        if ( (self.course.name != self.changedCourse.name &&
+              [self.course.name isEqualToString:self.changedCourse.name]) ||
+            (self.course.briefDescription != self.changedCourse.briefDescription &&
+             [self.course.briefDescription isEqualToString:self.changedCourse.briefDescription]) ||
+            self.course.startDayTime != self.changedCourse.startDayTime ||
+            self.course.endDayTime != self.changedCourse.endDayTime ||
+            fabsf(self.course.price - self.changedCourse.price) > FLT_EPSILON ) {
+            [self updateCourse:self.changedCourse];
+        }
     } else {
         [self createCourse:self.changedCourse];
     }
