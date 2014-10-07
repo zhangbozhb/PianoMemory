@@ -8,7 +8,7 @@
 
 #import "PMCourseViewController.h"
 #import "PMCourseTableViewCell.h"
-#import "PMCourse.h"
+#import "PMCourse+Wrapper.h"
 #import "PMServerWrapper.h"
 #import "PMCourseEditViewController.h"
 
@@ -51,6 +51,12 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:courseTableViewCellReuseIdentifier];
+    PMCourse *course = [self.courseArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = (nil!=course.name)?course.name:@"";
+    NSString *detailInfo = [NSString stringWithFormat:@"%@ -- %@",
+                            [course getStartTimeWithFormatterString:@"HH:mm"],
+                            [course getEndTimeWithFormatterString:@"HH:mm"]];
+    cell.detailTextLabel.text = detailInfo;
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
@@ -75,25 +81,6 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
     [self.courseTableView reloadData];
 }
 
-- (void)saveCourse:(PMCourse*)course
-{
-//    __weak PMCourseViewController *pSelf = self;
-//    [[PMServerWrapper defaultServer] createStudent:student success:^(PMStudent *student) {
-//        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功添加课程"];
-//        [toast showAnimated:YES whileExecutingBlock:^{
-//            sleep(2);
-//        } completionBlock:^{
-//            [toast removeFromSuperview];
-//        }];
-//    } failure:^(HCErrorMessage *error) {
-//        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
-//        [toast showAnimated:YES whileExecutingBlock:^{
-//            sleep(2);
-//        } completionBlock:^{
-//            [toast removeFromSuperview];
-//        }];
-//    }];
-}
 
 - (void)deleteCourse:(PMCourse*)course
 {
@@ -144,6 +131,14 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
     if ([segue.identifier isEqualToString:@"addCourseSegueIdentifier"]) {
         PMCourseEditViewController *addCourseVC = (PMCourseEditViewController*)segue.destinationViewController;
         [addCourseVC setCourse:nil];
+    } else if ([segue.identifier isEqualToString:@"editCourseSegueIdentifier"]) {
+        PMCourseEditViewController *addCourseVC = (PMCourseEditViewController*)segue.destinationViewController;
+        NSIndexPath *selectedIndexPath = [self.courseTableView indexPathForSelectedRow];
+        if (selectedIndexPath && selectedIndexPath.row < [self.courseArray count]) {
+            [addCourseVC setCourse:[self.courseArray objectAtIndex:selectedIndexPath.row]];
+        } else {
+            [addCourseVC setCourse:nil];
+        }
     }
 }
 @end

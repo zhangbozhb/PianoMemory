@@ -15,6 +15,7 @@
 		9E08E84D19E2D25D00DFD7CA /* PMCourseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E84C19E2D25D00DFD7CA /* PMCourseTableViewCell.m */; };
 		9E08E85019E2DD7D00DFD7CA /* PMCourseEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E84F19E2DD7D00DFD7CA /* PMCourseEditViewController.m */; };
 		9E08E85319E2E3C700DFD7CA /* UIView+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E85219E2E3C700DFD7CA /* UIView+Extend.m */; };
+		9E08E85619E3789E00DFD7CA /* PMCourse+Wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E85519E3789E00DFD7CA /* PMCourse+Wrapper.m */; };
 		9EF130E819E029A900843F02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF130E719E029A900843F02 /* main.m */; };
 		9EF130EB19E029A900843F02 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF130EA19E029A900843F02 /* AppDelegate.m */; };
 		9EF130EE19E029AA00843F02 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF130ED19E029AA00843F02 /* ViewController.m */; };
@@ -96,6 +97,8 @@
 		9E08E84F19E2DD7D00DFD7CA /* PMCourseEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMCourseEditViewController.m; sourceTree = "<group>"; };
 		9E08E85119E2E3C700DFD7CA /* UIView+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extend.h"; sourceTree = "<group>"; };
 		9E08E85219E2E3C700DFD7CA /* UIView+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extend.m"; sourceTree = "<group>"; };
+		9E08E85419E3789E00DFD7CA /* PMCourse+Wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PMCourse+Wrapper.h"; sourceTree = "<group>"; };
+		9E08E85519E3789E00DFD7CA /* PMCourse+Wrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PMCourse+Wrapper.m"; sourceTree = "<group>"; };
 		9EF130E219E029A900843F02 /* PianoMemory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PianoMemory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EF130E619E029A900843F02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EF130E719E029A900843F02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -461,6 +464,8 @@
 			children = (
 				9EF1319319E2299E00843F02 /* PMStudent+Wrapper.h */,
 				9EF1319419E2299E00843F02 /* PMStudent+Wrapper.m */,
+				9E08E85419E3789E00DFD7CA /* PMCourse+Wrapper.h */,
+				9E08E85519E3789E00DFD7CA /* PMCourse+Wrapper.m */,
 			);
 			name = wrapper;
 			sourceTree = "<group>";
@@ -641,6 +646,7 @@
 				9EF1315D19E02FF200843F02 /* UINavigationItem+iOS7.m in Sources */,
 				9EF1315F19E02FF200843F02 /* UITableViewCell+SelectedView.m in Sources */,
 				9EF1314D19E02FF200843F02 /* HCObject.m in Sources */,
+				9E08E85619E3789E00DFD7CA /* PMCourse+Wrapper.m in Sources */,
 				9E08E84A19E2CF5000DFD7CA /* PMCourseViewController.m in Sources */,
 				9E08E83F19E29E1B00DFD7CA /* UIViewController+Extend.m in Sources */,
 				9EF1317B19E0C9BA00843F02 /* PMStudentBrowseViewController.m in Sources */,

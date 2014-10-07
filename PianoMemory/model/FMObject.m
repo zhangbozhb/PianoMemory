@@ -14,6 +14,7 @@
 {
     FMObject *another = [super copyWithZone:zone];
     another.remoteDBId = [self.remoteDBId copy];
+    another.localDBId = [self.localDBId copy];
     return another;
 }
 

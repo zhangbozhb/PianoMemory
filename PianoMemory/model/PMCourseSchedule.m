@@ -9,5 +9,18 @@
 #import "PMCourseSchedule.h"
 
 @implementation PMCourseSchedule
-
+- (id)copyWithZone:(NSZone *)zone
+{
+    PMCourseSchedule *another = [super copyWithZone:zone];
+    another.courseId = [self.courseId copy];
+    if (nil != self.students) {
+        another.students = [NSMutableArray arrayWithCapacity:[self.students count]];
+        for (NSObject *student in self.students) {
+            [another.students addObject:[student copy]];
+        }
+    }
+    another.startTime = self.startTime;
+    another.endTime = self.endTime;
+    return another;
+}
 @end

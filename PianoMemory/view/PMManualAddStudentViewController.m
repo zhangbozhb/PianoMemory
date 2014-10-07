@@ -25,11 +25,25 @@
 
 @implementation PMManualAddStudentViewController
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.student = (nil == self.student)?nil:self.student;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self refreshUI];
+}
+
 #pragma override
 - (void)setStudent:(PMStudent *)student
 {
     _student = student;
-    if (!student) {
+    if (student) {
+        self.changedStudent = [student copy];
+    } else {
         self.changedStudent = [[PMStudent alloc] init];
     }
 }
@@ -44,6 +58,23 @@
     self.changedStudent.weixin = (0 < [self.weixinTextField.text length])?self.weixinTextField.text:nil;
     self.changedStudent.email = (0 < [self.emailTextField.text length])?self.emailTextField.text:nil;
     [self.changedStudent updateShortcut];
+}
+
+- (void)refreshUI
+{
+    if (self.changedStudent) {
+        self.nameTextField.text = (nil!=self.changedStudent.name)?self.changedStudent.name:@"";
+        self.phoneTextField.text = (nil!=self.changedStudent.phone)?self.changedStudent.phone:@"";
+        self.qqTextField.text = (nil!=self.changedStudent.qq)?self.changedStudent.qq:@"";
+        self.weixinTextField.text =(nil!=self.changedStudent.weixin)?self.changedStudent.weixin:@"";
+        self.emailTextField.text = (nil!=self.changedStudent.email)?self.changedStudent.email:@"";
+    } else {
+        self.nameTextField.text = @"";
+        self.phoneTextField.text = @"";
+        self.qqTextField.text = @"";
+        self.weixinTextField.text = @"";
+        self.emailTextField.text = @"";
+    }
 }
 
 - (NSString *)checkErrorOfStudent:(PMStudent *)student
@@ -91,10 +122,29 @@
         [alertView show];
         return;
     }
-    [self.changedStudent updateShortcut];
+    if (self.student) {
+        [self updateStudent:self.changedStudent];
+    } else {
+        [self createStudent:self.changedStudent];
+    }
+}
 
+#pragma convenience method
+- (MBProgressHUD*)getSimpleToastWithTitle:(NSString*)title message:(NSString*)message
+{
+    MBProgressHUD *toast = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:toast];
+    toast.mode = MBProgressHUDModeText;
+    toast.animationType = MBProgressHUDAnimationZoomOut;
+    [toast setLabelText:title];
+    [toast setDetailsLabelText:message];
+    return toast;
+}
+
+- (void)createStudent:(PMStudent *)student
+{
     __weak PMManualAddStudentViewController *pSelf = self;
-     [[PMServerWrapper defaultServer] createStudent:self.changedStudent success:^(PMStudent *student) {
+    [[PMServerWrapper defaultServer] createStudent:self.changedStudent success:^(PMStudent *student) {
         MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功添加学生"];
         [toast showAnimated:YES whileExecutingBlock:^{
             sleep(2);
@@ -112,15 +162,25 @@
     }];
 }
 
-#pragma convenience method
-     - (MBProgressHUD*)getSimpleToastWithTitle:(NSString*)title message:(NSString*)message
-    {
-        MBProgressHUD *toast = [[MBProgressHUD alloc] initWithView:self.view];
-        [self.view addSubview:toast];
-        toast.mode = MBProgressHUDModeText;
-        toast.animationType = MBProgressHUDAnimationZoomOut;
-        [toast setLabelText:title];
-        [toast setDetailsLabelText:message];
-        return toast;
-    }
+- (void)updateStudent:(PMStudent *)student
+{
+    __weak PMManualAddStudentViewController *pSelf = self;
+    [[PMServerWrapper defaultServer]  updateStudent:self.changedStudent success:^(PMStudent *student) {
+        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功修改学生信息"];
+        [toast showAnimated:YES whileExecutingBlock:^{
+            sleep(2);
+        } completionBlock:^{
+            [toast removeFromSuperview];
+            [pSelf.navigationController popViewControllerAnimated:YES];
+        }];
+    } failure:^(HCErrorMessage *error) {
+        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
+        [toast showAnimated:YES whileExecutingBlock:^{
+            sleep(2);
+        } completionBlock:^{
+            [toast removeFromSuperview];
+        }];
+    }];
+}
+
 @end

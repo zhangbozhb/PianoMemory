@@ -10,6 +10,19 @@
 
 @implementation PMStudent
 
+- (id)copyWithZone:(NSZone *)zone
+{
+    PMStudent *another = [super copyWithZone:zone];
+    another.name = [self.name copy];
+    another.nameShortcut = [self.nameShortcut copy];
+    another.phone = [self.phone copy];
+    another.qq = [self.qq copy];
+    another.weixin = [self.weixin copy];
+    another.email = [self.email copy];
+    another.level = [self.level copy];
+    return another;
+}
+
 - (NSString *)syncCreateLocalId
 {
     return [NSString stringWithFormat:@"com.traveljoin.PianoMemory.%@", self.phone];
