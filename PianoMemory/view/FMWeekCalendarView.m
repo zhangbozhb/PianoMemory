@@ -287,8 +287,8 @@
         self.selectedDate = selectedDate;
         [self setNeedsDisplay];
     }
-    if (self.delegate && [self.delegate respondsToSelector:@selector(weekCalendarView:selectDate:)]) {
-        [self.delegate weekCalendarView:self selectDate:selectedDate];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(weekCalendarView:selectedDate:)]) {
+        [self.delegate weekCalendarView:self selectedDate:selectedDate];
     }
 }
 

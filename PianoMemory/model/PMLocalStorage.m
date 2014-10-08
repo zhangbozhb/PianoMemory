@@ -19,6 +19,9 @@ static NSString *const klocal_courseschedule_mapping_key = @"org.plam4fun.fm1017
 static NSString *const klocal_courseschedule_view_key = @"org.plam4fun.fm1017.localCourseScheduleViewKey";
 
 
+static NSString *const klocal_daycourseschedule_mapping_key = @"org.plam4fun.fm1017.localDayCourseScheduleyMappingKey";
+static NSString *const klocal_daycourseschedule_view_key = @"org.plam4fun.fm1017.localDayCourseScheduleViewKey";
+
 @interface PMLocalStorage () <FMSyncStorageDelate>
 @property (nonatomic) FMSyncStorage *syncStorage;
 @end
@@ -46,6 +49,8 @@ static NSString *const klocal_courseschedule_view_key = @"org.plam4fun.fm1017.lo
         return klocal_course_mapping_key;
     } else if ([objectClass isSubclassOfClass:[PMCourseSchedule class]]) {
         return klocal_courseschedule_mapping_key;
+    } else if ([objectClass isSubclassOfClass:[PMDayCourseSchedule class]]) {
+        return klocal_daycourseschedule_mapping_key;
     }
     return nil;
 }
@@ -57,8 +62,18 @@ static NSString *const klocal_courseschedule_view_key = @"org.plam4fun.fm1017.lo
         return klocal_course_view_key;
     } else if ([objectClass isSubclassOfClass:[PMCourseSchedule class]]) {
         return klocal_courseschedule_view_key;
+    } else if ([objectClass isSubclassOfClass:[PMDayCourseSchedule class]]) {
+        return klocal_daycourseschedule_view_key;
     }
     return nil;
+}
+- (NSObject *)viewValueInViewOfHCObject:(HCObject *)object
+{
+    if ([object isKindOfClass:[PMDayCourseSchedule class]]) {
+        PMDayCourseSchedule *dayCourseSchedule = (PMDayCourseSchedule*)object;
+        return [[NSNumber numberWithLong:dayCourseSchedule.scheduleTimestamp] stringValue];
+    }
+    return @"";
 }
 
 - (void)clearData
@@ -143,5 +158,47 @@ static NSString *const klocal_courseschedule_view_key = @"org.plam4fun.fm1017.lo
 - (NSDictionary *)viewCourseSchedule
 {
     return [self.syncStorage viewOfClass:[PMCourseSchedule class]];
+}
+
+
+#pragma day course schedule
+- (BOOL)storeDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule
+{
+    if (!dayCourseSchedule) {
+        return NO;
+    }
+    for (PMCourseSchedule *courseSchedule in dayCourseSchedule.courseSchedules) {
+        [self storeCourseSchedule:courseSchedule];
+    }
+    return [self.syncStorage storeHCObject:dayCourseSchedule];
+}
+- (BOOL)removeDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule
+{
+    for (PMCourseSchedule *courseSchedule in dayCourseSchedule.courseSchedules) {
+        [self removeCourseSchedule:courseSchedule];
+    }
+    return [self.syncStorage removeHCObject:dayCourseSchedule];
+}
+- (PMDayCourseSchedule*)getDayCourseScheduleWithId:(NSString*)dayCourseScheduleId
+{
+    PMDayCourseSchedule *dayCourseSchedule = (PMDayCourseSchedule*)[self.syncStorage objectForKey:dayCourseScheduleId];
+    if (dayCourseSchedule) {
+        NSMutableArray *latestCourseSchedules = [NSMutableArray array];
+        //加载最新的课程信息
+        for (PMCourseSchedule *courseSchedule in dayCourseSchedule.courseSchedules) {
+            PMCourseSchedule *latestCourseSchedule = [self getCourseScheduleWithId:courseSchedule.localDBId];
+            if (latestCourseSchedule) {
+                [latestCourseSchedules addObject:latestCourseSchedule];
+            } else {
+                [latestCourseSchedules addObject:courseSchedule];
+            }
+        }
+        dayCourseSchedule.courseSchedules = latestCourseSchedules;
+    }
+    return dayCourseSchedule;
+}
+- (NSDictionary *)viewDayCourseSchedule
+{
+    return [self.syncStorage viewOfClass:[PMDayCourseSchedule class]];
 }
 @end

@@ -25,7 +25,7 @@
         <!--今日课程-->
         <scene sceneID="rZy-z2-krR">
             <objects>
-                <viewController id="jon-z2-5lc" customClass="PMTodayCourseScheduleViewController" sceneMemberID="viewController">
+                <viewController id="jon-z2-5lc" customClass="PMDayCourseScheduleViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fV5-7J-ely"/>
                         <viewControllerLayoutGuide type="bottom" id="yYZ-p4-VvG"/>
@@ -192,7 +192,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="courseScheduleTableView" destination="Hui-ao-FN8" id="nNW-55-z4h"/>
                         <outlet property="myNavigationitem" destination="KNO-no-0QF" id="Zxm-b4-Qhb"/>
+                        <outlet property="weekCalendarView" destination="u9s-Xc-zCf" id="1eA-8K-aVA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lgu-AI-85h" userLabel="First Responder" sceneMemberID="firstResponder"/>

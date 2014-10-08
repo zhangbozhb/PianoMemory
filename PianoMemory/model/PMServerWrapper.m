@@ -9,6 +9,7 @@
 #import "PMServerWrapper.h"
 #import "PMLocalServer.h"
 #import "PMDateUpdte.h"
+#import "NSDate+Extend.h"
 
 @interface PMServerWrapper ()
 @property (nonatomic) PMLocalServer *localServer;
@@ -176,6 +177,92 @@
         NSArray *array = [self.localServer queryCourses:name];
         if (success) {
             success(array);
+        }
+    }];
+}
+
+- (NSArray*)queryCoursesWithAccurateName:(NSString*)name
+{
+    return [self.localServer queryCoursesWithAccurateName:name];
+}
+
+#pragma dayCourseSchedule
+- (void)createDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    [self asyncProcessing:^{
+        if ([self.localServer saveDayCourseSchedule:dayCourseSchedule]) {
+            if (success) {
+                success(dayCourseSchedule);
+            }
+            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_DayCourseSchedule]];
+        } else {
+            if (failure) {
+                failure([self errorUnknown]);
+            }
+        }
+    }];
+}
+
+- (void)updateDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    if ([self.localServer deleteDayCourseSchedule:dayCourseSchedule]) {
+        if (success) {
+            success(dayCourseSchedule);
+        }
+        [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_DayCourseSchedule]];
+    } else {
+        if (failure) {
+            failure([self errorUnknown]);
+        }
+    }
+}
+- (void)deleteDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    if ([self.localServer deleteDayCourseSchedule:dayCourseSchedule]) {
+        if (success) {
+            success(dayCourseSchedule);
+        }
+        [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_DayCourseSchedule]];
+    } else {
+        if (failure) {
+            failure([self errorUnknown]);
+        }
+    }
+}
+//param 	starttime, endtime
+- (void)queryDayCourseSchedules:(NSDictionary *)parameters success:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    NSString *starttimeString = [parameters objectForKey:@"starttime"];
+    NSString *endtimeString = [parameters objectForKey:@"endtime"];
+
+    NSInteger starttime = 0;
+    NSInteger endtime = NSIntegerMax;
+    if (starttimeString) {
+        starttime = [starttimeString integerValue];
+    }
+    if (endtimeString) {
+        endtime = [endtimeString integerValue];
+    }
+    if (starttime >= endtime) {
+        endtime = [[[NSDate dateWithTimeIntervalSince1970:starttime] zb_dateAfterDay:1] zb_getDayTimestamp]-1;
+    }
+    [self asyncProcessing:^{
+        NSArray *array = [self.localServer queryDayCourseSchedulesFrom:starttime toEndTime:endtime];
+        if (success) {
+            success(array);
+        }
+    }];
+}
+- (void)queryDayCourseScheduleOfDate:(NSDate*)date success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    [self asyncProcessing:^{
+        NSDate *targetDate = date;
+        if (!targetDate) {
+            targetDate = [NSDate date];
+        }
+        PMDayCourseSchedule *dayCourseSchedule = [self.localServer queryDayCourseScheduleOfDate:targetDate];
+        if (success) {
+            success(dayCourseSchedule);
         }
     }];
 }

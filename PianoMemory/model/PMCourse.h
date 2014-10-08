@@ -13,7 +13,9 @@
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *briefDescription;
 @property (nonatomic) NSInteger type;
-@property (nonatomic) NSInteger startDayTime;
-@property (nonatomic) NSInteger endDayTime;
+@property (nonatomic) NSInteger startTime;
+@property (nonatomic) NSInteger endTime;
 @property (nonatomic) CGFloat price;
+
++ (NSArray *)sortDescriptors:(BOOL)ascending;
 @end

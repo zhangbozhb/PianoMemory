@@ -181,8 +181,8 @@
               [self.course.name isEqualToString:self.changedCourse.name]) ||
             (self.course.briefDescription != self.changedCourse.briefDescription &&
              [self.course.briefDescription isEqualToString:self.changedCourse.briefDescription]) ||
-            self.course.startDayTime != self.changedCourse.startDayTime ||
-            self.course.endDayTime != self.changedCourse.endDayTime ||
+            self.course.startTime != self.changedCourse.startTime ||
+            self.course.endTime != self.changedCourse.endTime ||
             fabsf(self.course.price - self.changedCourse.price) > FLT_EPSILON ) {
             [self updateCourse:self.changedCourse];
         }

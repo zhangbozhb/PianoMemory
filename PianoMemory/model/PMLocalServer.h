@@ -10,6 +10,7 @@
 #import "PMStudent.h"
 #import "PMCourse.h"
 #import "PMCourseSchedule.h"
+#import "PMDayCourseSchedule.h"
 
 @interface PMLocalServer : NSObject
 + (instancetype)defaultLocalServer;
@@ -28,10 +29,19 @@
 - (BOOL)deleteCourse:(PMCourse*)course;
 - (PMCourse*)queryCourseWithId:(NSString*)courseId;
 - (NSArray*)queryCourses:(NSString*)name;
+- (NSArray*)queryCoursesWithAccurateName:(NSString*)name;
 
 #pragma courseSchedule
 - (BOOL)saveCourseSchedule:(PMCourseSchedule*)courseSchedule;
 - (BOOL)deleteCourseSchedule:(PMCourseSchedule*)courseSchedule;
 - (PMCourseSchedule*)queryCourseScheduleWithId:(NSString*)courseScheduleId;
 - (NSArray*)queryAllCourseSchedule;
+
+#pragma dayCourseSchedule
+- (BOOL)saveDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule;
+- (BOOL)deleteDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule;
+- (PMDayCourseSchedule*)queryDayCourseScheduleWithId:(NSString*)dayCourseScheduleId;
+- (NSArray*)queryAllDayCourseSchedule;
+- (NSArray*)queryDayCourseSchedulesFrom:(NSInteger)startTime toEndTime:(NSInteger)endTime;
+- (PMDayCourseSchedule *)queryDayCourseScheduleOfDate:(NSDate*)date;
 @end

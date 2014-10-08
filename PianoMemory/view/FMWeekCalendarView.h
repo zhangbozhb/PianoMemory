@@ -11,7 +11,7 @@
 @class FMWeekCalendarView;
 @protocol FMWeekCalendarViewDelegate <NSObject>
 
-- (void)weekCalendarView:(FMWeekCalendarView *)weekCalendarView selectDate:(NSDate*)selectDate;
+- (void)weekCalendarView:(FMWeekCalendarView *)weekCalendarView selectedDate:(NSDate*)selectedDate;
 @end
 
 @interface FMWeekCalendarView : UIView

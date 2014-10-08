@@ -16,4 +16,6 @@
 @property (nonatomic) NSInteger startTime;
 @property (nonatomic) NSInteger endTime;
 @property (nonatomic) NSString *briefDescription;
+
++ (NSArray *)sortDescriptors:(BOOL)ascending;
 @end

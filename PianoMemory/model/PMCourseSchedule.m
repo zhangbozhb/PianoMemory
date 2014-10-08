@@ -24,4 +24,12 @@
     another.briefDescription = [self.briefDescription copy];
     return another;
 }
+
++ (NSArray *)sortDescriptors:(BOOL)ascending
+{
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:
+                                [NSSortDescriptor sortDescriptorWithKey:@"startTime" ascending:ascending],
+                                [NSSortDescriptor sortDescriptorWithKey:@"endTime" ascending:ascending], nil];
+    return sortDescriptors;
+}
 @end

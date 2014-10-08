@@ -8,6 +8,7 @@
 
 #import "PMLocalServer.h"
 #import "PMLocalStorage.h"
+#import "NSDate+Extend.h"
 
 @interface PMLocalServer ()
 @property (nonatomic) PMLocalStorage *localStorage;
@@ -115,7 +116,21 @@
         }
     }
     return courses;
-
+}
+- (NSArray*)queryCoursesWithAccurateName:(NSString*)name
+{
+    NSMutableArray *courses = [NSMutableArray array];
+    NSDictionary *viewCourse = [self.localStorage viewCourse];
+    for (NSString *courseId in viewCourse) {
+        PMCourse *course = [self.localStorage getCourseWithId:courseId];
+        if (course) {
+            if (0 != [name length] ||
+                [name isEqualToString:course.name]) {
+                [courses addObject:course];
+            }
+        }
+    }
+    return courses;
 }
 
 #pragma courseSchedule
@@ -142,6 +157,55 @@
         }
     }
     return courseSchedules;
+}
 
+#pragma dayCourseSchedule
+- (BOOL)saveDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule
+{
+    return [self.localStorage storeDayCourseSchedule:dayCourseSchedule];
+}
+- (BOOL)deleteDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule
+{
+    return [self.localStorage removeDayCourseSchedule:dayCourseSchedule];
+}
+- (PMDayCourseSchedule*)queryDayCourseScheduleWithId:(NSString*)dayCourseScheduleId
+{
+    return [self.localStorage getDayCourseScheduleWithId:dayCourseScheduleId];
+}
+- (NSArray*)queryAllDayCourseSchedule
+{
+    NSMutableArray *dayCourseSchedules = [NSMutableArray array];
+    NSDictionary *viewDayCourseSchedule = [self.localStorage viewDayCourseSchedule];
+    for (NSString *dayCourseScheduleId in viewDayCourseSchedule) {
+        PMDayCourseSchedule *dayCourseSchedule = [self.localStorage getDayCourseScheduleWithId:dayCourseScheduleId];
+        if (dayCourseSchedule) {
+            [dayCourseSchedules addObject:dayCourseSchedule];
+        }
+    }
+    return dayCourseSchedules;
+}
+- (NSArray*)queryDayCourseSchedulesFrom:(NSInteger)startTime toEndTime:(NSInteger)endTime
+{
+    NSMutableArray *dayCourseSchedules = [NSMutableArray array];
+    NSDictionary *viewDayCourseSchedule = [self.localStorage viewDayCourseSchedule];
+    for (NSString *dayCourseScheduleId in viewDayCourseSchedule) {
+        NSString *scheduleTimestampString = [viewDayCourseSchedule objectForKey:dayCourseScheduleId];
+        NSInteger scheduleTimestamp = [scheduleTimestampString integerValue];
+        if (startTime <= scheduleTimestamp &&
+            scheduleTimestamp <= endTime) {
+            PMDayCourseSchedule *dayCourseSchedule = [self.localStorage getDayCourseScheduleWithId:dayCourseScheduleId];
+            if (dayCourseSchedule) {
+                [dayCourseSchedules addObject:dayCourseSchedule];
+            }
+        }
+    }
+    return dayCourseSchedules;
+}
+- (PMDayCourseSchedule *)queryDayCourseScheduleOfDate:(NSDate*)date
+{
+    NSInteger startTime = [date zb_getDayTimestamp];
+    NSInteger endTime = [[date zb_dateAfterDay:1] zb_getDayTimestamp] - 1;
+    NSArray *dayCourseSchedules = [self queryDayCourseSchedulesFrom:startTime toEndTime:endTime];
+    return [dayCourseSchedules firstObject];
 }
 @end

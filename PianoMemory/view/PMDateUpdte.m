@@ -28,6 +28,9 @@ NSString * const kPianoMemoryLocalDataUpdatedNotification = @"kPianoMemoryLocalD
         case PMLocalServer_DateUpateType_CourseSchedule:
             typeString = @"PMLocalServer_DateUpateType_CourseSchedule";
             break;
+        case PMLocalServer_DateUpateType_DayCourseSchedule:
+            typeString = @"PMLocalServer_DateUpateType_DayCourseSchedule";
+            break;
         case PMLocalServer_DateUpateType_Undefined:
         default:
             typeString = @"PMLocalServer_DateUpateType_Undefined";
@@ -44,6 +47,7 @@ NSString * const kPianoMemoryLocalDataUpdatedNotification = @"kPianoMemoryLocalD
                                [NSNumber numberWithLong:PMLocalServer_DateUpateType_Student],
                                [NSNumber numberWithLong:PMLocalServer_DateUpateType_Course],
                                [NSNumber numberWithLong:PMLocalServer_DateUpateType_CourseSchedule],
+                               [NSNumber numberWithLong:PMLocalServer_DateUpateType_DayCourseSchedule],
                                [NSNumber numberWithLong:PMLocalServer_DateUpateType_ALL],
                                ];
 
