@@ -6,11 +6,11 @@
 //  Copyright (c) 2014年 yue. All rights reserved.
 //
 
-#import "FMObject.h"
+#import "PMObject.h"
 #import "PMCourse.h"
 #import "PMStudent.h"
 
-@interface PMCourseSchedule : FMObject
+@interface PMCourseSchedule : PMObject
 @property (nonatomic) PMCourse *course;
 @property (nonatomic) NSMutableArray *students;
 @property (nonatomic) NSInteger startTime;

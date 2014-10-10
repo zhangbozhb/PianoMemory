@@ -9,7 +9,6 @@
 #import "FMObject.h"
 
 @implementation FMObject
-
 - (id)copyWithZone:(NSZone *)zone
 {
     FMObject *another = [super copyWithZone:zone];

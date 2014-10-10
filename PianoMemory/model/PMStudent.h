@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 yue. All rights reserved.
 //
 
-#import "FMObject.h"
+#import "PMObject.h"
 
-@interface PMStudent : FMObject
+@interface PMStudent : PMObject
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *nameShortcut;
 @property (nonatomic) NSString *phone;

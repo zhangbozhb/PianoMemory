@@ -21,9 +21,8 @@
 @property (weak, nonatomic) IBOutlet UINavigationItem *myNavigationItem;
 @property (weak, nonatomic) IBOutlet UITextField *courseNameTextField;
 @property (weak, nonatomic) IBOutlet UITextView *courseDescriptionTextView;
-@property (weak, nonatomic) IBOutlet UITextField *startTimeTextField;
-@property (weak, nonatomic) IBOutlet UITextField *endTimeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *priceTextField;
+@property (weak, nonatomic) IBOutlet UITextField *salaryTextField;
 @end
 
 @implementation PMCourseEditViewController
@@ -63,11 +62,11 @@
 {
     if (textField == self.courseNameTextField) {
         [self.courseDescriptionTextView becomeFirstResponder];
-    } else if (textField == self.startTimeTextField) {
-        [self.endTimeTextField becomeFirstResponder];
-    } else if (textField == self.endTimeTextField) {
+    } else if (textField == self.priceTextField) {
+        [self.salaryTextField becomeFirstResponder];
+    } else if (textField == self.salaryTextField) {
         [self.priceTextField becomeFirstResponder];
-    } else if (textField == self.endTimeTextField) {
+    } else if (textField == self.salaryTextField) {
         [textField resignFirstResponder];
         return NO;
     }
@@ -78,24 +77,22 @@
 {
     self.changedCourse.name = self.courseNameTextField.text;
     self.changedCourse.briefDescription = self.courseDescriptionTextView.text;
+    self.changedCourse.price = [self.priceTextField.text floatValue];
+    self.changedCourse.salary = [self.salaryTextField.text floatValue];
 }
-
-
 
 - (void)refreshUI
 {
     if (self.changedCourse) {
-        self.courseNameTextField.text = (nil != self.changedCourse.name)?self.changedCourse.name:@"";
-        self.courseDescriptionTextView.text = (nil != self.changedCourse.briefDescription)?self.changedCourse.briefDescription:@"";
-        self.startTimeTextField.text = [self.changedCourse getStartTimeWithFormatterString:@"HH:mm"];
-        self.endTimeTextField.text = [self.changedCourse getEndTimeWithFormatterString:@"HH:mm"];
+        self.courseNameTextField.text = [self.changedCourse getNotNilName];
+        self.courseDescriptionTextView.text = [self.changedCourse getNotNilBriefDescription];
         self.priceTextField.text = [NSString stringWithFormat:@"%.2f", self.changedCourse.price];
+        self.salaryTextField.text = [NSString stringWithFormat:@"%.2f", self.changedCourse.salary];
     } else {
         self.courseNameTextField.text = @"";
         self.courseDescriptionTextView.text = @"";
-        self.startTimeTextField.text = @"";
-        self.endTimeTextField.text = @"";
         self.priceTextField.text = [NSString stringWithFormat:@"%.2f", 0.f];
+        self.salaryTextField.text = [NSString stringWithFormat:@"%.2f", 0.f];
     }
 }
 
@@ -164,8 +161,10 @@
 }
 
 - (IBAction)commitChangeAction:(id)sender {
-    [self updateCourseFromUI];
 
+    [self.view endEditing:YES];
+
+    [self updateCourseFromUI];
     NSString *error = [self checkErrorOfCourse:self.changedCourse];
     if (error) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"错误"
@@ -181,8 +180,6 @@
               [self.course.name isEqualToString:self.changedCourse.name]) ||
             (self.course.briefDescription != self.changedCourse.briefDescription &&
              [self.course.briefDescription isEqualToString:self.changedCourse.briefDescription]) ||
-            self.course.startTime != self.changedCourse.startTime ||
-            self.course.endTime != self.changedCourse.endTime ||
             fabsf(self.course.price - self.changedCourse.price) > FLT_EPSILON ) {
             [self updateCourse:self.changedCourse];
         }
@@ -207,8 +204,7 @@
 
 - (void)handleKeyboardAppear:(NSTimeInterval)duration keyboardHeight:(CGFloat)keyboardHeight
 {
-    if ([self.startTimeTextField isFirstResponder] ||
-        [self.endTimeTextField isFirstResponder] ||
+    if ([self.salaryTextField isFirstResponder] ||
         [self.priceTextField isFirstResponder]) {
         [super handleKeyboardAppear:duration keyboardHeight:keyboardHeight-60];
     }

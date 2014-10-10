@@ -6,16 +6,13 @@
 //  Copyright (c) 2014年 yue. All rights reserved.
 //
 
-#import "FMObject.h"
+#import "PMObject.h"
 #import <CoreGraphics/CGBase.h>
 
-@interface PMCourse : FMObject
+@interface PMCourse : PMObject
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *briefDescription;
 @property (nonatomic) NSInteger type;
-@property (nonatomic) NSInteger startTime;
-@property (nonatomic) NSInteger endTime;
 @property (nonatomic) CGFloat price;
-
-+ (NSArray *)sortDescriptors:(BOOL)ascending;
+@property (nonatomic) CGFloat salary;
 @end

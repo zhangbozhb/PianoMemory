@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 yue. All rights reserved.
 //
 
-#import "FMObject.h"
+#import "PMObject.h"
 
-@interface PMDayCourseSchedule : FMObject
+@interface PMDayCourseSchedule : PMObject
 @property (nonatomic) NSInteger scheduleTimestamp;
 @property (nonatomic) NSMutableArray *courseSchedules;
 @end

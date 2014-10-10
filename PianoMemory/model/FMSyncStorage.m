@@ -337,8 +337,8 @@
 
     if (nil == object.syncLocalId) {
         object.syncLocalId = [self createLocalId:object];
-        [self storeObject:object forKey:object.syncLocalId];
     }
+    [self storeObject:object forKey:object.syncLocalId];
 
     //更新 mapping
     [self mappingStoreForHCObject:object];

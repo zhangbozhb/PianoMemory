@@ -7,7 +7,6 @@
 //
 
 #import "PMCourseViewController.h"
-#import "PMCourseTableViewCell.h"
 #import "PMCourse+Wrapper.h"
 #import "PMServerWrapper.h"
 #import "PMCourseEditViewController.h"
@@ -18,7 +17,7 @@
 
 static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewCellReuseIdentifier";
 
-@interface PMCourseViewController () <UITableViewDataSource, UITableViewDataSource>
+@interface PMCourseViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic) NSArray *courseArray;
 @property (nonatomic) BOOL shouldFetchData;
@@ -52,11 +51,8 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:courseTableViewCellReuseIdentifier];
     PMCourse *course = [self.courseArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = (nil!=course.name)?course.name:@"";
-    NSString *detailInfo = [NSString stringWithFormat:@"%@ -- %@",
-                            [course getStartTimeWithFormatterString:@"HH:mm"],
-                            [course getEndTimeWithFormatterString:@"HH:mm"]];
-    cell.detailTextLabel.text = detailInfo;
+    cell.textLabel.text = [course getNotNilName];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f 元", course.price];
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;

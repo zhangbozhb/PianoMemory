@@ -10,27 +10,14 @@
 #import "NSDate+Extend.h"
 
 @implementation PMCourse (Wrapper)
-- (NSString*)getStartTimeWithFormatterString:(NSString*)formatterString
-{
-    if (!formatterString) {
-        formatterString = @"HH:mm";
-    }
 
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:formatterString];
-    NSDate *targetDate = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] zb_getDayTimestamp]+self.startTime];
-    return [dateFormatter stringFromDate:targetDate];
+- (NSString *)getNotNilName
+{
+    return (nil!=self.name)?self.name:@"";
 }
 
-- (NSString*)getEndTimeWithFormatterString:(NSString*)formatterString
+- (NSString *)getNotNilBriefDescription
 {
-    if (!formatterString) {
-        formatterString = @"HH:mm";
-    }
-
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:formatterString];
-    NSDate *targetDate = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] zb_getDayTimestamp]+self.endTime];
-    return [dateFormatter stringFromDate:targetDate];
+    return (nil!=self.briefDescription)?self.briefDescription:@"";
 }
 @end

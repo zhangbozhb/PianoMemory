@@ -11,6 +11,16 @@
 
 @implementation PMStudent (Wrapper)
 
+- (NSString *)getNotNilName
+{
+    return (nil!=self.name)?self.name:@"";
+}
+
+- (NSString *)getNotNilPhone
+{
+    return (nil!=self.phone)?self.phone:@"";
+}
+
 + (NSString *)getFirstLetterOfChineseCharacter:(NSString*)inputText
 {
     HanyuPinyinOutputFormat *outputFormat=[[HanyuPinyinOutputFormat alloc] init];

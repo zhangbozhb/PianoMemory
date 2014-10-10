@@ -15,18 +15,8 @@
     another.name = [self.name copy];
     another.briefDescription = [self.briefDescription copy];
     another.type = self.type;
-    another.startTime = self.startTime;
-    another.endTime = self.endTime;
     another.price = self.price;
+    another.salary = self.salary;
     return another;
-}
-
-
-+ (NSArray *)sortDescriptors:(BOOL)ascending
-{
-    NSArray *sortDescriptors = [NSArray arrayWithObjects:
-                                [NSSortDescriptor sortDescriptorWithKey:@"startTime" ascending:ascending],
-                                [NSSortDescriptor sortDescriptorWithKey:@"endTime" ascending:ascending], nil];
-    return sortDescriptors;
 }
 @end

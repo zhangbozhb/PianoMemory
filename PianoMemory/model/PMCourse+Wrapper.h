@@ -9,6 +9,6 @@
 #import "PMCourse.h"
 
 @interface PMCourse (Wrapper)
-- (NSString*)getStartTimeWithFormatterString:(NSString*)formatterString;
-- (NSString*)getEndTimeWithFormatterString:(NSString*)formatterString;
+- (NSString *)getNotNilName;
+- (NSString *)getNotNilBriefDescription;
 @end

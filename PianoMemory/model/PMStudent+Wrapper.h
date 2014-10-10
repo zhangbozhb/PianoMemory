@@ -9,6 +9,7 @@
 #import "PMStudent.h"
 
 @interface PMStudent (Wrapper)
-
+- (NSString *)getNotNilName;
+- (NSString *)getNotNilPhone;
 - (void)updateShortcut;
 @end
