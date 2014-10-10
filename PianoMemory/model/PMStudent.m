@@ -17,9 +17,9 @@
     another.nameShortcut = [self.nameShortcut copy];
     another.phone = [self.phone copy];
     another.qq = [self.qq copy];
-    another.weixin = [self.weixin copy];
     another.email = [self.email copy];
     another.level = [self.level copy];
+    another.briefDescription = [self.briefDescription copy];
     return another;
 }
 

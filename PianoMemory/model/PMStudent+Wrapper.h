@@ -11,5 +11,8 @@
 @interface PMStudent (Wrapper)
 - (NSString *)getNotNilName;
 - (NSString *)getNotNilPhone;
+- (NSString *)getNotNilQQ;
+- (NSString *)getNotNilEmail;
+- (NSString *)getNotNilBriefDescription;
 - (void)updateShortcut;
 @end

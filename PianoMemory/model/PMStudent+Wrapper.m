@@ -21,6 +21,21 @@
     return (nil!=self.phone)?self.phone:@"";
 }
 
+- (NSString *)getNotNilQQ
+{
+    return (nil!=self.qq)?self.qq:@"";
+}
+
+- (NSString *)getNotNilEmail
+{
+    return (nil!=self.email)?self.email:@"";
+}
+
+- (NSString *)getNotNilBriefDescription
+{
+    return (nil!=self.briefDescription)?self.briefDescription:@"";
+}
+
 + (NSString *)getFirstLetterOfChineseCharacter:(NSString*)inputText
 {
     HanyuPinyinOutputFormat *outputFormat=[[HanyuPinyinOutputFormat alloc] init];
