@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "PMStudent.h"
 #import "PMCourse.h"
+#import "PMTimeSchedule.h"
 #import "PMCourseSchedule.h"
 #import "PMDayCourseSchedule.h"
 
@@ -30,6 +31,12 @@
 - (PMCourse*)queryCourseWithId:(NSString*)courseId;
 - (NSArray*)queryCourses:(NSString*)name;
 - (NSArray*)queryCoursesWithAccurateName:(NSString*)name;
+
+#pragma timeSchedule
+- (BOOL)saveTimeSchedule:(PMTimeSchedule*)timeSchedule;
+- (BOOL)deleteTimeSchedule:(PMTimeSchedule*)timeSchedule;
+- (PMTimeSchedule*)queryTimeScheduleWithId:(NSString*)timeScheduleId;
+- (NSArray*)queryAllTimeSchedule;
 
 #pragma courseSchedule
 - (BOOL)saveCourseSchedule:(PMCourseSchedule*)courseSchedule;

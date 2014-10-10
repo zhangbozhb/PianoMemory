@@ -155,7 +155,6 @@
         }
     }
 }
-
 - (void)deleteCourse:(PMCourse*)course success:(void(^)(PMCourse *course))success failure:(void(^)(HCErrorMessage *error))failure
 {
     if ([self.localServer deleteCourse:course]) {
@@ -169,7 +168,6 @@
         }
     }
 }
-
 - (void)queryCourses:(NSDictionary *)parameters success:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure
 {
     NSString *name = [parameters objectForKey:@"name"];
@@ -180,10 +178,61 @@
         }
     }];
 }
-
 - (NSArray*)queryCoursesWithAccurateName:(NSString*)name
 {
     return [self.localServer queryCoursesWithAccurateName:name];
+}
+
+#pragma timeSchedule
+- (void)createTimeSchedule:(PMTimeSchedule*)timeSchedule success:(void(^)(PMTimeSchedule *timeSchedule))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    [self asyncProcessing:^{
+        if ([self.localServer saveTimeSchedule:timeSchedule]) {
+            if (success) {
+                success(timeSchedule);
+            }
+            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_TimeSchedule]];
+        } else {
+            if (failure) {
+                failure([self errorUnknown]);
+            }
+        }
+    }];
+}
+- (void)updateTimeSchedule:(PMTimeSchedule*)timeSchedule success:(void(^)(PMTimeSchedule *timeSchedule))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    if ([self.localServer saveTimeSchedule:timeSchedule]) {
+        if (success) {
+            success(timeSchedule);
+        }
+        [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_TimeSchedule]];
+    } else {
+        if (failure) {
+            failure([self errorUnknown]);
+        }
+    }
+}
+- (void)deleteTimeSchedule:(PMTimeSchedule*)timeSchedule success:(void(^)(PMTimeSchedule *timeSchedule))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    if ([self.localServer deleteTimeSchedule:timeSchedule]) {
+        if (success) {
+            success(timeSchedule);
+        }
+        [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_TimeSchedule]];
+    } else {
+        if (failure) {
+            failure([self errorUnknown]);
+        }
+    }
+}
+- (void)queryAllTimeSchedules:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    [self asyncProcessing:^{
+        NSArray *array = [self.localServer queryAllTimeSchedule];
+        if (success) {
+            success(array);
+        }
+    }];
 }
 
 #pragma dayCourseSchedule
@@ -202,10 +251,9 @@
         }
     }];
 }
-
 - (void)updateDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
 {
-    if ([self.localServer deleteDayCourseSchedule:dayCourseSchedule]) {
+    if ([self.localServer saveDayCourseSchedule:dayCourseSchedule]) {
         if (success) {
             success(dayCourseSchedule);
         }

@@ -133,6 +133,30 @@
     return courses;
 }
 
+#pragma timeSchedule
+- (BOOL)saveTimeSchedule:(PMTimeSchedule*)timeSchedule
+{
+    return [self.localStorage storeTimeSchedule:timeSchedule];
+}
+- (BOOL)deleteTimeSchedule:(PMTimeSchedule*)timeSchedule
+{
+    return [self.localStorage removeTimeSchedule:timeSchedule];
+}
+- (PMTimeSchedule*)queryTimeScheduleWithId:(NSString*)timeScheduleId
+{
+    return [self.localStorage getTimeScheduleeWithId:timeScheduleId];
+}
+- (NSArray*)queryAllTimeSchedule
+{
+    NSMutableArray *timeSchedules = [NSMutableArray array];
+    NSDictionary *viewTimeSchedule = [self.localStorage viewTimeSchedule];
+    for (NSString *timeScheudleId in viewTimeSchedule) {
+        PMTimeSchedule *timeSchedule = [self.localStorage getTimeScheduleeWithId:timeScheudleId];
+        [timeSchedules addObject:timeSchedule];
+    }
+    return timeSchedules;
+}
+
 #pragma courseSchedule
 - (BOOL)saveCourseSchedule:(PMCourseSchedule*)courseSchedule
 {

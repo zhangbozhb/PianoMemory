@@ -15,6 +15,9 @@ static NSString *const klocal_student_view_key = @"org.plam4fun.fm1017.localStud
 static NSString *const klocal_course_mapping_key = @"org.plam4fun.fm1017.localCourseMappingKey";
 static NSString *const klocal_course_view_key = @"org.plam4fun.fm1017.localCourseViewKey";
 
+static NSString *const klocal_timeschedule_mapping_key = @"org.plam4fun.fm1017.localTimeScheduleyMappingKey";
+static NSString *const klocal_timeschedule_view_key = @"org.plam4fun.fm1017.localTimeScheduleViewKey";
+
 static NSString *const klocal_courseschedule_mapping_key = @"org.plam4fun.fm1017.localCourseScheduleyMappingKey";
 static NSString *const klocal_courseschedule_view_key = @"org.plam4fun.fm1017.localCourseScheduleViewKey";
 
@@ -47,6 +50,8 @@ static NSString *const klocal_daycourseschedule_view_key = @"org.plam4fun.fm1017
         return klocal_student_mapping_key;
     } else if ([objectClass isSubclassOfClass:[PMCourse class]]) {
         return klocal_course_mapping_key;
+    } else if ([objectClass isSubclassOfClass:[PMTimeSchedule class]]) {
+        return klocal_timeschedule_mapping_key;
     } else if ([objectClass isSubclassOfClass:[PMCourseSchedule class]]) {
         return klocal_courseschedule_mapping_key;
     } else if ([objectClass isSubclassOfClass:[PMDayCourseSchedule class]]) {
@@ -60,6 +65,8 @@ static NSString *const klocal_daycourseschedule_view_key = @"org.plam4fun.fm1017
         return klocal_student_view_key;
     } else if ([objectClass isSubclassOfClass:[PMCourse class]]) {
         return klocal_course_view_key;
+    } else if ([objectClass isSubclassOfClass:[PMTimeSchedule class]]) {
+        return klocal_timeschedule_view_key;
     } else if ([objectClass isSubclassOfClass:[PMCourseSchedule class]]) {
         return klocal_courseschedule_view_key;
     } else if ([objectClass isSubclassOfClass:[PMDayCourseSchedule class]]) {
@@ -119,6 +126,24 @@ static NSString *const klocal_daycourseschedule_view_key = @"org.plam4fun.fm1017
 - (NSDictionary *)viewCourse
 {
     return [self.syncStorage viewOfClass:[PMCourse class]];
+}
+
+#pragma time schedule
+- (BOOL)storeTimeSchedule:(PMTimeSchedule*)timeSchedule
+{
+    return [self.syncStorage storeHCObject:timeSchedule];
+}
+- (BOOL)removeTimeSchedule:(PMTimeSchedule*)timeSchedule
+{
+    return [self.syncStorage removeHCObject:timeSchedule];
+}
+- (PMTimeSchedule*)getTimeScheduleeWithId:(NSString*)timeScheduleId
+{
+    return (PMTimeSchedule*)[self.syncStorage objectForKey:timeScheduleId];
+}
+- (NSDictionary *)viewTimeSchedule
+{
+    return [self.syncStorage viewOfClass:[PMTimeSchedule class]];
 }
 
 #pragma course schedule

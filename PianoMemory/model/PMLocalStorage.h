@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "PMStudent.h"
 #import "PMCourse.h"
+#import "PMTimeSchedule.h"
 #import "PMCourseSchedule.h"
 #import "PMDayCourseSchedule.h"
 
@@ -44,6 +45,12 @@
 - (BOOL)removeCourse:(PMCourse*)course;
 - (PMCourse*)getCourseWithId:(NSString*)courseId;
 - (NSDictionary *)viewCourse;
+
+#pragma time schedule
+- (BOOL)storeTimeSchedule:(PMTimeSchedule*)timeSchedule;
+- (BOOL)removeTimeSchedule:(PMTimeSchedule*)timeSchedule;
+- (PMTimeSchedule*)getTimeScheduleeWithId:(NSString*)timeScheduleId;
+- (NSDictionary *)viewTimeSchedule;
 
 #pragma course schedule
 - (BOOL)storeCourseSchedule:(PMCourseSchedule*)courseSchedule;

@@ -10,6 +10,7 @@
 #import "HCErrorMessage.h"
 #import "PMStudent.h"
 #import "PMCourse.h"
+#import "PMTimeSchedule.h"
 #import "PMCourseSchedule.h"
 #import "PMDayCourseSchedule.h"
 
@@ -29,6 +30,12 @@
 - (NSArray*)queryCoursesWithAccurateName:(NSString*)name;
 //param 	name
 - (void)queryCourses:(NSDictionary *)parameters success:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure;
+
+#pragma timeSchedule
+- (void)createTimeSchedule:(PMTimeSchedule*)timeSchedule success:(void(^)(PMTimeSchedule *timeSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
+- (void)updateTimeSchedule:(PMTimeSchedule*)timeSchedule success:(void(^)(PMTimeSchedule *timeSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
+- (void)deleteTimeSchedule:(PMTimeSchedule*)timeSchedule success:(void(^)(PMTimeSchedule *timeSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
+- (void)queryAllTimeSchedules:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure;
 
 #pragma dayCourseSchedule
 - (void)createDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
