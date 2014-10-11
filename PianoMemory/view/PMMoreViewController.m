@@ -24,7 +24,7 @@ static NSString *const menuTableViewCellReuseIdentifier = @"menuTableViewCelReus
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.menuArray = [NSArray arrayWithObjects:@"课程管理", nil];
+    self.menuArray = [NSArray arrayWithObjects:@"课程管理", @"时间管理", nil];
 }
 
 
@@ -40,6 +40,15 @@ static NSString *const menuTableViewCellReuseIdentifier = @"menuTableViewCelReus
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (0 == indexPath.row) {
+        [self performSegueWithIdentifier:@"showMenuCourseSegueIdentifier" sender:self];
+    } else if (1 == indexPath.row) {
+        [self performSegueWithIdentifier:@"showMenuTimeScheduleSegueIdentifier" sender:self];
+    }
 }
 
 @end

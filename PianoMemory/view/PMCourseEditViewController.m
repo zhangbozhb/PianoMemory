@@ -13,6 +13,7 @@
 #import "PMServerWrapper.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "UIViewController+WithKeyboardNotification.h"
+#import "PMUISettings.h"
 
 @interface PMCourseEditViewController () <UITextFieldDelegate, UITextViewDelegate>
 @property (nonatomic) PMCourse *changedCourse;
@@ -31,7 +32,7 @@
     [super viewDidLoad];
     self.course = (nil == self.course)?nil:self.course;
     [self.courseDescriptionTextView zb_addBorder:1
-                                     borderColor:[UIColor lightGrayColor]
+                                     borderColor:[PMUISettings colorBoarder]
                                     cornerRadius:6.f];
 }
 
@@ -62,10 +63,13 @@
 {
     if (textField == self.courseNameTextField) {
         [self.courseDescriptionTextView becomeFirstResponder];
+        return NO;
     } else if (textField == self.priceTextField) {
         [self.salaryTextField becomeFirstResponder];
+        return NO;
     } else if (textField == self.salaryTextField) {
         [self.priceTextField becomeFirstResponder];
+        return NO;
     } else if (textField == self.salaryTextField) {
         [textField resignFirstResponder];
         return NO;

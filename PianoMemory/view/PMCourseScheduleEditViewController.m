@@ -15,6 +15,7 @@
 #import "PMStudent+Wrapper.h"
 #import "PMCourseSchedule+Wrapper.h"
 #import "PMServerWrapper.h"
+#import "PMUISettings.h"
 
 @interface PMCourseScheduleEditViewController () <UITextFieldDelegate, PMCoursePickerDelegate, PMStudentPickerDelgate>
 
@@ -36,7 +37,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.courseScheduleDescriptionTextView zb_addBorder:1 borderColor:[UIColor lightGrayColor] cornerRadius:6.f];
+    [self.courseScheduleDescriptionTextView zb_addBorder:1 borderColor:[PMUISettings colorBoarder] cornerRadius:6.f];
 }
 
 - (void)viewWillAppear:(BOOL)animated

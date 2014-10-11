@@ -12,6 +12,7 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "UIViewController+WithKeyboardNotification.h"
 #import "UIView+Extend.h"
+#import "PMUISettings.h"
 
 @interface PMStudentEditViewController () <UITextFieldDelegate>
 @property (nonatomic) PMStudent *changedStudent;
@@ -32,7 +33,7 @@
 {
     [super viewDidLoad];
     self.student = (nil == self.student)?nil:self.student;
-    [self.briefDescriptionTextView zb_addBorder:1 borderColor:[UIColor lightGrayColor] cornerRadius:6.f];
+    [self.briefDescriptionTextView zb_addBorder:1 borderColor:[PMUISettings colorBoarder] cornerRadius:6.f];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -100,12 +101,16 @@
 {
     if (textField == self.nameTextField) {
         [self.phoneTextField becomeFirstResponder];
+        return NO;
     } else if (textField == self.phoneTextField) {
         [self.qqTextField becomeFirstResponder];
+        return NO;
     } else if (textField == self.qqTextField) {
         [self.emailTextField becomeFirstResponder];
+        return NO;
     } else if (textField == self.emailTextField) {
         [self.briefDescriptionTextView becomeFirstResponder];
+        return NO;
     }
     return YES;
 }
