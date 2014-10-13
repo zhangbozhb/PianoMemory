@@ -411,12 +411,27 @@ static NSString * const HCRKPropertyInspectionReadOnlyKey = @"isReadOnly";
 
 
 #pragma coding
+- (NSArray*)classProperties
+{
+    return [[[self class] classPropertyInspections] allKeys];
+}
+
+- (NSArray *)classMutableProperties
+{
+    return [[[self class] classMutablePropertyInspections] allKeys];
+}
+// 这两个函数：是完成对象的序列化的反序列化。继承该对象的类可以不需要实现该函数
+//不过性能方面不是太好
+//关于性能的几点总结：
+//1,使用 setValue 和直接 property 赋值性能是一样的，没有区别
+//2,如果实现classMutableProperties，返回固定的数组，性能比默认的会号很多。与1比较会多花费20%的时间
+//3，initWithCoder，encodeWithCoder中直接使用数组性能比2好一些。可以认为没啥区别，不到3%左右的差距
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [self init];
     if (self) {
-        NSDictionary *inspection = [[self class] classMutablePropertyInspections];
-        for (NSString *propertyName in inspection) {
+        NSArray *properties = [self classMutableProperties];
+        for (NSString *propertyName in properties) {
             id propertyValue = [aDecoder decodeObjectForKey:propertyName];
             if (propertyValue &&
                 ![propertyValue isEqual:[NSNull null]]) {
@@ -429,8 +444,8 @@ static NSString * const HCRKPropertyInspectionReadOnlyKey = @"isReadOnly";
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    NSDictionary *inspection = [[self class] classMutablePropertyInspections];
-    for (NSString *propertyName in inspection) {
+    NSArray *properties = [self classMutableProperties];
+    for (NSString *propertyName in properties) {
         id propertyValue = [self valueForKey:propertyName];
         if (propertyValue &&
             ![propertyValue isEqual:[NSNull null]]) {
@@ -449,11 +464,11 @@ static NSString * const HCRKPropertyInspectionReadOnlyKey = @"isReadOnly";
 - (void)shallowCopyValue:(HCObject *)obj
 {
     if (obj) {
-        NSDictionary *inspection = nil;
+        NSArray *inspection = nil;
         if ([self isKindOfClass:[obj class]]) {
-            inspection = [[obj class] classMutablePropertyInspections];
+            inspection = [[obj class] classMutablePropertyNames];
         } else if ([obj isKindOfClass:[self class]]) {
-            inspection = [[self class] classMutablePropertyInspections];
+            inspection = [[self class] classMutablePropertyNames];
         }
         if (inspection) {
             for (NSString *propertyName in inspection) {
@@ -476,11 +491,11 @@ static NSString * const HCRKPropertyInspectionReadOnlyKey = @"isReadOnly";
     if (obj &&
         [obj isKindOfClass:copyClass] &&
         [copyClass isSubclassOfClass:[HCObject class]]) {
-        NSDictionary *inspection = nil;
+        NSArray *inspection = nil;
         if ([self isKindOfClass:[obj class]]) {
-            inspection = [copyClass classMutablePropertyInspections];
+            inspection = [copyClass classMutablePropertyNames];
         } else if ([obj isKindOfClass:[self class]]) {
-            inspection = [[self class] classMutablePropertyInspections];
+            inspection = [[self class] classMutablePropertyNames];
         }
         if (inspection) {
             for (NSString *propertyName in inspection) {

@@ -1,4 +1,4 @@
-//
+
 //  PMCourseScheduleEditViewController.m
 //  PianoMemory
 //
@@ -23,16 +23,21 @@
 @property (nonatomic) NSArray *students;
 
 //xib reference
-@property (weak, nonatomic) IBOutlet UIView *anchorView;
-@property (weak, nonatomic) IBOutlet UIScrollView *myScrollView;
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *myNavigationItem;
+
+@property (weak, nonatomic) IBOutlet UIView *anchorView;
+@property (weak, nonatomic) IBOutlet UIScrollView *myScrollView;
+@property (weak, nonatomic) IBOutlet UIView *myContentView;
+
 @property (weak, nonatomic) IBOutlet UITextField *coureNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *studentNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *startTimeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *endTimeTextField;
+@property (weak, nonatomic) IBOutlet UITextField *effectiveDateTextField;
+@property (weak, nonatomic) IBOutlet UITextField *expirationDateTextField;
 @property (weak, nonatomic) IBOutlet UITextView *courseScheduleDescriptionTextView;
-@property (weak, nonatomic) IBOutlet UIButton *commitButton;
+
 @end
 
 @implementation PMCourseScheduleEditViewController
@@ -145,23 +150,34 @@
     [self.view endEditing:YES];
 }
 
+- (void)refreshCourseNameUI
+{
+    if (self.course) {
+        self.coureNameTextField.text = [self.course getNotNilName];
+    } else {
+        self.coureNameTextField.text = nil;
+    }
+}
+
+- (void)refreshStudentNameUI
+{
+    if (self.students) {
+        self.studentNameTextField.text = [self getNameStringOfStudents:self.students];
+    } else {
+        self.studentNameTextField.text = nil;
+    }
+}
+
 - (void)refreshUI
 {
     NSString *navigationTilte = @"新增课程安排";
-    NSString *commitButtonTitle = @"添加";
     if (self.courseSchedule) {
         navigationTilte = @"修改课程安排";
-        commitButtonTitle = @"修改";
     }
     [self.myNavigationItem setTitle:navigationTilte];
-    [self.commitButton setTitle:commitButtonTitle forState:UIControlStateNormal];
 
-    if (self.course) {
-        self.coureNameTextField.text = [self.course getNotNilName];
-    }
-    if (self.students) {
-        self.studentNameTextField.text = [self getNameStringOfStudents:self.students];
-    }
+    [self refreshCourseNameUI];
+    [self refreshStudentNameUI];
 }
 
 - (NSString *)getNameStringOfStudents:(NSArray*)students
@@ -177,11 +193,13 @@
 - (void)coursePicker:(PMCoursePickerViewController *)coursePicker course:(PMCourse *)course
 {
     self.course = course;
+    [self refreshCourseNameUI];
 }
 #pragma delgate PMStudentPickerDelgate
 - (void)studentPicker:(PMStudentPickerViewController*)studentPicker students:(NSArray*)students
 {
     self.students = students;
+    [self refreshStudentNameUI];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
