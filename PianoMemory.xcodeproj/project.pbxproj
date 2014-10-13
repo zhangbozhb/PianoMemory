@@ -624,6 +624,7 @@
 		9EF130DA19E029A900843F02 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = PM;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = yue;
 				TargetAttributes = {

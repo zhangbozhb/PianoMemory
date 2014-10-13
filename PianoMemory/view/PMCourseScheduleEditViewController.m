@@ -23,6 +23,9 @@
 @property (nonatomic) NSArray *students;
 
 //xib reference
+@property (weak, nonatomic) IBOutlet UIView *anchorView;
+@property (weak, nonatomic) IBOutlet UIScrollView *myScrollView;
+
 @property (weak, nonatomic) IBOutlet UINavigationItem *myNavigationItem;
 @property (weak, nonatomic) IBOutlet UITextField *coureNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *studentNameTextField;
@@ -38,6 +41,7 @@
 {
     [super viewDidLoad];
     [self.courseScheduleDescriptionTextView zb_addBorder:1 borderColor:[PMUISettings colorBoarder] cornerRadius:6.f];
+    [self.myScrollView setContentSize:self.anchorView.frame.size];
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -8,13 +8,24 @@
 
 #import "PMObject.h"
 #import "PMCourse.h"
+#import "PMTimeSchedule.h"
 #import "PMStudent.h"
+
+typedef enum {
+    PMCourseScheduleRepeatTypeNone = 0,
+    PMCourseScheduleRepeatTypeDay,
+    PMCourseScheduleRepeatTypeWeek,
+    PMCourseScheduleRepeatTypeMonth,
+    PMCourseScheduleRepeatTypeYear,
+}PMCourseScheduleRepeatType;
 
 @interface PMCourseSchedule : PMObject
 @property (nonatomic) PMCourse *course;
 @property (nonatomic) NSMutableArray *students;
-@property (nonatomic) NSInteger startTime;
-@property (nonatomic) NSInteger endTime;
+@property (nonatomic) PMTimeSchedule *timeSchedule;
+@property (nonatomic) NSTimeInterval validStartTimestamp;
+@property (nonatomic) NSTimeInterval validEndTimestamp;
+@property (nonatomic) NSInteger repeatType;
 @property (nonatomic) NSString *briefDescription;
 
 + (NSArray *)sortDescriptors:(BOOL)ascending;

@@ -31,10 +31,10 @@
 - (void)refreshUI
 {
     NSDateFormatter *dateFormattor = [[NSDateFormatter alloc] init];
-    [dateFormattor setDateFormat:@"HH:mm"];
-    NSDate *startDate = [NSDate dateWithTimeIntervalSince1970:self.courseSchedule.startTime];
-    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:self.courseSchedule.endTime];
-    [self.startTimeLabel setText:[dateFormattor stringFromDate:startDate]];
-    [self.endTimeLabel setText:[dateFormattor stringFromDate:endDate]];
+//    [dateFormattor setDateFormat:@"HH:mm"];
+//    NSDate *startDate = [NSDate dateWithTimeIntervalSince1970:self.courseSchedule.startTime];
+//    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:self.courseSchedule.endTime];
+//    [self.startTimeLabel setText:[dateFormattor stringFromDate:startDate]];
+//    [self.endTimeLabel setText:[dateFormattor stringFromDate:endDate]];
 }
 @end

@@ -19,8 +19,10 @@
             [another.students addObject:[student copy]];
         }
     }
-    another.startTime = self.startTime;
-    another.endTime = self.endTime;
+    another.timeSchedule = [self.timeSchedule copy];
+    another.validStartTimestamp = self.validStartTimestamp;
+    another.validEndTimestamp = self.validEndTimestamp;
+    another.repeatType = self.repeatType;
     another.briefDescription = [self.briefDescription copy];
     return another;
 }
@@ -28,8 +30,7 @@
 + (NSArray *)sortDescriptors:(BOOL)ascending
 {
     NSArray *sortDescriptors = [NSArray arrayWithObjects:
-                                [NSSortDescriptor sortDescriptorWithKey:@"startTime" ascending:ascending],
-                                [NSSortDescriptor sortDescriptorWithKey:@"endTime" ascending:ascending], nil];
+                                [NSSortDescriptor sortDescriptorWithKey:@"timeSchedule" ascending:ascending], nil];
     return sortDescriptors;
 }
 @end
