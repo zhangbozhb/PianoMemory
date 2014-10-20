@@ -9,6 +9,7 @@
 #import "PMCoursePickerViewController.h"
 #import "PMCourse+Wrapper.h"
 #import "PMServerWrapper.h"
+#import "PMCourseEditViewController.h"
 
 static NSString *const coursePickerTableViewCellReuseIdentifier = @"coursePickerTableViewCellReuseIdentifier";
 
@@ -29,30 +30,40 @@ static NSString *const coursePickerTableViewCellReuseIdentifier = @"coursePicker
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.courseArray count];
+    return [self.courseArray count] + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:coursePickerTableViewCellReuseIdentifier];
-    PMCourse *course = [self.courseArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = [course getNotNilName];
+    if (indexPath.row < [self.courseArray count]) {
+        PMCourse *course = [self.courseArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = [course getNotNilName];
+    } else {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        [cell.imageView setImage:[UIImage imageNamed:@"btn_add_green"]];
+        [cell.textLabel setText:@"添加新的课程"];
+    }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if (cell) {
-        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+    if (indexPath.row < [self.courseArray count]) {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        if (cell) {
+            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        }
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(coursePicker:course:)]) {
+            PMCourse *course = [self.courseArray objectAtIndex:indexPath.row];
+            [self.delegate coursePicker:self course:course];
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self performSegueWithIdentifier:@"addCourseSegueIdentifier" sender:self];
     }
-    if (self.delegate &&
-        [self.delegate respondsToSelector:@selector(coursePicker:course:)]) {
-        PMCourse *course = [self.courseArray objectAtIndex:indexPath.row];
-        [self.delegate coursePicker:self course:course];
-    }
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)cancelCoursePickerAction:(id)sender {
@@ -73,4 +84,13 @@ static NSString *const coursePickerTableViewCellReuseIdentifier = @"coursePicker
 {
     [self.courseTableView reloadData];
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"addCourseSegueIdentifier"]) {
+        PMCourseEditViewController *coureEditVC = (PMCourseEditViewController *)segue.destinationViewController;
+        [coureEditVC setCourse:nil];
+    }
+}
+
 @end

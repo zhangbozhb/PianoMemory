@@ -23,8 +23,8 @@ typedef enum {
 @property (nonatomic) PMCourse *course;
 @property (nonatomic) NSMutableArray *students;
 @property (nonatomic) PMTimeSchedule *timeSchedule;
-@property (nonatomic) NSTimeInterval validStartTimestamp;
-@property (nonatomic) NSTimeInterval validEndTimestamp;
+@property (nonatomic) NSTimeInterval effectiveDateTimestamp;
+@property (nonatomic) NSTimeInterval expireDateTimestamp;
 @property (nonatomic) NSInteger repeatType;
 @property (nonatomic) NSString *briefDescription;
 

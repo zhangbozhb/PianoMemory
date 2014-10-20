@@ -9,6 +9,7 @@
 #import "PMStudentPickerViewController.h"
 #import "PMStudent+Wrapper.h"
 #import "PMServerWrapper.h"
+#import "PMStudentEditViewController.h"
 
 static NSString *const studentPickerTableViewCellReuseIdentifier = @"studentPickerTableViewCellReuseIdentifier";
 
@@ -37,23 +38,33 @@ static NSString *const studentPickerTableViewCellReuseIdentifier = @"studentPick
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.studentArray count];
+    return [self.studentArray count] + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:studentPickerTableViewCellReuseIdentifier];
-    PMStudent *student = [self.studentArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = [student getNotNilName];
-    cell.detailTextLabel.text = [student getNotNilPhone];
+    if (indexPath.row < [self.studentArray count]) {
+        PMStudent *student = [self.studentArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = [student getNotNilName];
+        cell.detailTextLabel.text = [student getNotNilPhone];
+    } else {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        [cell.imageView setImage:[UIImage imageNamed:@"btn_add_green"]];
+        [cell.textLabel setText:@"添加新的学生"];
+    }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+    if (indexPath.row < [self.studentArray count]) {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+    } else {
+        [self performSegueWithIdentifier:@"addStudentSegueIdentifier" sender:self];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -92,5 +103,14 @@ static NSString *const studentPickerTableViewCellReuseIdentifier = @"studentPick
 - (void)refreshUI
 {
     [self.studentsTableView reloadData];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"addStudentSegueIdentifier"]) {
+        PMStudentEditViewController *studentEditVC = (PMStudentEditViewController*)segue.destinationViewController;
+        [studentEditVC setStudent:nil];
+    }
+
 }
 @end

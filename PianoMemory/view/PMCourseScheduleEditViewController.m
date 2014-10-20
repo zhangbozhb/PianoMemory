@@ -17,10 +17,12 @@
 #import "PMServerWrapper.h"
 #import "PMUISettings.h"
 
-@interface PMCourseScheduleEditViewController () <UITextFieldDelegate, PMCoursePickerDelegate, PMStudentPickerDelgate>
+#import "NSDate+Extend.h"
 
-@property (nonatomic) PMCourse *course;
-@property (nonatomic) NSArray *students;
+@interface PMCourseScheduleEditViewController () <UITextFieldDelegate, PMCoursePickerDelegate, PMStudentPickerDelgate, UIScrollViewDelegate>
+
+@property (nonatomic) PMCourseSchedule *courseScheduleForUI;
+@property (weak, nonatomic) UITextField *currentDateField;
 
 //xib reference
 
@@ -37,6 +39,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *effectiveDateTextField;
 @property (weak, nonatomic) IBOutlet UITextField *expirationDateTextField;
 @property (weak, nonatomic) IBOutlet UITextView *courseScheduleDescriptionTextView;
+@property (weak, nonatomic) IBOutlet UIDatePicker *myDatePicker;
 
 @end
 
@@ -47,6 +50,10 @@
     [super viewDidLoad];
     [self.courseScheduleDescriptionTextView zb_addBorder:1 borderColor:[PMUISettings colorBoarder] cornerRadius:6.f];
     [self.myScrollView setContentSize:self.anchorView.frame.size];
+    UITapGestureRecognizer *hideDatePickerGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideDatePicker)];
+    [self.myScrollView addGestureRecognizer:hideDatePickerGesture];
+
+    [self.myDatePicker setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -58,22 +65,38 @@
 - (void)setCourseSchedule:(PMCourseSchedule *)courseSchedule
 {
     _courseSchedule = courseSchedule;
-    self.course = courseSchedule.course;
+    if (courseSchedule) {
+        _courseScheduleForUI = [courseSchedule copy];
+    }
+}
 
+- (PMCourseSchedule *)courseScheduleForUI
+{
+    if (!_courseScheduleForUI) {
+        _courseScheduleForUI = [[PMCourseSchedule alloc] init];
+        _courseScheduleForUI.effectiveDateTimestamp = [[NSDate date] zb_getDayTimestamp];
+        _courseScheduleForUI.expireDateTimestamp = [[[NSDate date] zb_dateAfterYear:100] zb_getDayTimestamp] - 1;
+    }
+    return _courseScheduleForUI;
 }
 
 - (NSString *)checkInputErrorsOfUI
 {
     if (0 == [self.coureNameTextField.text length] &&
-        self.course) {
+        self.courseScheduleForUI.course) {
         return @"课程不能为空";
     }
 
     if (0 == [self.studentNameTextField.text length] &&
-        (self.students || 0 == [self.students count])) {
+        (self.courseScheduleForUI.students || 0 == [self.courseScheduleForUI.students count])) {
         return @"学生不能为空";
     }
     return nil;
+}
+
+- (void)updateCourseScheduleFromUI
+{
+
 }
 
 - (IBAction)commitAction:(id)sender {
@@ -89,17 +112,40 @@
         [alertView show];
         return;
     }
-    if (!self.course) {
-        PMCourse *course = [[PMCourse alloc] init];
-        course.name = self.coureNameTextField.text;
-    }
-    if (!self.students) {
-        PMStudent *student = [[PMStudent alloc] init];
-        student.name = self.studentNameTextField.text;
-        self.students = [NSArray arrayWithObjects:student, nil];
-    }
     //这里不存放的哦数据库，加一个 delegate
 
+}
+
+- (IBAction)pickEffectiveDateAction:(id)sender {
+    self.currentDateField = self.effectiveDateTextField;
+    [self.myDatePicker setDatePickerMode:UIDatePickerModeDate];
+    [self.myDatePicker setHidden:NO];
+
+    CGPoint targetOffset = CGPointMake(0, self.effectiveDateTextField.frame.origin.y+self.effectiveDateTextField.frame.size.height+self.myDatePicker.frame.size.height-self.myScrollView.frame.size.height);
+    if (targetOffset.y < targetOffset.y) {
+        [self.myScrollView setContentOffset:targetOffset];
+    }
+}
+
+- (IBAction)pickExpireDateAction:(id)sender {
+    self.currentDateField = self.expirationDateTextField;
+    [self.myDatePicker setDatePickerMode:UIDatePickerModeDate];
+    [self.myDatePicker setHidden:NO];
+    CGPoint targetOffset = CGPointMake(0, self.expirationDateTextField.frame.origin.y+self.expirationDateTextField.frame.size.height+self.myDatePicker.frame.size.height-self.myScrollView.frame.size.height);
+    if (targetOffset.y < targetOffset.y) {
+        [self.myScrollView setContentOffset:targetOffset];
+    }
+}
+
+
+- (IBAction)dateTimePickerValueChangeAction:(id)sender {
+    if (self.currentDateField == self.effectiveDateTextField) {
+        self.courseScheduleForUI.effectiveDateTimestamp = [self.myDatePicker.date zb_getDayTimestamp];
+        [self refreshEffectiveExpireTimeUI];
+    } else if (self.currentDateField == self.expirationDateTextField) {
+        self.courseScheduleForUI.expireDateTimestamp = [[self.myDatePicker.date zb_dateAfterDay:1] zb_getDayTimestamp] - 1;
+        [self refreshEffectiveExpireTimeUI];
+    }
 }
 
 #pragma delegate textfield
@@ -109,19 +155,10 @@
     return NO;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
+#pragma delegate UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (textField == self.coureNameTextField) {
-        if (self.course &&
-            ![textField.text isEqualToString:self.course.name]) {
-            self.course = nil;
-        }
-    } else if (textField == self.studentNameTextField) {
-        if (self.students &&
-            [textField.text isEqualToString:[self getNameStringOfStudents:self.students]]) {
-            self.students = nil;
-        }
-    }
+
 }
 
 #pragma add keyboard appear and dissappear
@@ -152,8 +189,8 @@
 
 - (void)refreshCourseNameUI
 {
-    if (self.course) {
-        self.coureNameTextField.text = [self.course getNotNilName];
+    if (self.courseScheduleForUI.course) {
+        self.coureNameTextField.text = [self.courseScheduleForUI.course getNotNilName];
     } else {
         self.coureNameTextField.text = nil;
     }
@@ -161,11 +198,25 @@
 
 - (void)refreshStudentNameUI
 {
-    if (self.students) {
-        self.studentNameTextField.text = [self getNameStringOfStudents:self.students];
+    if (self.courseScheduleForUI.students) {
+        self.studentNameTextField.text = [self getNameStringOfStudents:self.courseScheduleForUI.students];
     } else {
         self.studentNameTextField.text = nil;
     }
+}
+
+- (void)refreshEffectiveExpireTimeUI
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:[self effectiveExpireDateFormatterString]];
+    self.effectiveDateTextField.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.courseScheduleForUI.effectiveDateTimestamp]];
+    self.expirationDateTextField.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.courseScheduleForUI.expireDateTimestamp]];
+
+}
+
+- (NSString *)effectiveExpireDateFormatterString
+{
+    return @"yyyy-MM-dd";
 }
 
 - (void)refreshUI
@@ -178,6 +229,7 @@
 
     [self refreshCourseNameUI];
     [self refreshStudentNameUI];
+    [self refreshEffectiveExpireTimeUI];
 }
 
 - (NSString *)getNameStringOfStudents:(NSArray*)students
@@ -192,13 +244,13 @@
 #pragma delegate PMCoursePickerDelate
 - (void)coursePicker:(PMCoursePickerViewController *)coursePicker course:(PMCourse *)course
 {
-    self.course = course;
+    self.courseScheduleForUI.course = course;
     [self refreshCourseNameUI];
 }
 #pragma delgate PMStudentPickerDelgate
 - (void)studentPicker:(PMStudentPickerViewController*)studentPicker students:(NSArray*)students
 {
-    self.students = students;
+    self.courseScheduleForUI.students = [NSMutableArray arrayWithArray:students];
     [self refreshStudentNameUI];
 }
 
@@ -211,6 +263,12 @@
         PMStudentPickerViewController *studentPickerVC = (PMStudentPickerViewController*)segue.destinationViewController;
         [studentPickerVC setDelegate:self];
     }
+}
+
+- (void)hideDatePicker
+{
+    self.currentDateField = nil;
+    [self.myDatePicker setHidden:YES];
 }
 
 @end

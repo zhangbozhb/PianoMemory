@@ -20,8 +20,8 @@
         }
     }
     another.timeSchedule = [self.timeSchedule copy];
-    another.validStartTimestamp = self.validStartTimestamp;
-    another.validEndTimestamp = self.validEndTimestamp;
+    another.effectiveDateTimestamp = self.effectiveDateTimestamp;
+    another.expireDateTimestamp = self.expireDateTimestamp;
     another.repeatType = self.repeatType;
     another.briefDescription = [self.briefDescription copy];
     return another;

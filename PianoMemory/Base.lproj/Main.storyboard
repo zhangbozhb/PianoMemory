@@ -211,21 +211,21 @@
                         <viewControllerLayoutGuide type="bottom" id="9si-z5-oxj"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Pqn-uJ-6kn">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="700"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5R1-iT-MWD" userLabel="anchor view">
-                                <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="400"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="600" id="Q3J-Fe-AOI"/>
+                                    <constraint firstAttribute="height" constant="400" id="Q3J-Fe-AOI"/>
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="648-h8-TDi">
-                                <rect key="frame" x="0.0" y="64" width="600" height="687"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="587"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1LL-Rt-p9C" userLabel="mycontentview">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="课程名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AkU-Ck-amO">
                                                 <rect key="frame" x="20" y="16" width="78" height="30"/>
@@ -379,6 +379,9 @@
                                                     <constraint firstAttribute="width" constant="30" id="MqJ-hn-Bbb"/>
                                                 </constraints>
                                                 <state key="normal" title="pick"/>
+                                                <connections>
+                                                    <action selector="pickEffectiveDateAction:" destination="74Q-lZ-nrB" eventType="touchUpInside" id="0dB-1V-FLn"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="失效时间" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9WP-tW-qwn">
                                                 <rect key="frame" x="20" y="216" width="78" height="30"/>
@@ -408,9 +411,12 @@
                                                     <constraint firstAttribute="width" constant="30" id="zWF-hY-vzf"/>
                                                 </constraints>
                                                 <state key="normal" title="pick"/>
+                                                <connections>
+                                                    <action selector="pickExpireDateAction:" destination="74Q-lZ-nrB" eventType="touchUpInside" id="Z34-Sq-Y29"/>
+                                                </connections>
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rCs-bt-1UA">
-                                                <rect key="frame" x="20" y="291" width="560" height="299"/>
+                                                <rect key="frame" x="20" y="291" width="560" height="99"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -475,15 +481,34 @@
                                     <constraint firstAttribute="trailing" secondItem="1LL-Rt-p9C" secondAttribute="trailing" id="cHd-Mq-Z8i"/>
                                     <constraint firstItem="1LL-Rt-p9C" firstAttribute="leading" secondItem="648-h8-TDi" secondAttribute="leading" id="vzb-Da-wuV"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="74Q-lZ-nrB" id="amO-VP-wK8"/>
+                                </connections>
                             </scrollView>
+                            <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="m32-bp-zyk">
+                                <rect key="frame" x="0.0" y="490" width="600" height="162"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="160" id="D9K-BD-rNU"/>
+                                </constraints>
+                                <date key="date" timeIntervalSinceReferenceDate="435466046.479307">
+                                    <!--2014-10-20 02:47:26 +0000-->
+                                </date>
+                                <locale key="locale" localeIdentifier="zh"/>
+                                <connections>
+                                    <action selector="dateTimePickerValueChangeAction:" destination="74Q-lZ-nrB" eventType="valueChanged" id="H0a-Uc-nhh"/>
+                                </connections>
+                            </datePicker>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="648-h8-TDi" firstAttribute="leading" secondItem="Pqn-uJ-6kn" secondAttribute="leading" id="4QB-bH-ogu"/>
                             <constraint firstAttribute="trailing" secondItem="648-h8-TDi" secondAttribute="trailing" id="FEJ-X0-ewE"/>
                             <constraint firstItem="1LL-Rt-p9C" firstAttribute="width" secondItem="5R1-iT-MWD" secondAttribute="width" id="HtP-NH-sNc"/>
+                            <constraint firstAttribute="trailing" secondItem="m32-bp-zyk" secondAttribute="trailing" id="OOU-kc-IQ6"/>
                             <constraint firstItem="648-h8-TDi" firstAttribute="top" secondItem="ptg-Y1-PVf" secondAttribute="bottom" id="Xuc-4u-vQe"/>
                             <constraint firstItem="5R1-iT-MWD" firstAttribute="top" secondItem="ptg-Y1-PVf" secondAttribute="bottom" id="bvm-od-gGb"/>
+                            <constraint firstItem="9si-z5-oxj" firstAttribute="top" secondItem="m32-bp-zyk" secondAttribute="bottom" id="fTZ-2N-fn5"/>
+                            <constraint firstItem="m32-bp-zyk" firstAttribute="leading" secondItem="Pqn-uJ-6kn" secondAttribute="leading" id="j7V-g2-sf9"/>
                             <constraint firstItem="5R1-iT-MWD" firstAttribute="leading" secondItem="Pqn-uJ-6kn" secondAttribute="leading" id="mhH-sN-Igd"/>
                             <constraint firstAttribute="trailing" secondItem="5R1-iT-MWD" secondAttribute="trailing" id="mvQ-O4-nBt"/>
                             <constraint firstItem="9si-z5-oxj" firstAttribute="top" secondItem="648-h8-TDi" secondAttribute="bottom" id="o1h-f6-I8O"/>
@@ -494,7 +519,7 @@
                         <barButtonItem key="rightBarButtonItem" title="保存" id="ufz-xU-WU0"/>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="600" height="800"/>
+                    <size key="freeformSize" width="600" height="700"/>
                     <connections>
                         <outlet property="anchorView" destination="5R1-iT-MWD" id="wld-Zv-A1c"/>
                         <outlet property="coureNameTextField" destination="Y2L-Fk-3pD" id="847-9e-x5P"/>
@@ -503,6 +528,7 @@
                         <outlet property="endTimeTextField" destination="kdJ-BJ-Klv" id="PNb-KB-bZv"/>
                         <outlet property="expirationDateTextField" destination="Ijj-sM-dEq" id="phe-yW-2d5"/>
                         <outlet property="myContentView" destination="1LL-Rt-p9C" id="yJL-o0-E6p"/>
+                        <outlet property="myDatePicker" destination="m32-bp-zyk" id="y35-bd-hu1"/>
                         <outlet property="myNavigationItem" destination="8zt-58-rWY" id="mz1-yR-K4L"/>
                         <outlet property="myScrollView" destination="648-h8-TDi" id="1Nz-3m-1VO"/>
                         <outlet property="startTimeTextField" destination="iIA-dg-5IN" id="FlC-oY-2o1"/>
@@ -512,7 +538,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="igY-br-9cX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1304" y="-903"/>
+            <point key="canvasLocation" x="1302" y="-974"/>
         </scene>
         <!--选择课程-->
         <scene sceneID="gtt-8f-aO9">
@@ -523,11 +549,11 @@
                         <viewControllerLayoutGuide type="bottom" id="qmI-LH-3yQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ylU-7h-ncm">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="700"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="yZa-oI-TEN">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="751"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="651"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="coursePickerTableViewCellReuseIdentifier" textLabel="aMf-3I-awD" detailTextLabel="nGr-21-hlO" style="IBUITableViewCellStyleValue1" id="7Vv-TM-N2L">
@@ -573,7 +599,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="选择课程" id="2Md-Pe-WPp">
-                        <barButtonItem key="leftBarButtonItem" title="取消" id="GG8-XZ-1l8">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="GG8-XZ-1l8">
                             <connections>
                                 <action selector="cancelCoursePickerAction:" destination="5JC-Hw-cuP" id="new-Yo-EwO"/>
                             </connections>
@@ -581,6 +607,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="courseTableView" destination="yZa-oI-TEN" id="77V-fr-dNj"/>
+                        <segue destination="eHN-cJ-8Qk" kind="show" identifier="addCourseSegueIdentifier" id="kSK-QF-DU4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EqM-w9-7xe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -596,11 +623,11 @@
                         <viewControllerLayoutGuide type="bottom" id="g6s-DC-D4K"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="s9g-aX-Zyd">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="700"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="drt-Iv-agX">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="700"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="studentPickerTableViewCellReuseIdentifier" textLabel="hOJ-J9-jT7" detailTextLabel="Rx8-Gb-0ah" style="IBUITableViewCellStyleValue1" id="9bI-uy-Ypv">
@@ -640,7 +667,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="选择学生" id="V6Z-LZ-eE4">
-                        <barButtonItem key="leftBarButtonItem" title="取消" id="tsn-fu-uaN">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="tsn-fu-uaN">
                             <connections>
                                 <action selector="cancelPickStudentAction:" destination="rfN-bX-z21" id="q4V-Fe-xJH"/>
                             </connections>
@@ -654,11 +681,12 @@
                     <connections>
                         <outlet property="myNavigationItem" destination="V6Z-LZ-eE4" id="v8y-BX-bVc"/>
                         <outlet property="studentsTableView" destination="drt-Iv-agX" id="Tvk-Pq-iPi"/>
+                        <segue destination="bUA-np-tzm" kind="show" identifier="addStudentSegueIdentifier" id="345-S2-1aJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z7e-3R-pLm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2021" y="-667"/>
+            <point key="canvasLocation" x="2111" y="-664"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="BkP-eQ-X1u">
@@ -1346,7 +1374,7 @@
                         <viewControllerLayoutGuide type="bottom" id="SOY-Aj-NbN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="EDR-W4-DND">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="700"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="姓名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="ai6-Da-Byo">
@@ -1437,7 +1465,7 @@
                                 </connections>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jwe-63-Dg5">
-                                <rect key="frame" x="20" y="294" width="560" height="237"/>
+                                <rect key="frame" x="20" y="294" width="560" height="337"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -1529,8 +1557,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="J05-Ct-SpG"/>
-        <segue reference="JJo-fG-Vw8"/>
+        <segue reference="345-S2-1aJ"/>
+        <segue reference="blV-Ym-aDH"/>
         <segue reference="ouG-9o-Jrx"/>
     </inferredMetricsTieBreakers>
 </document>
