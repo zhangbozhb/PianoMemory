@@ -28,6 +28,7 @@
 		9E08E88219E92AA100DFD7CA /* PMUISettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E88119E92AA100DFD7CA /* PMUISettings.m */; };
 		9EA76B7419F4BAA600B5613B /* btn_add_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA76B7219F4BAA600B5613B /* btn_add_green.png */; };
 		9EA76B7519F4BAA600B5613B /* btn_add_green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA76B7319F4BAA600B5613B /* btn_add_green@2x.png */; };
+		9EA76B7819F5001200B5613B /* PMTimeSchedulePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA76B7719F5001200B5613B /* PMTimeSchedulePickerViewController.m */; };
 		9EF130E819E029A900843F02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF130E719E029A900843F02 /* main.m */; };
 		9EF130EB19E029A900843F02 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF130EA19E029A900843F02 /* AppDelegate.m */; };
 		9EF130EE19E029AA00843F02 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF130ED19E029AA00843F02 /* ViewController.m */; };
@@ -133,6 +134,8 @@
 		9E08E88119E92AA100DFD7CA /* PMUISettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMUISettings.m; sourceTree = "<group>"; };
 		9EA76B7219F4BAA600B5613B /* btn_add_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_add_green.png; sourceTree = "<group>"; };
 		9EA76B7319F4BAA600B5613B /* btn_add_green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_add_green@2x.png"; sourceTree = "<group>"; };
+		9EA76B7619F5001200B5613B /* PMTimeSchedulePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMTimeSchedulePickerViewController.h; sourceTree = "<group>"; };
+		9EA76B7719F5001200B5613B /* PMTimeSchedulePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMTimeSchedulePickerViewController.m; sourceTree = "<group>"; };
 		9EF130E219E029A900843F02 /* PianoMemory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PianoMemory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EF130E619E029A900843F02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EF130E719E029A900843F02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -264,6 +267,8 @@
 				9E08E86319E6B61500DFD7CA /* PMCoursePickerViewController.m */,
 				9E08E86519E6C04400DFD7CA /* PMStudentPickerViewController.h */,
 				9E08E86619E6C04400DFD7CA /* PMStudentPickerViewController.m */,
+				9EA76B7619F5001200B5613B /* PMTimeSchedulePickerViewController.h */,
+				9EA76B7719F5001200B5613B /* PMTimeSchedulePickerViewController.m */,
 			);
 			name = daycourseschedule;
 			sourceTree = "<group>";
@@ -726,6 +731,7 @@
 				9E08E84719E2C88200DFD7CA /* PMMoreViewController.m in Sources */,
 				9EF131A119E24AEC00843F02 /* UIViewController+WithKeyboardNotification.m in Sources */,
 				9EF1315619E02FF200843F02 /* NSDictionary+Extend.m in Sources */,
+				9EA76B7819F5001200B5613B /* PMTimeSchedulePickerViewController.m in Sources */,
 				9EF1315B19E02FF200843F02 /* UIImage+Extend.m in Sources */,
 				9EF1315D19E02FF200843F02 /* UINavigationItem+iOS7.m in Sources */,
 				9EF1315F19E02FF200843F02 /* UITableViewCell+SelectedView.m in Sources */,

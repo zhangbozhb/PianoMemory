@@ -51,10 +51,6 @@ static NSString *const coursePickerTableViewCellReuseIdentifier = @"coursePicker
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row < [self.courseArray count]) {
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        if (cell) {
-            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-        }
         if (self.delegate &&
             [self.delegate respondsToSelector:@selector(coursePicker:course:)]) {
             PMCourse *course = [self.courseArray objectAtIndex:indexPath.row];
@@ -62,7 +58,7 @@ static NSString *const coursePickerTableViewCellReuseIdentifier = @"coursePicker
         }
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        [self performSegueWithIdentifier:@"addCourseSegueIdentifier" sender:self];
+        [self performSegueWithIdentifier:@"pickerAddCourseSegueIdentifier" sender:self];
     }
 }
 
@@ -87,7 +83,7 @@ static NSString *const coursePickerTableViewCellReuseIdentifier = @"coursePicker
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"addCourseSegueIdentifier"]) {
+    if ([segue.identifier isEqualToString:@"pickerAddCourseSegueIdentifier"]) {
         PMCourseEditViewController *coureEditVC = (PMCourseEditViewController *)segue.destinationViewController;
         [coureEditVC setCourse:nil];
     }

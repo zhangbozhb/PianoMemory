@@ -63,7 +63,7 @@ static NSString *const studentPickerTableViewCellReuseIdentifier = @"studentPick
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
     } else {
-        [self performSegueWithIdentifier:@"addStudentSegueIdentifier" sender:self];
+        [self performSegueWithIdentifier:@"pickerAddStudentSegueIdentifier" sender:self];
     }
 }
 
@@ -107,7 +107,7 @@ static NSString *const studentPickerTableViewCellReuseIdentifier = @"studentPick
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"addStudentSegueIdentifier"]) {
+    if ([segue.identifier isEqualToString:@"pickerAddStudentSegueIdentifier"]) {
         PMStudentEditViewController *studentEditVC = (PMStudentEditViewController*)segue.destinationViewController;
         [studentEditVC setStudent:nil];
     }

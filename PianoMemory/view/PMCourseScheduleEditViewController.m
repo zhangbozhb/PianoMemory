@@ -11,6 +11,7 @@
 #import "UIViewController+WithKeyboardNotification.h"
 #import "PMCoursePickerViewController.h"
 #import "PMStudentPickerViewController.h"
+#import "PMTimeSchedulePickerViewController.h"
 #import "PMCourse+Wrapper.h"
 #import "PMStudent+Wrapper.h"
 #import "PMCourseSchedule+Wrapper.h"
@@ -19,7 +20,7 @@
 
 #import "NSDate+Extend.h"
 
-@interface PMCourseScheduleEditViewController () <UITextFieldDelegate, PMCoursePickerDelegate, PMStudentPickerDelgate, UIScrollViewDelegate>
+@interface PMCourseScheduleEditViewController () <UITextFieldDelegate, PMCoursePickerDelegate, PMStudentPickerDelgate,PMTimeSchedulePickerDelgate, UIScrollViewDelegate>
 
 @property (nonatomic) PMCourseSchedule *courseScheduleForUI;
 @property (weak, nonatomic) UITextField *currentDateField;
@@ -219,6 +220,19 @@
     return @"yyyy-MM-dd";
 }
 
+- (void)refreshTimeScheduleUI
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:[self timeScheduleFormatterString]];
+    self.startTimeTextField.text = [self.courseScheduleForUI.timeSchedule getStartTimeWithTimeFormatter:[self timeScheduleFormatterString]];
+    self.endTimeTextField.text = [self.courseScheduleForUI.timeSchedule getEndTimeWithTimeFormatter:[self timeScheduleFormatterString]];
+}
+
+- (NSString *)timeScheduleFormatterString
+{
+    return @"HH:mm";
+}
+
 - (void)refreshUI
 {
     NSString *navigationTilte = @"新增课程安排";
@@ -253,6 +267,12 @@
     self.courseScheduleForUI.students = [NSMutableArray arrayWithArray:students];
     [self refreshStudentNameUI];
 }
+#pragma delegate PMTimeSchedulePickerDelgate
+- (void)timeSchedulePicker:(PMTimeSchedulePickerViewController *)timeSchedulePicker timeSchedule:(PMTimeSchedule *)timeSchedule
+{
+    self.courseScheduleForUI.timeSchedule = timeSchedule;
+    [self refreshTimeScheduleUI];
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -262,6 +282,9 @@
     } else if ([segue.identifier isEqualToString:@"showStudentPickSegueIdentifier"]) {
         PMStudentPickerViewController *studentPickerVC = (PMStudentPickerViewController*)segue.destinationViewController;
         [studentPickerVC setDelegate:self];
+    } else if ([segue.identifier isEqualToString:@"showTimeSchedulePickSegueIdentifier"]) {
+        PMTimeSchedulePickerViewController *timePickerVC = (PMTimeSchedulePickerViewController*)segue.destinationViewController;
+        [timePickerVC setDelegate:self];
     }
 }
 
