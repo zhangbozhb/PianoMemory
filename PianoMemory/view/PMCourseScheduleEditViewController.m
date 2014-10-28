@@ -22,7 +22,7 @@
 
 @interface PMCourseScheduleEditViewController () <UITextFieldDelegate, PMCoursePickerDelegate, PMStudentPickerDelgate,PMTimeSchedulePickerDelgate, UIScrollViewDelegate>
 
-@property (nonatomic) PMCourseSchedule *courseScheduleForUI;
+@property (nonatomic) PMCourseSchedule *changedCourseSchedule;
 @property (weak, nonatomic) UITextField *currentDateField;
 
 //xib reference
@@ -66,30 +66,28 @@
 - (void)setCourseSchedule:(PMCourseSchedule *)courseSchedule
 {
     _courseSchedule = courseSchedule;
-    if (courseSchedule) {
-        _courseScheduleForUI = [courseSchedule copy];
-    }
+    _changedCourseSchedule = [courseSchedule copy];
 }
 
-- (PMCourseSchedule *)courseScheduleForUI
+- (PMCourseSchedule *)changedCourseSchedule
 {
-    if (!_courseScheduleForUI) {
-        _courseScheduleForUI = [[PMCourseSchedule alloc] init];
-        _courseScheduleForUI.effectiveDateTimestamp = [[NSDate date] zb_getDayTimestamp];
-        _courseScheduleForUI.expireDateTimestamp = [[[NSDate date] zb_dateAfterYear:100] zb_getDayTimestamp] - 1;
+    if (!_changedCourseSchedule) {
+        _changedCourseSchedule = [[PMCourseSchedule alloc] init];
+        _changedCourseSchedule.effectiveDateTimestamp = [[NSDate date] zb_getDayTimestamp];
+        _changedCourseSchedule.expireDateTimestamp = [[[NSDate date] zb_dateAfterYear:100] zb_getDayTimestamp] - 1;
     }
-    return _courseScheduleForUI;
+    return _changedCourseSchedule;
 }
 
 - (NSString *)checkInputErrorsOfUI
 {
     if (0 == [self.coureNameTextField.text length] &&
-        self.courseScheduleForUI.course) {
+        self.changedCourseSchedule.course) {
         return @"课程不能为空";
     }
 
     if (0 == [self.studentNameTextField.text length] &&
-        (self.courseScheduleForUI.students || 0 == [self.courseScheduleForUI.students count])) {
+        (self.changedCourseSchedule.students || 0 == [self.changedCourseSchedule.students count])) {
         return @"学生不能为空";
     }
     return nil;
@@ -113,38 +111,49 @@
         [alertView show];
         return;
     }
-    //这里不存放的哦数据库，加一个 delegate
-
+    if (self.delegate &&
+        [self.delegate respondsToSelector:@selector(courseScheduleEdit:updateCourseSchedule:indexPath:)]) {
+        [self.delegate courseScheduleEdit:self updateCourseSchedule:self.changedCourseSchedule indexPath:self.indexPath];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)pickEffectiveDateAction:(id)sender {
-    self.currentDateField = self.effectiveDateTextField;
-    [self.myDatePicker setDatePickerMode:UIDatePickerModeDate];
-    [self.myDatePicker setHidden:NO];
+    if (self.currentDateField == self.effectiveDateTextField) {
+        [self hideDatePicker];
+    } else {
+        self.currentDateField = self.effectiveDateTextField;
+        [self.myDatePicker setDatePickerMode:UIDatePickerModeDate];
+        [self.myDatePicker setHidden:NO];
 
-    CGPoint targetOffset = CGPointMake(0, self.effectiveDateTextField.frame.origin.y+self.effectiveDateTextField.frame.size.height+self.myDatePicker.frame.size.height-self.myScrollView.frame.size.height);
-    if (targetOffset.y < targetOffset.y) {
-        [self.myScrollView setContentOffset:targetOffset];
+        CGPoint targetOffset = CGPointMake(0, self.effectiveDateTextField.frame.origin.y+self.effectiveDateTextField.frame.size.height+self.myDatePicker.frame.size.height-self.myScrollView.frame.size.height);
+        if (targetOffset.y < targetOffset.y) {
+            [self.myScrollView setContentOffset:targetOffset];
+        }
     }
 }
 
 - (IBAction)pickExpireDateAction:(id)sender {
-    self.currentDateField = self.expirationDateTextField;
-    [self.myDatePicker setDatePickerMode:UIDatePickerModeDate];
-    [self.myDatePicker setHidden:NO];
-    CGPoint targetOffset = CGPointMake(0, self.expirationDateTextField.frame.origin.y+self.expirationDateTextField.frame.size.height+self.myDatePicker.frame.size.height-self.myScrollView.frame.size.height);
-    if (targetOffset.y < targetOffset.y) {
-        [self.myScrollView setContentOffset:targetOffset];
+    if (self.currentDateField == self.expirationDateTextField) {
+        [self hideDatePicker];
+    } else {
+        self.currentDateField = self.expirationDateTextField;
+        [self.myDatePicker setDatePickerMode:UIDatePickerModeDate];
+        [self.myDatePicker setHidden:NO];
+        CGPoint targetOffset = CGPointMake(0, self.expirationDateTextField.frame.origin.y+self.expirationDateTextField.frame.size.height+self.myDatePicker.frame.size.height-self.myScrollView.frame.size.height);
+        if (targetOffset.y < targetOffset.y) {
+            [self.myScrollView setContentOffset:targetOffset];
+        }
     }
 }
 
 
 - (IBAction)dateTimePickerValueChangeAction:(id)sender {
     if (self.currentDateField == self.effectiveDateTextField) {
-        self.courseScheduleForUI.effectiveDateTimestamp = [self.myDatePicker.date zb_getDayTimestamp];
+        self.changedCourseSchedule.effectiveDateTimestamp = [self.myDatePicker.date zb_getDayTimestamp];
         [self refreshEffectiveExpireTimeUI];
     } else if (self.currentDateField == self.expirationDateTextField) {
-        self.courseScheduleForUI.expireDateTimestamp = [[self.myDatePicker.date zb_dateAfterDay:1] zb_getDayTimestamp] - 1;
+        self.changedCourseSchedule.expireDateTimestamp = [[self.myDatePicker.date zb_dateAfterDay:1] zb_getDayTimestamp] - 1;
         [self refreshEffectiveExpireTimeUI];
     }
 }
@@ -190,8 +199,8 @@
 
 - (void)refreshCourseNameUI
 {
-    if (self.courseScheduleForUI.course) {
-        self.coureNameTextField.text = [self.courseScheduleForUI.course getNotNilName];
+    if (self.changedCourseSchedule.course) {
+        self.coureNameTextField.text = [self.changedCourseSchedule.course getNotNilName];
     } else {
         self.coureNameTextField.text = nil;
     }
@@ -199,8 +208,8 @@
 
 - (void)refreshStudentNameUI
 {
-    if (self.courseScheduleForUI.students) {
-        self.studentNameTextField.text = [self getNameStringOfStudents:self.courseScheduleForUI.students];
+    if (self.changedCourseSchedule.students) {
+        self.studentNameTextField.text = [self getNameStringOfStudents:self.changedCourseSchedule.students];
     } else {
         self.studentNameTextField.text = nil;
     }
@@ -210,8 +219,8 @@
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:[self effectiveExpireDateFormatterString]];
-    self.effectiveDateTextField.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.courseScheduleForUI.effectiveDateTimestamp]];
-    self.expirationDateTextField.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.courseScheduleForUI.expireDateTimestamp]];
+    self.effectiveDateTextField.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.changedCourseSchedule.effectiveDateTimestamp]];
+    self.expirationDateTextField.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.changedCourseSchedule.expireDateTimestamp]];
 
 }
 
@@ -224,8 +233,8 @@
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:[self timeScheduleFormatterString]];
-    self.startTimeTextField.text = [self.courseScheduleForUI.timeSchedule getStartTimeWithTimeFormatter:[self timeScheduleFormatterString]];
-    self.endTimeTextField.text = [self.courseScheduleForUI.timeSchedule getEndTimeWithTimeFormatter:[self timeScheduleFormatterString]];
+    self.startTimeTextField.text = [self.changedCourseSchedule.timeSchedule getStartTimeWithTimeFormatter:[self timeScheduleFormatterString]];
+    self.endTimeTextField.text = [self.changedCourseSchedule.timeSchedule getEndTimeWithTimeFormatter:[self timeScheduleFormatterString]];
 }
 
 - (NSString *)timeScheduleFormatterString
@@ -258,19 +267,19 @@
 #pragma delegate PMCoursePickerDelate
 - (void)coursePicker:(PMCoursePickerViewController *)coursePicker course:(PMCourse *)course
 {
-    self.courseScheduleForUI.course = course;
+    self.changedCourseSchedule.course = course;
     [self refreshCourseNameUI];
 }
 #pragma delgate PMStudentPickerDelgate
 - (void)studentPicker:(PMStudentPickerViewController*)studentPicker students:(NSArray*)students
 {
-    self.courseScheduleForUI.students = [NSMutableArray arrayWithArray:students];
+    self.changedCourseSchedule.students = [NSMutableArray arrayWithArray:students];
     [self refreshStudentNameUI];
 }
 #pragma delegate PMTimeSchedulePickerDelgate
 - (void)timeSchedulePicker:(PMTimeSchedulePickerViewController *)timeSchedulePicker timeSchedule:(PMTimeSchedule *)timeSchedule
 {
-    self.courseScheduleForUI.timeSchedule = timeSchedule;
+    self.changedCourseSchedule.timeSchedule = timeSchedule;
     [self refreshTimeScheduleUI];
 }
 

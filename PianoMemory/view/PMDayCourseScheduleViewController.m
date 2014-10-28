@@ -15,13 +15,15 @@
 #import "PMServerWrapper.h"
 #import "PMDayCourseSchedule.h"
 #import "FMWeekCalendarView.h"
+#import "PMCourseScheduleEditViewController.h"
+#import "PMDayCourseSchedule+Wrapper.h"
 
 static NSString *const courseScheduleTableViewCellReuseIdentifier = @"PMCourseScheduleTableViewCellReuseIdentifier";
 
-@interface PMDayCourseScheduleViewController () <UITableViewDataSource, UITableViewDataSource, FMWeekCalendarViewDelegate>
+@interface PMDayCourseScheduleViewController () <UITableViewDataSource, UITableViewDataSource, FMWeekCalendarViewDelegate, PMCourseScheduleEditProtocol>
 
 @property (nonatomic) NSDate *targetDate;
-@property (nonatomic) PMDayCourseSchedule *targeDayCourseSchedule;
+@property (nonatomic) PMDayCourseSchedule *targetDayCourseSchedule;
 @property (nonatomic) BOOL shouldFetchData;
 
 //xib reference
@@ -40,6 +42,7 @@ static NSString *const courseScheduleTableViewCellReuseIdentifier = @"PMCourseSc
     self.shouldFetchData = YES;
     self.targetDate = [NSDate date];
     [self.weekCalendarView setDelegate:self];
+    self.targetDayCourseSchedule = [[PMDayCourseSchedule alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -50,13 +53,13 @@ static NSString *const courseScheduleTableViewCellReuseIdentifier = @"PMCourseSc
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.targeDayCourseSchedule.courseSchedules count];
+    return [self.targetDayCourseSchedule.courseSchedules count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PMCourseScheduleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:courseScheduleTableViewCellReuseIdentifier];
-    PMCourseSchedule *courseSchedule = [self.targeDayCourseSchedule.courseSchedules objectAtIndex:indexPath.row];
+    PMCourseSchedule *courseSchedule = [self.targetDayCourseSchedule.courseSchedules objectAtIndex:indexPath.row];
     [cell setCourseSchedule:courseSchedule];
     [cell refreshUI];
     return cell;
@@ -75,7 +78,7 @@ static NSString *const courseScheduleTableViewCellReuseIdentifier = @"PMCourseSc
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (UITableViewCellEditingStyleDelete == editingStyle) {
-        [self.targeDayCourseSchedule.courseSchedules removeObjectAtIndex:indexPath.row];
+        [self.targetDayCourseSchedule.courseSchedules removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
@@ -90,13 +93,25 @@ static NSString *const courseScheduleTableViewCellReuseIdentifier = @"PMCourseSc
     }
 }
 
+#pragma delegate PMCourseScheduleEditProtocol
+- (void)courseScheduleEdit:(PMCourseScheduleEditViewController *)courseScheduleEdit updateCourseSchedule:(PMCourseSchedule *)courseSchedule indexPath:(NSIndexPath *)indexPath
+{
+    if (nil == indexPath &&
+        [self.targetDayCourseSchedule.courseSchedules count] <= indexPath.row) {
+        [self.targetDayCourseSchedule addCourseSchedule:courseSchedule];
+    } else {
+        [self.targetDayCourseSchedule.courseSchedules replaceObjectAtIndex:indexPath.row withObject:courseSchedule];
+    }
+
+}
+
 #pragma ui and customer data
 - (void)loadCustomerData
 {
     if (self.shouldFetchData) {
         __weak PMDayCourseScheduleViewController *pSelf = self;
         [[PMServerWrapper defaultServer] queryDayCourseScheduleOfDate:self.targetDate success:^(PMDayCourseSchedule *dayCourseSchedule) {
-            pSelf.targeDayCourseSchedule = dayCourseSchedule;
+            pSelf.targetDayCourseSchedule = dayCourseSchedule;
             [pSelf refreshUI];
             pSelf.shouldFetchData = NO;
         } failure:^(HCErrorMessage *error) {

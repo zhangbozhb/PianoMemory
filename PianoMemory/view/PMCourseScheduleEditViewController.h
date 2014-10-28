@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "PMCourseSchedule.h"
 
+@class PMCourseScheduleEditViewController;
+@protocol PMCourseScheduleEditProtocol <NSObject>
+- (void)courseScheduleEdit:(PMCourseScheduleEditViewController*)courseScheduleEdit updateCourseSchedule:(PMCourseSchedule*)courseSchedule indexPath:(NSIndexPath*)indexPath;
+
+@end
+
 @interface PMCourseScheduleEditViewController : UIViewController
 @property (nonatomic) PMCourseSchedule *courseSchedule;
+@property (nonatomic) NSIndexPath *indexPath;
+@property (nonatomic, weak) id<PMCourseScheduleEditProtocol>delegate;
 @end
