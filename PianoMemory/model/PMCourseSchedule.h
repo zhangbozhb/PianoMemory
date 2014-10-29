@@ -19,6 +19,16 @@ typedef enum {
     PMCourseScheduleRepeatTypeYear,
 }PMCourseScheduleRepeatType;
 
+typedef enum {
+    PMCourseScheduleRepeatDataWeekDayMonday = 1 ,
+    PMCourseScheduleRepeatDataWeekDayTuesday = 1 < 1,
+    PMCourseScheduleRepeatDataWeekDayWednesday  = 1 < 2,
+    PMCourseScheduleRepeatDataWeekDayThursday  = 1 < 3,
+    PMCourseScheduleRepeatDataWeekDayFriday  = 1 < 4,
+    PMCourseScheduleRepeatDataWeekDayStaturday  = 1 < 5,
+    PMCourseScheduleRepeatDataWeekDaySunday = 1 < 6,
+}PMCourseScheduleRepeatDataWeekDay;
+
 @interface PMCourseSchedule : PMObject
 @property (nonatomic) PMCourse *course;
 @property (nonatomic) NSMutableArray *students;
@@ -26,6 +36,7 @@ typedef enum {
 @property (nonatomic) NSTimeInterval effectiveDateTimestamp;
 @property (nonatomic) NSTimeInterval expireDateTimestamp;
 @property (nonatomic) NSInteger repeatType;
+@property (nonatomic) NSInteger repeateData;
 @property (nonatomic) NSString *briefDescription;
 
 + (NSArray *)sortDescriptors:(BOOL)ascending;

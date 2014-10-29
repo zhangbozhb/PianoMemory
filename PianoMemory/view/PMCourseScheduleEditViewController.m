@@ -41,6 +41,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *expirationDateTextField;
 @property (weak, nonatomic) IBOutlet UITextView *courseScheduleDescriptionTextView;
 @property (weak, nonatomic) IBOutlet UIDatePicker *myDatePicker;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *repeateTypeSegmentControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *weekDaySegmentControl;
 
 @end
 

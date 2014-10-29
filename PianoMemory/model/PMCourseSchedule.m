@@ -23,6 +23,7 @@
     another.effectiveDateTimestamp = self.effectiveDateTimestamp;
     another.expireDateTimestamp = self.expireDateTimestamp;
     another.repeatType = self.repeatType;
+    another.repeateData = self.repeateData;
     another.briefDescription = [self.briefDescription copy];
     return another;
 }
