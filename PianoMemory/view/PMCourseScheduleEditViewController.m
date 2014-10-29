@@ -19,6 +19,7 @@
 #import "PMUISettings.h"
 
 #import "NSDate+Extend.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 
 @interface PMCourseScheduleEditViewController () <UITextFieldDelegate, PMCoursePickerDelegate, PMStudentPickerDelgate,PMTimeSchedulePickerDelgate, UIScrollViewDelegate>
 
@@ -41,7 +42,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *expirationDateTextField;
 @property (weak, nonatomic) IBOutlet UITextView *courseScheduleDescriptionTextView;
 @property (weak, nonatomic) IBOutlet UIDatePicker *myDatePicker;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *repeateTypeSegmentControl;
+@property (weak, nonatomic) IBOutlet UISwitch *repeatSwitch;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *weekDaySegmentControl;
 
 @end
@@ -95,11 +96,6 @@
     return nil;
 }
 
-- (void)updateCourseScheduleFromUI
-{
-
-}
-
 - (IBAction)commitAction:(id)sender {
     [self.view endEditing:YES];
 
@@ -113,11 +109,45 @@
         [alertView show];
         return;
     }
-    if (self.delegate &&
-        [self.delegate respondsToSelector:@selector(courseScheduleEdit:updateCourseSchedule:indexPath:)]) {
-        [self.delegate courseScheduleEdit:self updateCourseSchedule:self.changedCourseSchedule indexPath:self.indexPath];
+    if (PMCourseScheduleRepeatTypeNone == self.changedCourseSchedule.repeatType) {
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(courseScheduleEdit:updateCourseSchedule:indexPath:)]) {
+            [self.delegate courseScheduleEdit:self updateCourseSchedule:self.changedCourseSchedule indexPath:self.indexPath];
+        }
+    } else {
+        __weak PMCourseScheduleEditViewController *pSelf = self;
+        [[PMServerWrapper defaultServer] updateCourseSchedule:self.changedCourseSchedule success:^(PMCourseSchedule *courseSchedule) {
+            if (pSelf.delegate &&
+                [pSelf.delegate respondsToSelector:@selector(courseScheduleEdit:updateCourseSchedule:indexPath:)]) {
+                [pSelf.delegate courseScheduleEdit:pSelf updateCourseSchedule:courseSchedule indexPath:pSelf.indexPath];
+            }
+
+            MBProgressHUD *toast = [[MBProgressHUD alloc] initWithView:pSelf.view];
+            [pSelf.view addSubview:toast];
+            toast.removeFromSuperViewOnHide = YES;
+            toast.mode = MBProgressHUDModeText;
+            toast.animationType = MBProgressHUDAnimationFade;
+
+            [toast setLabelText:@"课程保存成功"];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+                [pSelf.navigationController popViewControllerAnimated:YES];
+            }];
+        } failure:^(HCErrorMessage *error) {
+            MBProgressHUD *toast = [[MBProgressHUD alloc] initWithView:pSelf.view];
+            [pSelf.view addSubview:toast];
+            toast.removeFromSuperViewOnHide = YES;
+            toast.mode = MBProgressHUDModeText;
+            toast.animationType = MBProgressHUDAnimationFade;
+
+            [toast setLabelText:@"课程保存失败"];
+            [toast setDetailsLabelText:error.errorMessage];
+            [toast show:YES];
+            [toast hide:YES afterDelay:2];
+        }];
     }
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)pickEffectiveDateAction:(id)sender {
@@ -158,6 +188,18 @@
         self.changedCourseSchedule.expireDateTimestamp = [[self.myDatePicker.date zb_dateAfterDay:1] zb_getDayTimestamp] - 1;
         [self refreshEffectiveExpireTimeUI];
     }
+}
+
+- (IBAction)repeatChangedAction:(id)sender {
+    if ([self.repeatSwitch isOn]) {
+        [self.changedCourseSchedule setRepeatType:PMCourseScheduleRepeatTypeWeek];
+
+        PMCourseScheduleRepeatDataWeekDay weekday = [PMCourseSchedule getRepeatWeekDayFromWeekDayIndex:[[NSDate date] zb_getWeekDay]-1];
+        [self.changedCourseSchedule setRepeatWeekDay:weekday];
+    } else {
+        [self.changedCourseSchedule setRepeatType:PMCourseScheduleRepeatTypeNone];
+    }
+    [self refreshRepeatInfoUI];
 }
 
 #pragma delegate textfield
@@ -223,7 +265,6 @@
     [dateFormatter setDateFormat:[self effectiveExpireDateFormatterString]];
     self.effectiveDateTextField.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.changedCourseSchedule.effectiveDateTimestamp]];
     self.expirationDateTextField.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.changedCourseSchedule.expireDateTimestamp]];
-
 }
 
 - (NSString *)effectiveExpireDateFormatterString
@@ -244,6 +285,20 @@
     return @"HH:mm";
 }
 
+- (void)refreshRepeatInfoUI
+{
+    if (PMCourseScheduleRepeatTypeWeek == self.changedCourseSchedule.repeatType) {
+        [self.repeatSwitch setOn:YES];
+        [self.weekDaySegmentControl setEnabled:YES];
+        NSArray *weekDays = [self.changedCourseSchedule getRepeatWeekDays];
+        NSInteger weekDayIndex = [PMCourseSchedule getWeekDayIndexFromRepeatWeekDay:[[weekDays firstObject] longValue]];
+        [self.weekDaySegmentControl setSelectedSegmentIndex:weekDayIndex];
+    } else  {
+        [self.repeatSwitch setOn:NO];
+        [self.weekDaySegmentControl setEnabled:NO];
+    }
+}
+
 - (void)refreshUI
 {
     NSString *navigationTilte = @"新增课程安排";
@@ -254,7 +309,9 @@
 
     [self refreshCourseNameUI];
     [self refreshStudentNameUI];
+    [self refreshTimeScheduleUI];
     [self refreshEffectiveExpireTimeUI];
+    [self refreshRepeatInfoUI];
 }
 
 - (NSString *)getNameStringOfStudents:(NSArray*)students

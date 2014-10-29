@@ -72,6 +72,11 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
     return [self.studentArray count];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44.f;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PMStudentBrowseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:studentBrowseTableViewCellReuseIdentifier];
@@ -94,10 +99,11 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (UITableViewCellEditingStyleDelete == editingStyle) {
-        PMStudent *toDeleteStudent = [self.studentArray objectAtIndex:indexPath.row];
-        [self.studentArray removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self deleteStudent:toDeleteStudent];
+        __weak PMStudentBrowseViewController *pSelf = self;
+        [self deleteStudent:[self.studentArray objectAtIndex:indexPath.row] block:^{
+            [pSelf.studentArray removeObjectAtIndex:indexPath.row];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }];
     }
 }
 
@@ -267,7 +273,7 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
     }];
 }
 
-- (void)deleteStudent:(PMStudent*)student
+- (void)deleteStudent:(PMStudent*)student block:(void (^)(void))block
 {
     [student updateShortcut];
     __weak PMStudentBrowseViewController *pSelf = self;
@@ -277,6 +283,9 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
             sleep(2);
         } completionBlock:^{
             [toast removeFromSuperview];
+            if (block) {
+                block();
+            }
         }];
     } failure:^(HCErrorMessage *error) {
         MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
@@ -284,6 +293,9 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
             sleep(2);
         } completionBlock:^{
             [toast removeFromSuperview];
+            if (block) {
+                block();
+            }
         }];
     }];
 }
@@ -307,7 +319,6 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
     if (PMLocalServer_DateUpateType_Student == [PMDateUpdte dateUpdateType:notification.object] ||
         PMLocalServer_DateUpateType_ALL == [PMDateUpdte dateUpdateType:notification.object]) {
         self.shouldFetchData = YES;
-        [self loadCustomerData];
     }
 }
 

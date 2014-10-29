@@ -18,7 +18,7 @@
 #import "PMCourseScheduleEditViewController.h"
 #import "PMDayCourseSchedule+Wrapper.h"
 
-static NSString *const courseScheduleTableViewCellReuseIdentifier = @"PMCourseScheduleTableViewCellReuseIdentifier";
+static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCourseScheduleTableViewCellReuseIdentifier";
 
 @interface PMDayCourseScheduleViewController () <UITableViewDataSource, UITableViewDataSource, FMWeekCalendarViewDelegate, PMCourseScheduleEditProtocol>
 
@@ -58,7 +58,7 @@ static NSString *const courseScheduleTableViewCellReuseIdentifier = @"PMCourseSc
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PMCourseScheduleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:courseScheduleTableViewCellReuseIdentifier];
+    PMCourseScheduleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:dayCourseScheduleTableViewCellReuseIdentifier];
     PMCourseSchedule *courseSchedule = [self.targetDayCourseSchedule.courseSchedules objectAtIndex:indexPath.row];
     [cell setCourseSchedule:courseSchedule];
     [cell refreshUI];
@@ -102,7 +102,6 @@ static NSString *const courseScheduleTableViewCellReuseIdentifier = @"PMCourseSc
     } else {
         [self.targetDayCourseSchedule.courseSchedules replaceObjectAtIndex:indexPath.row withObject:courseSchedule];
     }
-
 }
 
 #pragma ui and customer data

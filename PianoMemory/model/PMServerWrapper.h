@@ -37,6 +37,12 @@
 - (void)deleteTimeSchedule:(PMTimeSchedule*)timeSchedule success:(void(^)(PMTimeSchedule *timeSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
 - (void)queryAllTimeSchedules:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure;
 
+#pragma courseSchedule
+- (void)createCourseSchedule:(PMCourseSchedule*)courseSchedule success:(void(^)(PMCourseSchedule *courseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
+- (void)updateCourseSchedule:(PMCourseSchedule*)courseSchedule success:(void(^)(PMCourseSchedule *courseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
+- (void)deleteCourseSchedule:(PMCourseSchedule*)courseSchedule success:(void(^)(PMCourseSchedule *courseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
+- (void)queryAllCourseSchedules:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure;
+
 #pragma dayCourseSchedule
 - (void)createDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
 - (void)updateDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;

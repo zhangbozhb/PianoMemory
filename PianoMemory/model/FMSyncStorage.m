@@ -164,7 +164,8 @@
         NSMutableDictionary *mapping = (NSMutableDictionary *)[self objectForKey:mappingKey];
         if (mapping) {
             NSObject *oldMappingValue = [mapping objectForKey:keyInMapping];
-            if ([oldMappingValue isKindOfClass:[NSString class]] &&
+            if ( (!oldMappingValue ||
+                  [oldMappingValue isKindOfClass:[NSString class]]) &&
                 [mappingValue isKindOfClass:[NSString class]]) {
                 NSString *mappingValueString =  (NSString*)mappingValue;
                 NSString *oldMappingValueString = (NSString*)oldMappingValue;
@@ -296,8 +297,16 @@
         [viewMapping setObject:valueInView forKey:keyInView];
         [self storeObject:viewMapping forKey:viewKey];
     } else {
-        [viewMapping setObject:valueInView forKey:keyInView];
-        [self storeObject:viewMapping forKey:viewKey];
+        if ([valueInView isKindOfClass:[NSString class]]) {
+            NSString *stringValueInView = (NSString*)valueInView;
+            if (![stringValueInView isEqualToString:[viewMapping objectForKey:keyInView]]) {
+                [viewMapping setObject:valueInView forKey:keyInView];
+                [self storeObject:viewMapping forKey:viewKey];
+            }
+        } else {
+            [viewMapping setObject:valueInView forKey:keyInView];
+            [self storeObject:viewMapping forKey:viewKey];
+        }
     }
 }
 

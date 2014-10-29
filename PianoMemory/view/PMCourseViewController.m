@@ -19,7 +19,7 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
 
 @interface PMCourseViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic) NSArray *courseArray;
+@property (nonatomic) NSMutableArray *courseArray;
 @property (nonatomic) BOOL shouldFetchData;
 
 //xib reference
@@ -71,8 +71,11 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (UITableViewCellEditingStyleDelete == editingStyle) {
-        PMCourse *toDeleteCourse = [self.courseArray objectAtIndex:indexPath.row];
-        [self deleteCourse:toDeleteCourse];
+        __weak PMCourseViewController *pSelf = self;
+        [self deleteCourse:[self.courseArray objectAtIndex:indexPath.row] block:^{
+            [pSelf.courseArray removeObjectAtIndex:indexPath.row];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }];
     }
 }
 
@@ -96,7 +99,7 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
 }
 
 
-- (void)deleteCourse:(PMCourse*)course
+- (void)deleteCourse:(PMCourse*)course block:(void (^)(void))block
 {
     __weak PMCourseViewController *pSelf = self;
     [[PMServerWrapper defaultServer]  deleteCourse:course success:^(PMCourse *course) {
@@ -105,6 +108,9 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
             sleep(2);
         } completionBlock:^{
             [toast removeFromSuperview];
+            if (block) {
+                block();
+            }
         }];
     } failure:^(HCErrorMessage *error) {
         MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
@@ -112,6 +118,9 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
             sleep(2);
         } completionBlock:^{
             [toast removeFromSuperview];
+            if (block) {
+                block();
+            }
         }];
     }];
 }
@@ -135,7 +144,6 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
     if (PMLocalServer_DateUpateType_Course == [PMDateUpdte dateUpdateType:notification.object] ||
         PMLocalServer_DateUpateType_ALL == [PMDateUpdte dateUpdateType:notification.object]) {
         self.shouldFetchData = YES;
-        [self loadCustomerData];
     }
 }
 

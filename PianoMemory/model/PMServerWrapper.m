@@ -235,6 +235,61 @@
     }];
 }
 
+
+#pragma courseSchedule
+- (void)createCourseSchedule:(PMCourseSchedule*)courseSchedule success:(void(^)(PMCourseSchedule *courseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    [self asyncProcessing:^{
+        if ([self.localServer saveCourseSchedule:courseSchedule]) {
+            if (success) {
+                success(courseSchedule);
+            }
+            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_CourseSchedule]];
+        } else {
+            if (failure) {
+                failure([self errorUnknown]);
+            }
+        }
+    }];
+}
+- (void)updateCourseSchedule:(PMCourseSchedule*)courseSchedule success:(void(^)(PMCourseSchedule *courseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    [self asyncProcessing:^{
+        if ([self.localServer saveCourseSchedule:courseSchedule]) {
+            if (success) {
+                success(courseSchedule);
+            }
+            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_CourseSchedule]];
+        } else {
+            if (failure) {
+                failure([self errorUnknown]);
+            }
+        }
+    }];
+}
+- (void)deleteCourseSchedule:(PMCourseSchedule*)courseSchedule success:(void(^)(PMCourseSchedule *courseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    if ([self.localServer deleteCourseSchedule:courseSchedule]) {
+        if (success) {
+            success(courseSchedule);
+        }
+        [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_CourseSchedule]];
+    } else {
+        if (failure) {
+            failure([self errorUnknown]);
+        }
+    }
+}
+- (void)queryAllCourseSchedules:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    [self asyncProcessing:^{
+        NSArray *array = [self.localServer queryAllCourseSchedule];
+        if (success) {
+            success(array);
+        }
+    }];
+}
+
 #pragma dayCourseSchedule
 - (void)createDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
 {

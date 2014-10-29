@@ -1,34 +1,33 @@
 //
-//  PMTimeScheduleViewController.m
+//  PMCourseScheduleViewController.m
 //  PianoMemory
 //
-//  Created by 张 波 on 14-10-11.
+//  Created by 张 波 on 14/10/29.
 //  Copyright (c) 2014年 yue. All rights reserved.
 //
 
-#import "PMTimeScheduleViewController.h"
-#import "PMTimeSchedule+Wrapper.h"
+#import "PMCourseScheduleViewController.h"
+#import "PMCourseScheduleEditViewController.h"
+#import "PMCourseScheduleTableViewCell.h"
 #import "PMServerWrapper.h"
-#import "PMCourseEditViewController.h"
-#import "PMTimeScheduleEditViewController.h"
 
 #import "PMDateUpdte.h"
 #import "UIViewController+DataUpdate.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 
 
-static NSString *const timeScheduleTableViewCellReuseIdentifier = @"timeScheduleTableViewCellReuseIdentifier";
+static NSString *const courseScheduleTableViewCellReuseIdentifier = @"courseScheduleTableViewCellReuseIdentifier";
 
-@interface PMTimeScheduleViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface PMCourseScheduleViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic) NSMutableArray *timeScheduleArray;
+@property (nonatomic) NSMutableArray *courseScheduleArray;
 @property (nonatomic) BOOL shouldFetchData;
 
 //xib referrence
-@property (weak, nonatomic) IBOutlet UITableView *timeScheduleTableView;
+@property (weak, nonatomic) IBOutlet UITableView *courseScheduleTableView;
 @end
 
-@implementation PMTimeScheduleViewController
+@implementation PMCourseScheduleViewController
 
 
 - (void)viewDidLoad
@@ -46,19 +45,17 @@ static NSString *const timeScheduleTableViewCellReuseIdentifier = @"timeSchedule
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.timeScheduleArray count];
+    return [self.courseScheduleArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:timeScheduleTableViewCellReuseIdentifier];
-    PMTimeSchedule *timeSchedule = [self.timeScheduleArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = [timeSchedule getNotNilName];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ -- %@",
-                                 [timeSchedule getStartTimeWithTimeFormatter:nil],
-                                 [timeSchedule getEndTimeWithTimeFormatter:nil]];
-    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    PMCourseScheduleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:courseScheduleTableViewCellReuseIdentifier];
+    PMCourseSchedule *courseSchedule = [self.courseScheduleArray objectAtIndex:indexPath.row];
+    [cell setCourseSchedule:courseSchedule];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    [cell setAccessoryType:UITableViewCellAccessoryNone];
+    [cell refreshUI];
     return cell;
 }
 
@@ -72,12 +69,17 @@ static NSString *const timeScheduleTableViewCellReuseIdentifier = @"timeSchedule
     return UITableViewCellEditingStyleDelete;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44.f;
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (UITableViewCellEditingStyleDelete == editingStyle) {
-        __weak PMTimeScheduleViewController *pSelf = self;
-        [self deleteTimeSchedule:[self.timeScheduleArray objectAtIndex:indexPath.row] block:^{
-            [pSelf.timeScheduleArray removeObjectAtIndex:indexPath.row];
+        __weak PMCourseScheduleViewController *pSelf = self;
+        [self deleteCourseSchedule:[self.courseScheduleArray objectAtIndex:indexPath.row] block:^{
+            [pSelf.courseScheduleArray removeObjectAtIndex:indexPath.row];
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }];
     }
@@ -87,9 +89,9 @@ static NSString *const timeScheduleTableViewCellReuseIdentifier = @"timeSchedule
 - (void)loadCustomerData
 {
     if (self.shouldFetchData) {
-        __weak PMTimeScheduleViewController *pSelf = self;
-        [[PMServerWrapper defaultServer] queryAllTimeSchedules:^(NSArray *array) {
-            pSelf.timeScheduleArray = [NSMutableArray arrayWithArray:array];
+        __weak PMCourseScheduleViewController *pSelf = self;
+        [[PMServerWrapper defaultServer] queryAllCourseSchedules:^(NSArray *array) {
+            pSelf.courseScheduleArray = [NSMutableArray arrayWithArray:array];
             [pSelf refreshUI];
             pSelf.shouldFetchData = NO;
         } failure:^(HCErrorMessage *error) {
@@ -99,15 +101,15 @@ static NSString *const timeScheduleTableViewCellReuseIdentifier = @"timeSchedule
 
 - (void)refreshUI
 {
-    [self.timeScheduleTableView reloadData];
+    [self.courseScheduleTableView reloadData];
 }
 
 
-- (void)deleteTimeSchedule:(PMTimeSchedule*)timeSchedule block:(void (^)(void))block
+- (void)deleteCourseSchedule:(PMCourseSchedule*)courseSchedule block:(void (^)(void))block
 {
-    __weak PMTimeScheduleViewController *pSelf = self;
-    [[PMServerWrapper defaultServer] deleteTimeSchedule:timeSchedule success:^(PMTimeSchedule *timeSchedule) {
-        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功删除时间段"];
+    __weak PMCourseScheduleViewController *pSelf = self;
+    [[PMServerWrapper defaultServer] deleteCourseSchedule:courseSchedule success:^(PMCourseSchedule *courseSchedule) {
+        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功删除课程安排"];
         [toast showAnimated:YES whileExecutingBlock:^{
             sleep(2);
         } completionBlock:^{
@@ -145,7 +147,7 @@ static NSString *const timeScheduleTableViewCellReuseIdentifier = @"timeSchedule
 - (void)handleDataUpdated:(NSNotification *)notification
 {
     [super handleDataUpdated:notification];
-    if (PMLocalServer_DateUpateType_TimeSchedule == [PMDateUpdte dateUpdateType:notification.object] ||
+    if (PMLocalServer_DateUpateType_CourseSchedule == [PMDateUpdte dateUpdateType:notification.object] ||
         PMLocalServer_DateUpateType_ALL == [PMDateUpdte dateUpdateType:notification.object]) {
         self.shouldFetchData = YES;
     }
@@ -154,17 +156,18 @@ static NSString *const timeScheduleTableViewCellReuseIdentifier = @"timeSchedule
 #pragma segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"addTimeScheduleSegueIdentifier"]) {
-        PMTimeScheduleEditViewController *addTimeScheduleVC = (PMTimeScheduleEditViewController*)segue.destinationViewController;
-        [addTimeScheduleVC setTimeSchedule:nil];
-    } else if ([segue.identifier isEqualToString:@"editTimeScheduleSegueIdentifier"]) {
-        PMTimeScheduleEditViewController *editTimeScheduleVC = (PMTimeScheduleEditViewController*)segue.destinationViewController;
-        NSIndexPath *selectedIndexPath = [self.timeScheduleTableView indexPathForSelectedRow];
-        if (selectedIndexPath && selectedIndexPath.row < [self.timeScheduleArray count]) {
-            [editTimeScheduleVC setTimeSchedule:[self.timeScheduleArray objectAtIndex:selectedIndexPath.row]];
+    if ([segue.identifier isEqualToString:@"addCourseScheduleSegueIdentifier"]) {
+        PMCourseScheduleEditViewController *addCourseScheduleVC = (PMCourseScheduleEditViewController*)segue.destinationViewController;
+        [addCourseScheduleVC setCourseSchedule:nil];
+    } else if ([segue.identifier isEqualToString:@"editCourseScheduleSegueIdentifier"]) {
+        PMCourseScheduleEditViewController *editCourseScheduleVC = (PMCourseScheduleEditViewController*)segue.destinationViewController;
+        NSIndexPath *selectedIndexPath = [self.courseScheduleTableView indexPathForSelectedRow];
+        if (selectedIndexPath && selectedIndexPath.row < [self.courseScheduleArray count]) {
+            [editCourseScheduleVC setCourseSchedule:[self.courseScheduleArray objectAtIndex:selectedIndexPath.row]];
         } else {
-            [editTimeScheduleVC setTimeSchedule:nil];
+            [editCourseScheduleVC setCourseSchedule:nil];
         }
     }
 }
+
 @end
