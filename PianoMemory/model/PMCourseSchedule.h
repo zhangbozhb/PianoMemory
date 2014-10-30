@@ -45,6 +45,8 @@ typedef enum {
 - (void)setRepeatWeekDay:(PMCourseScheduleRepeatDataWeekDay)repeatWeekDay;
 - (void)addRepeatWeekDay:(PMCourseScheduleRepeatDataWeekDay)repeatWeekDay;
 - (void)removeRepeatWeekDay:(PMCourseScheduleRepeatDataWeekDay)repeatWeekDay;
+- (BOOL)availableForRepeatWeekDay:(PMCourseScheduleRepeatDataWeekDay)repeatWeekDay;
+- (BOOL)availableFordDate:(NSDate*)date;
 
 + (NSInteger)getWeekDayIndexFromRepeatWeekDay:(PMCourseScheduleRepeatDataWeekDay)repeateWeekDay;
 + (PMCourseScheduleRepeatDataWeekDay)getRepeatWeekDayFromWeekDayIndex:(NSInteger)weekDayIndex;

@@ -42,12 +42,13 @@
 - (void)updateCourseSchedule:(PMCourseSchedule*)courseSchedule success:(void(^)(PMCourseSchedule *courseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
 - (void)deleteCourseSchedule:(PMCourseSchedule*)courseSchedule success:(void(^)(PMCourseSchedule *courseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
 - (void)queryAllCourseSchedules:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure;
+- (void)queryCourseScheduleOfDate:(NSDate*)date success:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure;
 
 #pragma dayCourseSchedule
 - (void)createDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
 - (void)updateDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
 - (void)deleteDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
-//param 	starttime, endtime
+//param 	starttime, endtime, create
 - (void)queryDayCourseSchedules:(NSDictionary *)parameters success:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure;
 - (void)queryDayCourseScheduleOfDate:(NSDate*)date success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
 @end

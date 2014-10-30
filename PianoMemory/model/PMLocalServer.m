@@ -9,6 +9,72 @@
 #import "PMLocalServer.h"
 #import "PMLocalStorage.h"
 #import "NSDate+Extend.h"
+#import "PMBusiness.h"
+
+@interface PMLocalServerCache : NSObject
+@property (nonatomic) NSMutableDictionary  *weekDayCourseScheduleMapping;
+@property (nonatomic) NSTimeInterval lastUpdateTimestamp;
+@property (nonatomic) NSTimeInterval lifeTimestamp;
++ (instancetype)sharedCache;
+- (void)updateWeekDayCourseScheduleMapping:(NSArray*)courseSchedules;
+@end
+@implementation PMLocalServerCache
+
++ (instancetype)sharedCache
+{
+    static PMLocalServerCache *sharedCache = nil;
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        sharedCache = [[PMLocalServerCache alloc] init];
+        sharedCache.lifeTimestamp = 60 * 5;
+    });
+    return sharedCache;
+}
+
+- (NSMutableDictionary *)weekDayCourseScheduleMapping
+{
+    NSMutableDictionary *targetMapping = nil;
+    if (_weekDayCourseScheduleMapping) {
+        NSTimeInterval currentTimestamp = [[NSDate date] timeIntervalSince1970];
+        if (self.lastUpdateTimestamp + self.lifeTimestamp < currentTimestamp) {
+            targetMapping = nil;
+        } else {
+            targetMapping = _weekDayCourseScheduleMapping;
+        }
+    }
+    return targetMapping;
+}
+
+- (void)updateWeekDayCourseScheduleMapping:(NSArray*)courseSchedules
+{
+    NSMutableDictionary *repreatWeekDayMapping = [NSMutableDictionary dictionary];
+    for (PMCourseSchedule *courseSchdeudle in courseSchedules) {
+        if (PMCourseScheduleRepeatTypeWeek == courseSchdeudle.repeatType) {
+            NSArray *weekDays = [NSArray arrayWithObjects:
+                                 [NSNumber numberWithLong:PMCourseScheduleRepeatDataWeekDaySunday],
+                                 [NSNumber numberWithLong:PMCourseScheduleRepeatDataWeekDayMonday],
+                                 [NSNumber numberWithLong:PMCourseScheduleRepeatDataWeekDayTuesday],
+                                 [NSNumber numberWithLong:PMCourseScheduleRepeatDataWeekDayWednesday],
+                                 [NSNumber numberWithLong:PMCourseScheduleRepeatDataWeekDayThursday],
+                                 [NSNumber numberWithLong:PMCourseScheduleRepeatDataWeekDayFriday],
+                                 [NSNumber numberWithLong:PMCourseScheduleRepeatDataWeekDayStaturday],
+                                 nil];
+            for (NSNumber *mappingKey in weekDays) {
+                if ([courseSchdeudle availableForRepeatWeekDay:PMCourseScheduleRepeatDataWeekDaySunday]) {
+                    NSMutableArray *weekDayScheudles = [repreatWeekDayMapping objectForKey:mappingKey];
+                    if (weekDayScheudles) {
+                        [weekDayScheudles addObject:courseSchdeudle];
+                    } else {
+                        weekDayScheudles = [NSMutableArray arrayWithObject:courseSchdeudle];
+                    }
+                }
+            }
+        }
+    }
+    _lastUpdateTimestamp = [[NSDate date] timeIntervalSince1970];
+    _weekDayCourseScheduleMapping = repreatWeekDayMapping;
+}
+@end
 
 @interface PMLocalServer ()
 @property (nonatomic) PMLocalStorage *localStorage;
@@ -182,6 +248,46 @@
     }
     return courseSchedules;
 }
+- (NSArray *)queryCourseScheduleOfDate:(NSDate*)date
+{
+    NSMutableArray *targetCourseSchedules = [NSMutableArray array];
+    NSArray *allCourseSchedules = [self queryAllCourseSchedule];
+    for (PMCourseSchedule *courseSchedule in allCourseSchedules) {
+        if ([courseSchedule availableFordDate:date]) {
+            [targetCourseSchedules addObject:courseSchedule];
+        }
+    }
+    return targetCourseSchedules;
+}
+- (NSDictionary *)queryCourseScheduleMapingOfRepeatWeekDay
+{
+    NSArray *allCourseSchedules = [self queryAllCourseSchedule];
+    NSMutableDictionary *repreatWeekDayMapping = [NSMutableDictionary dictionary];
+    for (PMCourseSchedule *courseSchdeudle in allCourseSchedules) {
+        if (PMCourseScheduleRepeatTypeWeek == courseSchdeudle.repeatType) {
+            NSArray *weekDays = [NSArray arrayWithObjects:
+                                 [NSNumber numberWithInteger:PMCourseScheduleRepeatDataWeekDaySunday],
+                                 [NSNumber numberWithInteger:PMCourseScheduleRepeatDataWeekDayMonday],
+                                 [NSNumber numberWithInteger:PMCourseScheduleRepeatDataWeekDayTuesday],
+                                 [NSNumber numberWithInteger:PMCourseScheduleRepeatDataWeekDayWednesday],
+                                 [NSNumber numberWithInteger:PMCourseScheduleRepeatDataWeekDayThursday],
+                                 [NSNumber numberWithInteger:PMCourseScheduleRepeatDataWeekDayFriday],
+                                 [NSNumber numberWithInteger:PMCourseScheduleRepeatDataWeekDayStaturday],
+                                 nil];
+            for (NSNumber *mappingKey in weekDays) {
+                if ([courseSchdeudle availableForRepeatWeekDay:PMCourseScheduleRepeatDataWeekDaySunday]) {
+                    NSMutableArray *weekDayScheudles = [repreatWeekDayMapping objectForKey:mappingKey];
+                    if (weekDayScheudles) {
+                        [weekDayScheudles addObject:courseSchdeudle];
+                    } else {
+                        weekDayScheudles = [NSMutableArray arrayWithObject:courseSchdeudle];
+                    }
+                }
+            }
+        }
+    }
+    return repreatWeekDayMapping;
+}
 
 #pragma dayCourseSchedule
 - (BOOL)saveDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule
@@ -208,28 +314,83 @@
     }
     return dayCourseSchedules;
 }
-- (NSArray*)queryDayCourseSchedulesFrom:(NSInteger)startTime toEndTime:(NSInteger)endTime
+
+- (NSArray*)queryDayCourseSchedulesFrom:(NSInteger)startTime toEndTime:(NSInteger)endTime createIfNotExsit:(BOOL)createIfNotExsit
 {
-    NSMutableArray *dayCourseSchedules = [NSMutableArray array];
+    NSMutableArray *dayCourseScheduleArray = [NSMutableArray array];
     NSDictionary *viewDayCourseSchedule = [self.localStorage viewDayCourseSchedule];
     for (NSString *dayCourseScheduleId in viewDayCourseSchedule) {
         NSString *scheduleTimestampString = [viewDayCourseSchedule objectForKey:dayCourseScheduleId];
         NSInteger scheduleTimestamp = [scheduleTimestampString integerValue];
         if (startTime <= scheduleTimestamp &&
-            scheduleTimestamp <= endTime) {
+            scheduleTimestamp < endTime) {
             PMDayCourseSchedule *dayCourseSchedule = [self.localStorage getDayCourseScheduleWithId:dayCourseScheduleId];
             if (dayCourseSchedule) {
-                [dayCourseSchedules addObject:dayCourseSchedule];
+                [dayCourseScheduleArray addObject:dayCourseSchedule];
             }
         }
     }
-    return dayCourseSchedules;
+    if (!createIfNotExsit) {
+        return dayCourseScheduleArray;
+    }
+
+    //1,获取周一，周二每天的 courseMapping
+    NSDictionary *repreatWeekDayMapping = [self queryCourseScheduleMapingOfRepeatWeekDay];
+
+
+    //2, 构建dayCourseScheduleMapping
+    NSMutableDictionary *dayCourseScheduleMapping = [NSMutableDictionary dictionary];
+    for (PMDayCourseSchedule *dayCourseSchedule in dayCourseScheduleArray) {
+        NSTimeInterval scheduleTimestamp = [[NSDate dateWithTimeIntervalSince1970:dayCourseSchedule.scheduleTimestamp] zb_getDayTimestamp];
+        [dayCourseScheduleMapping setObject:dayCourseSchedule forKey:[NSNumber numberWithLong:scheduleTimestamp]];
+    }
+
+
+    //3, 递归每天的dayCourseSchedule
+    NSTimeInterval maxCreateTimestamp = [[[NSDate date] zb_dateAfterDay:1] timeIntervalSince1970];
+    NSDate *targetDay = [NSDate dateWithTimeIntervalSince1970:startTime];
+    long targetDayTimestamp = [targetDay zb_getDayTimestamp];
+    while (targetDayTimestamp < endTime) {
+        PMDayCourseSchedule *dayCourseSchedule = [dayCourseScheduleMapping objectForKey:[NSNumber numberWithLong:targetDayTimestamp]];
+        if (!dayCourseSchedule &&
+            targetDayTimestamp < maxCreateTimestamp) {
+            //创建 day
+            PMCourseScheduleRepeatDataWeekDay repeatWeekDay = [PMCourseSchedule getRepeatWeekDayFromWeekDayIndex:[targetDay zb_getWeekDay]-1];
+            NSArray *repeatWeekDayCourseSchedules = [repreatWeekDayMapping objectForKey:[NSNumber numberWithInteger:repeatWeekDay]];
+            NSMutableArray *canditeCourseSchedules = [NSMutableArray array];
+            for (PMCourseSchedule *courseSchedule in repeatWeekDayCourseSchedules) {
+                if (courseSchedule.effectiveDateTimestamp <= targetDayTimestamp &&
+                    targetDayTimestamp <= courseSchedule.expireDateTimestamp) {
+                    [canditeCourseSchedules addObject:courseSchedule];
+                }
+            }
+            PMDayCourseSchedule *createdDayCourseSchedule = [PMBusiness createDayCourseScheduleWithCourseSchedules:canditeCourseSchedules atDate:targetDay];
+            [self saveDayCourseSchedule:createdDayCourseSchedule];
+            dayCourseSchedule = createdDayCourseSchedule;
+        }
+
+        if(dayCourseSchedule) {
+            [dayCourseScheduleArray addObject:dayCourseSchedule];
+        }
+        targetDay = [targetDay zb_dateAfterDay:1];
+        targetDayTimestamp = [targetDay zb_getDayTimestamp];
+    }
+    return dayCourseScheduleArray;
 }
-- (PMDayCourseSchedule *)queryDayCourseScheduleOfDate:(NSDate*)date
+
+
+- (PMDayCourseSchedule *)queryDayCourseScheduleOfDate:(NSDate*)date createIfNotExsit:(BOOL)createIfNotExsit
 {
     NSInteger startTime = [date zb_getDayTimestamp];
-    NSInteger endTime = [[date zb_dateAfterDay:1] zb_getDayTimestamp] - 1;
-    NSArray *dayCourseSchedules = [self queryDayCourseSchedulesFrom:startTime toEndTime:endTime];
+    NSInteger endTime = [[date zb_dateAfterDay:1] zb_getDayTimestamp];
+    NSArray *dayCourseSchedules = [self queryDayCourseSchedulesFrom:startTime toEndTime:endTime createIfNotExsit:NO];
+    if (createIfNotExsit &&
+        0 == [dayCourseSchedules count]) {
+        NSArray *courseSchedules = [self queryCourseScheduleOfDate:date];
+        PMDayCourseSchedule *dayCourseSchedule = [PMBusiness createDayCourseScheduleWithCourseSchedules:courseSchedules atDate:date];
+        [self saveDayCourseSchedule:dayCourseSchedule];
+        return dayCourseSchedule;
+    }
     return [dayCourseSchedules firstObject];
 }
 @end

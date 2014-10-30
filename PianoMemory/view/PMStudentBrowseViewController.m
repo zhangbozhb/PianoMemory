@@ -257,19 +257,23 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
     [student updateShortcut];
     __weak PMStudentBrowseViewController *pSelf = self;
     [[PMServerWrapper defaultServer] createStudent:student success:^(PMStudent *student) {
-        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功添加学生"];
-        [toast showAnimated:YES whileExecutingBlock:^{
-            sleep(2);
-        } completionBlock:^{
-            [toast removeFromSuperview];
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功添加学生"];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+            }];
+        });
     } failure:^(HCErrorMessage *error) {
-        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
-        [toast showAnimated:YES whileExecutingBlock:^{
-            sleep(2);
-        } completionBlock:^{
-            [toast removeFromSuperview];
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+            }];
+        });
     }];
 }
 
@@ -278,25 +282,29 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
     [student updateShortcut];
     __weak PMStudentBrowseViewController *pSelf = self;
     [[PMServerWrapper defaultServer] deleteStudent:student success:^(PMStudent *student) {
-        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功删除学生"];
-        [toast showAnimated:YES whileExecutingBlock:^{
-            sleep(2);
-        } completionBlock:^{
-            [toast removeFromSuperview];
-            if (block) {
-                block();
-            }
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功删除学生"];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+                if (block) {
+                    block();
+                }
+            }];
+        });
     } failure:^(HCErrorMessage *error) {
-        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
-        [toast showAnimated:YES whileExecutingBlock:^{
-            sleep(2);
-        } completionBlock:^{
-            [toast removeFromSuperview];
-            if (block) {
-                block();
-            }
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+                if (block) {
+                    block();
+                }
+            }];
+        });
     }];
 }
 
@@ -366,8 +374,10 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
     }
     __weak PMStudentBrowseViewController *pSelf = self;
     [[PMServerWrapper defaultServer] queryStudents:params success:^(NSArray *array) {
-        pSelf.studentArray = [NSMutableArray arrayWithArray:array];
-        [pSelf refreshUI];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            pSelf.studentArray = [NSMutableArray arrayWithArray:array];
+            [pSelf refreshUI];
+        });
     } failure:^(HCErrorMessage *error) {
     }];
 }
@@ -391,9 +401,11 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
     if (self.shouldFetchData) {
         __weak PMStudentBrowseViewController *pSelf = self;
         [[PMServerWrapper defaultServer] queryStudents:nil success:^(NSArray *array) {
-            pSelf.studentArray = [NSMutableArray arrayWithArray:array];
-            [pSelf refreshUI];
-            pSelf.shouldFetchData = NO;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                pSelf.studentArray = [NSMutableArray arrayWithArray:array];
+                [pSelf refreshUI];
+                pSelf.shouldFetchData = NO;
+            });
         } failure:^(HCErrorMessage *error) {
         }];
     }

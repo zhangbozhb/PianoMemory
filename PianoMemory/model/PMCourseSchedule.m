@@ -87,6 +87,30 @@
     self.repeateData &= ~repeatWeekDay;
 }
 
+- (BOOL)availableForRepeatWeekDay:(PMCourseScheduleRepeatDataWeekDay)repeatWeekDay
+{
+    if (PMCourseScheduleRepeatTypeWeek == self.repeatType &&
+        self.repeateData&repeatWeekDay) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)availableFordDate:(NSDate*)date
+{
+    long timestamp  = [date timeIntervalSince1970];
+    if (PMCourseScheduleRepeatTypeWeek == self.repeatType &&
+        self.effectiveDateTimestamp <= timestamp &&
+        timestamp < self.expireDateTimestamp) {
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *components = [calendar components:NSWeekdayCalendarUnit fromDate:date];
+        PMCourseScheduleRepeatDataWeekDay repeatWeekDay = [[self class]
+                                                           getRepeatWeekDayFromWeekDayIndex:[components weekday]-1];
+        return [self availableForRepeatWeekDay:repeatWeekDay];
+    }
+    return NO;
+}
+
 + (NSInteger)getWeekDayIndexFromRepeatWeekDay:(PMCourseScheduleRepeatDataWeekDay)repeateWeekDay
 {
     NSInteger weekDayIndex = 0;

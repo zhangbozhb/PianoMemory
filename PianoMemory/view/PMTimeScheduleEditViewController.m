@@ -200,21 +200,25 @@
 {
     __weak PMTimeScheduleEditViewController *pSelf = self;
     [[PMServerWrapper defaultServer] createTimeSchedule:timeSchedule success:^(PMTimeSchedule *timeSchedule) {
-        pSelf.timeSchedule = timeSchedule;
-        MBProgressHUD *toast = [self getSimpleToastWithTitle:@"成功" message:@"你已成功添加时间"];
-        [toast showAnimated:YES whileExecutingBlock:^{
-            sleep(2);
-        } completionBlock:^{
-            [toast removeFromSuperview];
-            [pSelf.navigationController popViewControllerAnimated:YES];
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            pSelf.timeSchedule = timeSchedule;
+            MBProgressHUD *toast = [self getSimpleToastWithTitle:@"成功" message:@"你已成功添加时间"];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+                [pSelf.navigationController popViewControllerAnimated:YES];
+            }];
+        });
     } failure:^(HCErrorMessage *error) {
-        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
-        [toast showAnimated:YES whileExecutingBlock:^{
-            sleep(2);
-        } completionBlock:^{
-            [toast removeFromSuperview];
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+            }];
+        });
     }];
 }
 
@@ -222,21 +226,25 @@
 {
     __weak PMTimeScheduleEditViewController *pSelf = self;
     [[PMServerWrapper defaultServer] updateTimeSchedule:timeSchedule success:^(PMTimeSchedule *timeSchedule) {
-        pSelf.timeSchedule = timeSchedule;
-        MBProgressHUD *toast = [self getSimpleToastWithTitle:@"成功" message:@"你已更新添加时间"];
-        [toast showAnimated:YES whileExecutingBlock:^{
-            sleep(2);
-        } completionBlock:^{
-            [toast removeFromSuperview];
-            [pSelf.navigationController popViewControllerAnimated:YES];
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            pSelf.timeSchedule = timeSchedule;
+            MBProgressHUD *toast = [self getSimpleToastWithTitle:@"成功" message:@"你已更新添加时间"];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+                [pSelf.navigationController popViewControllerAnimated:YES];
+            }];
+        });
     } failure:^(HCErrorMessage *error) {
-        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
-        [toast showAnimated:YES whileExecutingBlock:^{
-            sleep(2);
-        } completionBlock:^{
-            [toast removeFromSuperview];
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+            }];
+        });
     }];
 }
 @end

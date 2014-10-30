@@ -117,35 +117,37 @@
     } else {
         __weak PMCourseScheduleEditViewController *pSelf = self;
         [[PMServerWrapper defaultServer] updateCourseSchedule:self.changedCourseSchedule success:^(PMCourseSchedule *courseSchedule) {
-            if (pSelf.delegate &&
-                [pSelf.delegate respondsToSelector:@selector(courseScheduleEdit:updateCourseSchedule:indexPath:)]) {
-                [pSelf.delegate courseScheduleEdit:pSelf updateCourseSchedule:courseSchedule indexPath:pSelf.indexPath];
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (pSelf.delegate &&
+                    [pSelf.delegate respondsToSelector:@selector(courseScheduleEdit:updateCourseSchedule:indexPath:)]) {
+                    [pSelf.delegate courseScheduleEdit:pSelf updateCourseSchedule:courseSchedule indexPath:pSelf.indexPath];
+                }
 
-            MBProgressHUD *toast = [[MBProgressHUD alloc] initWithView:pSelf.view];
-            [pSelf.view addSubview:toast];
-            toast.removeFromSuperViewOnHide = YES;
-            toast.mode = MBProgressHUDModeText;
-            toast.animationType = MBProgressHUDAnimationFade;
-
-            [toast setLabelText:@"课程保存成功"];
-            [toast showAnimated:YES whileExecutingBlock:^{
-                sleep(2);
-            } completionBlock:^{
-                [toast removeFromSuperview];
-                [pSelf.navigationController popViewControllerAnimated:YES];
-            }];
+                MBProgressHUD *toast = [[MBProgressHUD alloc] initWithView:pSelf.view];
+                [pSelf.view addSubview:toast];
+                toast.removeFromSuperViewOnHide = YES;
+                toast.mode = MBProgressHUDModeText;
+                toast.animationType = MBProgressHUDAnimationFade;
+                [toast setLabelText:@"课程保存成功"];
+                [toast showAnimated:YES whileExecutingBlock:^{
+                    sleep(2);
+                } completionBlock:^{
+                    [toast removeFromSuperview];
+                    [pSelf.navigationController popViewControllerAnimated:YES];
+                }];
+            });
         } failure:^(HCErrorMessage *error) {
-            MBProgressHUD *toast = [[MBProgressHUD alloc] initWithView:pSelf.view];
-            [pSelf.view addSubview:toast];
-            toast.removeFromSuperViewOnHide = YES;
-            toast.mode = MBProgressHUDModeText;
-            toast.animationType = MBProgressHUDAnimationFade;
-
-            [toast setLabelText:@"课程保存失败"];
-            [toast setDetailsLabelText:error.errorMessage];
-            [toast show:YES];
-            [toast hide:YES afterDelay:2];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                MBProgressHUD *toast = [[MBProgressHUD alloc] initWithView:pSelf.view];
+                [pSelf.view addSubview:toast];
+                toast.removeFromSuperViewOnHide = YES;
+                toast.mode = MBProgressHUDModeText;
+                toast.animationType = MBProgressHUDAnimationFade;
+                [toast setLabelText:@"课程保存失败"];
+                [toast setDetailsLabelText:error.errorMessage];
+                [toast show:YES];
+                [toast hide:YES afterDelay:2];
+            });
         }];
     }
 }

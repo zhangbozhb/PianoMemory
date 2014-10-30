@@ -11,6 +11,7 @@
 #import "PMDateUpdte.h"
 #import "NSDate+Extend.h"
 
+
 @interface PMServerWrapper ()
 @property (nonatomic) PMLocalServer *localServer;
 @property (nonatomic) dispatch_queue_t localServerQueue;
@@ -24,7 +25,7 @@
     dispatch_once(&token, ^{
         server = [[PMServerWrapper alloc] init];
         server.localServer = [PMLocalServer defaultLocalServer];
-        server.localServerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        server.localServerQueue = dispatch_queue_create("com.zhangbo.pianomemory", DISPATCH_QUEUE_CONCURRENT);
     });
     return server;
 }
@@ -32,9 +33,16 @@
 - (void)asyncProcessing:(void (^)(void))block
 {
     dispatch_async(self.localServerQueue, ^{
-        dispatch_async(dispatch_get_main_queue(), block);
+        block();
     });
 }
+//
+//- (void)asynProcessingOnMainQueue:(void (^)(void))block
+//{
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        block();
+//    });
+//}
 
 - (HCErrorMessage *)errorUnknown
 {
@@ -52,7 +60,8 @@
                 failure(error);
             }
         } else {
-            if ([self.localServer saveStudent:student]) {
+            BOOL isSucceed = [self.localServer saveStudent:student];
+            if (isSucceed) {
                 if (success) {
                     success(student);
                 }
@@ -75,7 +84,8 @@
                 failure(error);
             }
         } else {
-            if ([self.localServer saveStudent:student]) {
+            BOOL isSucceed = [self.localServer saveStudent:student];
+            if (isSucceed) {
                 if (success) {
                     success(student);
                 }
@@ -98,7 +108,8 @@
                 failure(error);
             }
         } else {
-            if ([self.localServer deleteStudent:student]) {
+            BOOL isSucceed = [self.localServer deleteStudent:student];
+            if (isSucceed) {
                 if (success) {
                     success(student);
                 }
@@ -129,7 +140,8 @@
 - (void)createCourse:(PMCourse*)course success:(void(^)(PMCourse *course))success failure:(void(^)(HCErrorMessage *error))failure
 {
     [self asyncProcessing:^{
-        if ([self.localServer saveCourse:course]) {
+        BOOL isSucceed = [self.localServer saveCourse:course];
+        if (isSucceed) {
             if (success) {
                 success(course);
             }
@@ -144,29 +156,35 @@
 
 - (void)updateCourse:(PMCourse*)course success:(void(^)(PMCourse *course))success failure:(void(^)(HCErrorMessage *error))failure
 {
-    if ([self.localServer saveCourse:course]) {
-        if (success) {
-            success(course);
+    [self asyncProcessing:^{
+        BOOL isSucceed = [self.localServer saveCourse:course];
+        if (isSucceed) {
+            if (success) {
+                success(course);
+            }
+            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_Course]];
+        } else {
+            if (failure) {
+                failure([self errorUnknown]);
+            }
         }
-        [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_Course]];
-    } else {
-        if (failure) {
-            failure([self errorUnknown]);
-        }
-    }
+    }];
 }
 - (void)deleteCourse:(PMCourse*)course success:(void(^)(PMCourse *course))success failure:(void(^)(HCErrorMessage *error))failure
 {
-    if ([self.localServer deleteCourse:course]) {
-        if (success) {
-            success(course);
+    [self asyncProcessing:^{
+        BOOL isSucceed = [self.localServer deleteCourse:course];
+        if (isSucceed) {
+            if (success) {
+                success(course);
+            }
+            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_Course]];
+        } else {
+            if (failure) {
+                failure([self errorUnknown]);
+            }
         }
-        [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_Course]];
-    } else {
-        if (failure) {
-            failure([self errorUnknown]);
-        }
-    }
+    }];
 }
 - (void)queryCourses:(NSDictionary *)parameters success:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure
 {
@@ -187,7 +205,8 @@
 - (void)createTimeSchedule:(PMTimeSchedule*)timeSchedule success:(void(^)(PMTimeSchedule *timeSchedule))success failure:(void(^)(HCErrorMessage *error))failure
 {
     [self asyncProcessing:^{
-        if ([self.localServer saveTimeSchedule:timeSchedule]) {
+        BOOL isSucceed = [self.localServer saveTimeSchedule:timeSchedule];
+        if (isSucceed) {
             if (success) {
                 success(timeSchedule);
             }
@@ -201,29 +220,35 @@
 }
 - (void)updateTimeSchedule:(PMTimeSchedule*)timeSchedule success:(void(^)(PMTimeSchedule *timeSchedule))success failure:(void(^)(HCErrorMessage *error))failure
 {
-    if ([self.localServer saveTimeSchedule:timeSchedule]) {
-        if (success) {
-            success(timeSchedule);
+    [self asyncProcessing:^{
+        BOOL isSucceed = [self.localServer saveTimeSchedule:timeSchedule];
+        if (isSucceed) {
+            if (success) {
+                success(timeSchedule);
+            }
+            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_TimeSchedule]];
+        } else {
+            if (failure) {
+                failure([self errorUnknown]);
+            }
         }
-        [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_TimeSchedule]];
-    } else {
-        if (failure) {
-            failure([self errorUnknown]);
-        }
-    }
+    }];
 }
 - (void)deleteTimeSchedule:(PMTimeSchedule*)timeSchedule success:(void(^)(PMTimeSchedule *timeSchedule))success failure:(void(^)(HCErrorMessage *error))failure
 {
-    if ([self.localServer deleteTimeSchedule:timeSchedule]) {
-        if (success) {
-            success(timeSchedule);
+    [self asyncProcessing:^{
+        BOOL isSucceed = [self.localServer deleteTimeSchedule:timeSchedule];
+        if (isSucceed) {
+            if (success) {
+                success(timeSchedule);
+            }
+            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_TimeSchedule]];
+        } else {
+            if (failure) {
+                failure([self errorUnknown]);
+            }
         }
-        [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_TimeSchedule]];
-    } else {
-        if (failure) {
-            failure([self errorUnknown]);
-        }
-    }
+    }];
 }
 - (void)queryAllTimeSchedules:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure
 {
@@ -231,8 +256,7 @@
         NSArray *array = [self.localServer queryAllTimeSchedule];
         if (success) {
             success(array);
-        }
-    }];
+        }    }];
 }
 
 
@@ -240,7 +264,8 @@
 - (void)createCourseSchedule:(PMCourseSchedule*)courseSchedule success:(void(^)(PMCourseSchedule *courseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
 {
     [self asyncProcessing:^{
-        if ([self.localServer saveCourseSchedule:courseSchedule]) {
+        BOOL isSucceed = [self.localServer saveCourseSchedule:courseSchedule];
+        if (isSucceed) {
             if (success) {
                 success(courseSchedule);
             }
@@ -255,7 +280,8 @@
 - (void)updateCourseSchedule:(PMCourseSchedule*)courseSchedule success:(void(^)(PMCourseSchedule *courseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
 {
     [self asyncProcessing:^{
-        if ([self.localServer saveCourseSchedule:courseSchedule]) {
+        BOOL isSucceed = [self.localServer saveCourseSchedule:courseSchedule];
+        if (isSucceed) {
             if (success) {
                 success(courseSchedule);
             }
@@ -269,16 +295,19 @@
 }
 - (void)deleteCourseSchedule:(PMCourseSchedule*)courseSchedule success:(void(^)(PMCourseSchedule *courseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
 {
-    if ([self.localServer deleteCourseSchedule:courseSchedule]) {
-        if (success) {
-            success(courseSchedule);
+    [self asyncProcessing:^{
+        BOOL isSucceed = [self.localServer deleteCourseSchedule:courseSchedule];
+        if (isSucceed) {
+            if (success) {
+                success(courseSchedule);
+            }
+            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_CourseSchedule]];
+        } else {
+            if (failure) {
+                failure([self errorUnknown]);
+            }
         }
-        [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_CourseSchedule]];
-    } else {
-        if (failure) {
-            failure([self errorUnknown]);
-        }
-    }
+    }];
 }
 - (void)queryAllCourseSchedules:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure
 {
@@ -289,12 +318,22 @@
         }
     }];
 }
+- (void)queryCourseScheduleOfDate:(NSDate*)date success:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure
+{
+    [self asyncProcessing:^{
+        NSArray *array = [self.localServer queryCourseScheduleOfDate:date];
+        if (success) {
+            success(array);
+        }
+    }];
+}
 
 #pragma dayCourseSchedule
 - (void)createDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
 {
     [self asyncProcessing:^{
-        if ([self.localServer saveDayCourseSchedule:dayCourseSchedule]) {
+        BOOL isSucceed = [self.localServer saveDayCourseSchedule:dayCourseSchedule];
+        if (isSucceed) {
             if (success) {
                 success(dayCourseSchedule);
             }
@@ -308,35 +347,42 @@
 }
 - (void)updateDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
 {
-    if ([self.localServer saveDayCourseSchedule:dayCourseSchedule]) {
-        if (success) {
-            success(dayCourseSchedule);
+    [self asyncProcessing:^{
+        BOOL isSucceed = [self.localServer saveDayCourseSchedule:dayCourseSchedule];
+        if (isSucceed) {
+            if (success) {
+                success(dayCourseSchedule);
+            }
+            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_DayCourseSchedule]];
+        } else {
+            if (failure) {
+                failure([self errorUnknown]);
+            }
         }
-        [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_DayCourseSchedule]];
-    } else {
-        if (failure) {
-            failure([self errorUnknown]);
-        }
-    }
+    }];
 }
 - (void)deleteDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
 {
-    if ([self.localServer deleteDayCourseSchedule:dayCourseSchedule]) {
-        if (success) {
-            success(dayCourseSchedule);
+    [self asyncProcessing:^{
+        BOOL isSucceed = [self.localServer deleteDayCourseSchedule:dayCourseSchedule];
+        if (isSucceed) {
+            if (success) {
+                success(dayCourseSchedule);
+            }
+            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_DayCourseSchedule]];
+        } else {
+            if (failure) {
+                failure([self errorUnknown]);
+            }
         }
-        [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_DayCourseSchedule]];
-    } else {
-        if (failure) {
-            failure([self errorUnknown]);
-        }
-    }
+    }];
 }
 //param 	starttime, endtime
 - (void)queryDayCourseSchedules:(NSDictionary *)parameters success:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure
 {
     NSString *starttimeString = [parameters objectForKey:@"starttime"];
     NSString *endtimeString = [parameters objectForKey:@"endtime"];
+    NSNumber *createValue = [parameters objectForKey:@"create"];
 
     NSInteger starttime = 0;
     NSInteger endtime = NSIntegerMax;
@@ -349,12 +395,16 @@
     if (starttime >= endtime) {
         endtime = [[[NSDate dateWithTimeIntervalSince1970:starttime] zb_dateAfterDay:1] zb_getDayTimestamp]-1;
     }
+    BOOL createIfNotExist = NO;
+    if (createValue && [createValue isKindOfClass:[NSNumber class]]) {
+        createIfNotExist = [createValue boolValue];
+    }
+
     [self asyncProcessing:^{
-        NSArray *array = [self.localServer queryDayCourseSchedulesFrom:starttime toEndTime:endtime];
+        NSArray *array = [self.localServer queryDayCourseSchedulesFrom:starttime toEndTime:endtime createIfNotExsit:createIfNotExist];
         if (success) {
             success(array);
-        }
-    }];
+        }    }];
 }
 - (void)queryDayCourseScheduleOfDate:(NSDate*)date success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
 {
@@ -363,7 +413,8 @@
         if (!targetDate) {
             targetDate = [NSDate date];
         }
-        PMDayCourseSchedule *dayCourseSchedule = [self.localServer queryDayCourseScheduleOfDate:targetDate];
+        BOOL createIfNotExsit = ([[[NSDate date] zb_dateAfterDay:1] timeIntervalSince1970] > [date timeIntervalSince1970])?YES:NO;
+        PMDayCourseSchedule *dayCourseSchedule = [self.localServer queryDayCourseScheduleOfDate:targetDate createIfNotExsit:createIfNotExsit];
         if (success) {
             success(dayCourseSchedule);
         }

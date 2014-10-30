@@ -87,8 +87,10 @@ static NSString *const timeSchedulePickerTableViewCellReuseIdentifier = @"timeSc
 {
     __weak PMTimeSchedulePickerViewController *pSelf = self;
     [[PMServerWrapper defaultServer] queryAllTimeSchedules:^(NSArray *array) {
-        pSelf.timeScheduleArray = [NSMutableArray arrayWithArray:array];
-        [pSelf refreshUI];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            pSelf.timeScheduleArray = [NSMutableArray arrayWithArray:array];
+            [pSelf refreshUI];
+        });
     } failure:^(HCErrorMessage *error) {
     }];
 }

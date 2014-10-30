@@ -70,8 +70,10 @@ static NSString *const coursePickerTableViewCellReuseIdentifier = @"coursePicker
 {
     __weak PMCoursePickerViewController *pSelf = self;
     [[PMServerWrapper defaultServer] queryCourses:nil success:^(NSArray *array) {
-        pSelf.courseArray = [NSMutableArray arrayWithArray:array];
-        [pSelf refreshUI];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            pSelf.courseArray = [NSMutableArray arrayWithArray:array];
+            [pSelf refreshUI];
+        });
     } failure:^(HCErrorMessage *error) {
     }];
 }

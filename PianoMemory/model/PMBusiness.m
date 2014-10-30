@@ -26,4 +26,13 @@
     }
     return isValid;
 }
+
++ (PMDayCourseSchedule*)createDayCourseScheduleWithCourseSchedules:(NSArray*)courseSchedules atDate:(NSDate*)atDate
+{
+    PMDayCourseSchedule *dayCourseSchedule = [[PMDayCourseSchedule alloc] init];
+    dayCourseSchedule.scheduleTimestamp = [atDate timeIntervalSince1970];
+    dayCourseSchedule.courseSchedules = [NSMutableArray arrayWithArray:courseSchedules];
+    dayCourseSchedule.created = [[NSDate date] timeIntervalSince1970];
+    return dayCourseSchedule;
+}
 @end

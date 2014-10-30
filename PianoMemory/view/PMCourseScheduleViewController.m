@@ -91,9 +91,11 @@ static NSString *const courseScheduleTableViewCellReuseIdentifier = @"courseSche
     if (self.shouldFetchData) {
         __weak PMCourseScheduleViewController *pSelf = self;
         [[PMServerWrapper defaultServer] queryAllCourseSchedules:^(NSArray *array) {
-            pSelf.courseScheduleArray = [NSMutableArray arrayWithArray:array];
-            [pSelf refreshUI];
-            pSelf.shouldFetchData = NO;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                pSelf.courseScheduleArray = [NSMutableArray arrayWithArray:array];
+                [pSelf refreshUI];
+                pSelf.shouldFetchData = NO;
+            });
         } failure:^(HCErrorMessage *error) {
         }];
     }
@@ -109,25 +111,29 @@ static NSString *const courseScheduleTableViewCellReuseIdentifier = @"courseSche
 {
     __weak PMCourseScheduleViewController *pSelf = self;
     [[PMServerWrapper defaultServer] deleteCourseSchedule:courseSchedule success:^(PMCourseSchedule *courseSchedule) {
-        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功删除课程安排"];
-        [toast showAnimated:YES whileExecutingBlock:^{
-            sleep(2);
-        } completionBlock:^{
-            [toast removeFromSuperview];
-            if (block) {
-                block();
-            }
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功删除课程安排"];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+                if (block) {
+                    block();
+                }
+            }];
+        });
     } failure:^(HCErrorMessage *error) {
-        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
-        [toast showAnimated:YES whileExecutingBlock:^{
-            sleep(2);
-        } completionBlock:^{
-            [toast removeFromSuperview];
-            if (block) {
-                block();
-            }
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+                if (block) {
+                    block();
+                }
+            }];
+        });
     }];
 }
 

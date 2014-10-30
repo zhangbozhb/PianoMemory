@@ -43,12 +43,13 @@
 - (BOOL)deleteCourseSchedule:(PMCourseSchedule*)courseSchedule;
 - (PMCourseSchedule*)queryCourseScheduleWithId:(NSString*)courseScheduleId;
 - (NSArray*)queryAllCourseSchedule;
+- (NSArray *)queryCourseScheduleOfDate:(NSDate*)date;
 
 #pragma dayCourseSchedule
 - (BOOL)saveDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule;
 - (BOOL)deleteDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule;
 - (PMDayCourseSchedule*)queryDayCourseScheduleWithId:(NSString*)dayCourseScheduleId;
 - (NSArray*)queryAllDayCourseSchedule;
-- (NSArray*)queryDayCourseSchedulesFrom:(NSInteger)startTime toEndTime:(NSInteger)endTime;
-- (PMDayCourseSchedule *)queryDayCourseScheduleOfDate:(NSDate*)date;
+- (NSArray*)queryDayCourseSchedulesFrom:(NSInteger)startTime toEndTime:(NSInteger)endTime createIfNotExsit:(BOOL)createIfNotExsit;
+- (PMDayCourseSchedule *)queryDayCourseScheduleOfDate:(NSDate*)date createIfNotExsit:(BOOL)createIfNotExsit;
 @end

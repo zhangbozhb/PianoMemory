@@ -21,4 +21,11 @@
     }
     return another;
 }
+
++ (NSArray *)sortDescriptors:(BOOL)ascending
+{
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:
+                                [NSSortDescriptor sortDescriptorWithKey:@"scheduleTimestamp" ascending:ascending], nil];
+    return sortDescriptors;
+}
 @end

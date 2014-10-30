@@ -24,9 +24,9 @@
         options.createIfMissing = true;
         options.errorIfExists   = false;
         options.paranoidCheck   = false;
-        options.compression     = true;
+        options.compression     = false;
         options.filterPolicy    = 0;      // Size in bits per key, allocated for a bloom filter, used in testing presence of key
-        options.cacheSize       = 1024 * 1024 * 5;      // Size in bytes, allocated for a LRU cache used for speeding up lookups
+        options.cacheSize       = 1024 * 1024 * 20;      // Size in bytes, allocated for a LRU cache used for speeding up lookups
         self.localLevelDB =  [LevelDB databaseInLibraryWithName:dbName andOptions:options];
         self.queue = dispatch_queue_create("org.plam4fun.fm1017.localstorage-queue", DISPATCH_QUEUE_CONCURRENT);
     }

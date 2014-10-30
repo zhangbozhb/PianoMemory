@@ -94,8 +94,10 @@ static NSString *const studentPickerTableViewCellReuseIdentifier = @"studentPick
 {
     __weak PMStudentPickerViewController *pSelf = self;
     [[PMServerWrapper defaultServer] queryStudents:nil success:^(NSArray *array) {
-        pSelf.studentArray = [NSMutableArray arrayWithArray:array];
-        [pSelf refreshUI];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            pSelf.studentArray = [NSMutableArray arrayWithArray:array];
+            [pSelf refreshUI];
+        });
     } failure:^(HCErrorMessage *error) {
     }];
 }

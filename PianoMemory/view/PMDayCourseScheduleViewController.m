@@ -61,6 +61,7 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
     PMCourseScheduleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:dayCourseScheduleTableViewCellReuseIdentifier];
     PMCourseSchedule *courseSchedule = [self.targetDayCourseSchedule.courseSchedules objectAtIndex:indexPath.row];
     [cell setCourseSchedule:courseSchedule];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     [cell refreshUI];
     return cell;
 }
@@ -110,9 +111,11 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
     if (self.shouldFetchData) {
         __weak PMDayCourseScheduleViewController *pSelf = self;
         [[PMServerWrapper defaultServer] queryDayCourseScheduleOfDate:self.targetDate success:^(PMDayCourseSchedule *dayCourseSchedule) {
-            pSelf.targetDayCourseSchedule = dayCourseSchedule;
-            [pSelf refreshUI];
-            pSelf.shouldFetchData = NO;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                pSelf.targetDayCourseSchedule = dayCourseSchedule;
+                [pSelf refreshUI];
+                pSelf.shouldFetchData = NO;
+            });
         } failure:^(HCErrorMessage *error) {
         }];
     }

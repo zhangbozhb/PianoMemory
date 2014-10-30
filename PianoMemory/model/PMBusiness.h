@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "PMTimeSchedule.h"
+#import "PMCourseSchedule.h"
+#import "PMDayCourseSchedule.h"
 
 @interface PMBusiness : NSObject
 + (BOOL)isTimeScheduleValid:(NSArray*)timeSchedules;
++ (PMDayCourseSchedule*)createDayCourseScheduleWithCourseSchedules:(NSArray*)courseSchedules atDate:(NSDate*)atDate;
 @end

@@ -124,21 +124,25 @@
 {
     __weak PMCourseEditViewController *pSelf = self;
     [[PMServerWrapper defaultServer] createCourse:course success:^(PMCourse *course) {
-        pSelf.course = course;
-        MBProgressHUD *toast = [self getSimpleToastWithTitle:@"成功" message:@"你已成功添加课程"];
-        [toast showAnimated:YES whileExecutingBlock:^{
-            sleep(2);
-        } completionBlock:^{
-            [toast removeFromSuperview];
-            [pSelf.navigationController popViewControllerAnimated:YES];
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            pSelf.course = course;
+            MBProgressHUD *toast = [self getSimpleToastWithTitle:@"成功" message:@"你已成功添加课程"];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+                [pSelf.navigationController popViewControllerAnimated:YES];
+            }];
+        });
     } failure:^(HCErrorMessage *error) {
-        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
-        [toast showAnimated:YES whileExecutingBlock:^{
-            sleep(2);
-        } completionBlock:^{
-            [toast removeFromSuperview];
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+            }];
+        });
     }];
 }
 
@@ -146,21 +150,25 @@
 {
     __weak PMCourseEditViewController *pSelf = self;
     [[PMServerWrapper defaultServer] updateCourse:course success:^(PMCourse *course) {
-        pSelf.course = course;
-        MBProgressHUD *toast = [self getSimpleToastWithTitle:@"成功" message:@"你已成功修改课程"];
-        [toast showAnimated:YES whileExecutingBlock:^{
-            sleep(2);
-        } completionBlock:^{
-            [toast removeFromSuperview];
-            [pSelf.navigationController popViewControllerAnimated:YES];
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            pSelf.course = course;
+            MBProgressHUD *toast = [self getSimpleToastWithTitle:@"成功" message:@"你已成功修改课程"];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+                [pSelf.navigationController popViewControllerAnimated:YES];
+            }];
+        });
     } failure:^(HCErrorMessage *error) {
-        MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
-        [toast showAnimated:YES whileExecutingBlock:^{
-            sleep(2);
-        } completionBlock:^{
-            [toast removeFromSuperview];
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"失败" message:[error errorMessage]];
+            [toast showAnimated:YES whileExecutingBlock:^{
+                sleep(2);
+            } completionBlock:^{
+                [toast removeFromSuperview];
+            }];
+        });
     }];
 }
 
