@@ -20,7 +20,7 @@
 
 static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCourseScheduleTableViewCellReuseIdentifier";
 
-@interface PMDayCourseScheduleViewController () <UITableViewDataSource, UITableViewDataSource, FMWeekCalendarViewDelegate, PMCourseScheduleEditProtocol>
+@interface PMDayCourseScheduleViewController () <UITableViewDataSource, UITableViewDelegate, FMWeekCalendarViewDelegate, PMCourseScheduleEditProtocol>
 
 @property (nonatomic) NSDate *targetDate;
 @property (nonatomic) PMDayCourseSchedule *targetDayCourseSchedule;
@@ -64,6 +64,11 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     [cell refreshUI];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"dayCourseScheduleShowCourseScheduleSugeIdentifier" sender:self];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -131,6 +136,19 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
         [self.myNavigationitem setTitle:[dateFormatter stringFromDate:self.targetDate]];
     }
     [self.courseScheduleTableView reloadData];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"dayCourseScheduleShowCourseScheduleSugeIdentifier"]) {
+        PMCourseScheduleEditViewController *editCourseScheduleVC = (PMCourseScheduleEditViewController*)segue.destinationViewController;
+        NSIndexPath *selectedIndexPath = [self.courseScheduleTableView indexPathForSelectedRow];
+        if (selectedIndexPath && selectedIndexPath.row < [self.targetDayCourseSchedule.courseSchedules count]) {
+            [editCourseScheduleVC setCourseSchedule:[self.targetDayCourseSchedule.courseSchedules objectAtIndex:selectedIndexPath.row]];
+        } else {
+            [editCourseScheduleVC setCourseSchedule:nil];
+        }
+    }
 }
 
 @end

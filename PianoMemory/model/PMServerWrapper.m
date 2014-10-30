@@ -53,7 +53,7 @@
 - (void)createStudent:(PMStudent*)student success:(void(^)(PMStudent *student))success failure:(void(^)(HCErrorMessage *error))failure
 {
     [self asyncProcessing:^{
-        BOOL isExist = [self.localServer isStudentExist:student];
+        BOOL isExist = [self.localServer isStudentExist:student] || [self.localServer isStudentWithPhoneExist:student.phone];
         if (isExist) {
             if (failure) {
                 HCErrorMessage *error = [[HCErrorMessage alloc] initWithErrorMessage:@"该学生已存在，无法创建"];

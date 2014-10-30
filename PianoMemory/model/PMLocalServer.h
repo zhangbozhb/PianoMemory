@@ -20,6 +20,7 @@
 
 #pragma students
 - (BOOL)isStudentExist:(PMStudent *)student;
+- (BOOL)isStudentWithPhoneExist:(NSString*)phone;
 - (BOOL)saveStudent:(PMStudent*)student;
 - (BOOL)deleteStudent:(PMStudent*)student;
 - (PMStudent*)queryStudentWithId:(NSString*)studentId;

@@ -23,8 +23,4 @@
     return another;
 }
 
-- (NSString *)syncCreateLocalId
-{
-    return [NSString stringWithFormat:@"com.traveljoin.PianoMemory.%@", self.phone];
-}
 @end

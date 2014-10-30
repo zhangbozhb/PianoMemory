@@ -196,6 +196,7 @@
                         <outlet property="courseScheduleTableView" destination="Hui-ao-FN8" id="nNW-55-z4h"/>
                         <outlet property="myNavigationitem" destination="KNO-no-0QF" id="Zxm-b4-Qhb"/>
                         <outlet property="weekCalendarView" destination="u9s-Xc-zCf" id="1eA-8K-aVA"/>
+                        <segue destination="74Q-lZ-nrB" kind="show" identifier="dayCourseScheduleShowCourseScheduleSugeIdentifier" id="di9-Kj-I6R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lgu-AI-85h" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -592,7 +593,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="igY-br-9cX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1302" y="-974"/>
+            <point key="canvasLocation" x="1397" y="-978"/>
         </scene>
         <!--选择课程-->
         <scene sceneID="gtt-8f-aO9">
@@ -1855,9 +1856,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yjf-ok-jzk"/>
-        <segue reference="R6i-Wb-fgA"/>
-        <segue reference="kSK-QF-DU4"/>
+        <segue reference="di9-Kj-I6R"/>
         <segue reference="ouG-9o-Jrx"/>
+        <segue reference="yjf-ok-jzk"/>
+        <segue reference="kSK-QF-DU4"/>
     </inferredMetricsTieBreakers>
 </document>

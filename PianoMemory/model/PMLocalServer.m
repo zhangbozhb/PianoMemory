@@ -103,9 +103,23 @@
 #pragma students
 - (BOOL)isStudentExist:(PMStudent *)student
 {
-    BOOL isExist = [self.localStorage isStudentExist:student];
-    if (!isExist) {
-        isExist = (nil != [self.localStorage getStudentWithId:[student syncCreateLocalId]])?YES:NO;
+    return [self.localStorage isStudentExist:student];
+}
+- (BOOL)isStudentWithPhoneExist:(NSString*)phone
+{
+    BOOL isExist = NO;
+    if (0 < phone.length) {
+        NSDictionary *viewStudent = [self.localStorage viewStudent];
+        for (NSString *studentId in viewStudent) {
+            NSString *studentViewValue = [viewStudent objectForKey:studentId];
+            if (NSNotFound != [studentViewValue rangeOfString:phone].location) {
+                PMStudent *student = [self.localStorage getStudentWithId:studentId];
+                if ([phone isEqualToString:student.phone]) {
+                    isExist = YES;
+                    break;
+                }
+            }
+        }
     }
     return isExist;
 }
@@ -124,31 +138,55 @@
 
 - (NSArray *)queryStudents:(NSString*)name phone:(NSString*)phone nameShortcut:(NSString *)nameShortcut
 {
+    NSMutableArray *fastMatchTextArray = [NSMutableArray array];
+    if (0 < name.length) {
+        [fastMatchTextArray addObject:[name lowercaseString]];
+    } else if (0 < phone.length) {
+        [fastMatchTextArray addObject:[phone lowercaseString]];
+    } else if (0 < nameShortcut.length) {
+        [fastMatchTextArray addObject:[nameShortcut lowercaseString]];
+    }
+    BOOL fetchAll = (0 == [fastMatchTextArray count])?YES:NO;
     NSMutableArray *students = [NSMutableArray array];
     NSDictionary *viewStudent = [self.localStorage viewStudent];
     for (NSString *studentId in viewStudent) {
-        PMStudent *student = [self.localStorage getStudentWithId:studentId];
-        BOOL isMatch = NO;
-        if (student) {
-            if (0 != [name length] &&
-                student.name &&
-                NSNotFound != [student.name rangeOfString:name].location) {
-                isMatch = YES;
-            } else if (0 != [phone length] &&
-                student.phone &&
-                NSNotFound != [student.phone rangeOfString:phone].location) {
-                isMatch = YES;
-            } else if (0 != [nameShortcut length] &&
-                        student.nameShortcut &&
-                        NSNotFound != [student.nameShortcut rangeOfString:nameShortcut].location) {
-                isMatch = YES;
-            } else if (0 ==  [name length]
-                       && 0 == [phone length] &&
-                       0 == [nameShortcut length]){
-                isMatch = YES;
-            }
-            if (isMatch) {
+        if (fetchAll) {
+            PMStudent *student = [self.localStorage getStudentWithId:studentId];
+            if (student) {
                 [students addObject:student];
+            }
+        } else {
+            NSString *studentViewValue = [[viewStudent objectForKey:studentId] lowercaseString];
+            //先在 studentViewValue快速查找
+            BOOL fastMatch = NO;
+            for (NSString *fastMetchText in fastMatchTextArray) {
+                if (NSNotFound != [studentViewValue rangeOfString:fastMetchText].location) {
+                    fastMatch = YES;
+                    break;
+                }
+            }
+
+            if (fastMatch) {
+                PMStudent *student = [self.localStorage getStudentWithId:studentId];
+                BOOL isMatch = NO;
+                if (student) {
+                    if (0 != [name length] &&
+                        student.name &&
+                        NSNotFound != [[student.name lowercaseString] rangeOfString:[name lowercaseString]].location) {
+                        isMatch = YES;
+                    } else if (0 != [phone length] &&
+                               student.phone &&
+                               NSNotFound != [student.phone rangeOfString:phone].location) {
+                        isMatch = YES;
+                    } else if (0 != [nameShortcut length] &&
+                               student.nameShortcut &&
+                               NSNotFound != [[student.nameShortcut lowercaseString] rangeOfString:[nameShortcut lowercaseString]].location) {
+                        isMatch = YES;
+                    }
+                    if (isMatch) {
+                        [students addObject:student];
+                    }
+                }
             }
         }
     }

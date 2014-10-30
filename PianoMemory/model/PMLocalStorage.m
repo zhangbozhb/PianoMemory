@@ -76,7 +76,13 @@ static NSString *const klocal_daycourseschedule_view_key = @"org.plam4fun.fm1017
 }
 - (NSObject *)viewValueInViewOfHCObject:(HCObject *)object
 {
-    if ([object isKindOfClass:[PMDayCourseSchedule class]]) {
+    if ([object isKindOfClass:[PMStudent class]]) {
+        PMStudent *student = (PMStudent*)object;
+        NSString *name = student.name?student.name:@"";
+        NSString *phone = student.phone?student.phone:@"";
+        NSString *shortCut = student.nameShortcut?student.nameShortcut:@"";
+        return [NSString stringWithFormat:@"%@|%@|%@", name, phone, shortCut];
+    } else if ([object isKindOfClass:[PMDayCourseSchedule class]]) {
         PMDayCourseSchedule *dayCourseSchedule = (PMDayCourseSchedule*)object;
         return [[NSNumber numberWithLong:dayCourseSchedule.scheduleTimestamp] stringValue];
     }

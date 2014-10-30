@@ -264,6 +264,7 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
             } completionBlock:^{
                 [toast removeFromSuperview];
             }];
+            [pSelf loadCustomerData];
         });
     } failure:^(HCErrorMessage *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
