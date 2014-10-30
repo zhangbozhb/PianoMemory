@@ -192,7 +192,7 @@
     }
 }
 
-- (IBAction)repeatChangedAction:(id)sender {
+- (IBAction)repeatTypeChangedAction:(id)sender {
     if ([self.repeatSwitch isOn]) {
         [self.changedCourseSchedule setRepeatType:PMCourseScheduleRepeatTypeWeek];
 
@@ -202,6 +202,11 @@
         [self.changedCourseSchedule setRepeatType:PMCourseScheduleRepeatTypeNone];
     }
     [self refreshRepeatInfoUI];
+}
+
+- (IBAction)repeatDateChangeAction:(id)sender {
+    PMCourseScheduleRepeatDataWeekDay weekday = [PMCourseSchedule getRepeatWeekDayFromWeekDayIndex:[self.weekDaySegmentControl selectedSegmentIndex]];
+    [self.changedCourseSchedule setRepeatWeekDay:weekday];
 }
 
 #pragma delegate textfield

@@ -52,7 +52,7 @@
                                 <rect key="frame" x="0.0" y="144" width="600" height="407"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PMCourseScheduleTableViewCellReuseIdentifier" id="VvM-2H-g5g" customClass="PMCourseScheduleTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="dayCourseScheduleTableViewCellReuseIdentifier" id="VvM-2H-g5g" customClass="PMCourseScheduleTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VvM-2H-g5g" id="gCR-zz-M5L">
@@ -202,10 +202,10 @@
             </objects>
             <point key="canvasLocation" x="633" y="-903"/>
         </scene>
-        <!--添加课程-->
+        <!--添加课程安排-->
         <scene sceneID="RAY-0I-SdA">
             <objects>
-                <viewController title="添加课程" id="74Q-lZ-nrB" customClass="PMCourseScheduleEditViewController" sceneMemberID="viewController">
+                <viewController title="添加课程安排" id="74Q-lZ-nrB" customClass="PMCourseScheduleEditViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ptg-Y1-PVf"/>
                         <viewControllerLayoutGuide type="bottom" id="9si-z5-oxj"/>
@@ -432,6 +432,9 @@
                                                     <segment title="周五"/>
                                                     <segment title="周六"/>
                                                 </segments>
+                                                <connections>
+                                                    <action selector="repeatDateChangeAction:" destination="74Q-lZ-nrB" eventType="valueChanged" id="bN1-M6-I3k"/>
+                                                </connections>
                                             </segmentedControl>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="其他说明" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ml9-NF-oOO">
                                                 <rect key="frame" x="20" y="348" width="78" height="30"/>
@@ -459,7 +462,7 @@
                                                     <constraint firstAttribute="height" constant="31" id="lzV-cD-dEL"/>
                                                 </constraints>
                                                 <connections>
-                                                    <action selector="repeatChangedAction:" destination="74Q-lZ-nrB" eventType="valueChanged" id="IS2-Vg-eEr"/>
+                                                    <action selector="repeatTypeChangedAction:" destination="74Q-lZ-nrB" eventType="valueChanged" id="dL4-hx-Zya"/>
                                                 </connections>
                                             </switch>
                                         </subviews>
@@ -1852,9 +1855,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="4aE-fg-tsm"/>
+        <segue reference="yjf-ok-jzk"/>
+        <segue reference="R6i-Wb-fgA"/>
         <segue reference="kSK-QF-DU4"/>
         <segue reference="ouG-9o-Jrx"/>
-        <segue reference="yjf-ok-jzk"/>
     </inferredMetricsTieBreakers>
 </document>

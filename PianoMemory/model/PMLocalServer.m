@@ -384,11 +384,12 @@
     NSInteger startTime = [date zb_getDayTimestamp];
     NSInteger endTime = [[date zb_dateAfterDay:1] zb_getDayTimestamp];
     NSArray *dayCourseSchedules = [self queryDayCourseSchedulesFrom:startTime toEndTime:endTime createIfNotExsit:NO];
-    if (createIfNotExsit &&
-        0 == [dayCourseSchedules count]) {
+    if (0 == [dayCourseSchedules count]) {
         NSArray *courseSchedules = [self queryCourseScheduleOfDate:date];
         PMDayCourseSchedule *dayCourseSchedule = [PMBusiness createDayCourseScheduleWithCourseSchedules:courseSchedules atDate:date];
-        [self saveDayCourseSchedule:dayCourseSchedule];
+        if (createIfNotExsit) {
+            [self saveDayCourseSchedule:dayCourseSchedule];
+        }
         return dayCourseSchedule;
     }
     return [dayCourseSchedules firstObject];

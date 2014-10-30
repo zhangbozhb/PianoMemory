@@ -413,7 +413,7 @@
         if (!targetDate) {
             targetDate = [NSDate date];
         }
-        BOOL createIfNotExsit = ([[[NSDate date] zb_dateAfterDay:1] timeIntervalSince1970] > [date timeIntervalSince1970])?YES:NO;
+        BOOL createIfNotExsit = ([[[NSDate date] zb_dateAfterDay:1] zb_getDayTimestamp] > [date timeIntervalSince1970])?YES:NO;
         PMDayCourseSchedule *dayCourseSchedule = [self.localServer queryDayCourseScheduleOfDate:targetDate createIfNotExsit:createIfNotExsit];
         if (success) {
             success(dayCourseSchedule);
