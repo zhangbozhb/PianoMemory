@@ -395,7 +395,7 @@
     if (starttime >= endtime) {
         endtime = [[[NSDate dateWithTimeIntervalSince1970:starttime] zb_dateAfterDay:1] zb_getDayTimestamp]-1;
     }
-    BOOL createIfNotExist = NO;
+    BOOL createIfNotExist = YES;
     if (createValue && [createValue isKindOfClass:[NSNumber class]]) {
         createIfNotExist = [createValue boolValue];
     }

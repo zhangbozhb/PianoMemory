@@ -313,12 +313,14 @@
                                  [NSNumber numberWithInteger:PMCourseScheduleRepeatDataWeekDayStaturday],
                                  nil];
             for (NSNumber *mappingKey in weekDays) {
-                if ([courseSchdeudle availableForRepeatWeekDay:PMCourseScheduleRepeatDataWeekDaySunday]) {
+                PMCourseScheduleRepeatDataWeekDay repeateWeekDay = [mappingKey longValue];
+                if ([courseSchdeudle availableForRepeatWeekDay:repeateWeekDay]) {
                     NSMutableArray *weekDayScheudles = [repreatWeekDayMapping objectForKey:mappingKey];
                     if (weekDayScheudles) {
                         [weekDayScheudles addObject:courseSchdeudle];
                     } else {
                         weekDayScheudles = [NSMutableArray arrayWithObject:courseSchdeudle];
+                        [repreatWeekDayMapping setObject:weekDayScheudles forKey:mappingKey];
                     }
                 }
             }
@@ -399,7 +401,7 @@
             for (PMCourseSchedule *courseSchedule in repeatWeekDayCourseSchedules) {
                 if (courseSchedule.effectiveDateTimestamp <= targetDayTimestamp &&
                     targetDayTimestamp <= courseSchedule.expireDateTimestamp) {
-                    [canditeCourseSchedules addObject:courseSchedule];
+                    [canditeCourseSchedules addObject:[courseSchedule copy]];
                 }
             }
             PMDayCourseSchedule *createdDayCourseSchedule = [PMBusiness createDayCourseScheduleWithCourseSchedules:canditeCourseSchedules atDate:targetDay];

@@ -140,8 +140,13 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"dayCourseScheduleShowCourseScheduleSugeIdentifier"]) {
+    if ([segue.identifier isEqualToString:@"dayCourseScheduleAddCourseScheduleSugeIdentifier"]) {
+        PMCourseScheduleEditViewController *addCourseScheduleVC = (PMCourseScheduleEditViewController*)segue.destinationViewController;
+        [addCourseScheduleVC setDelegate:self];
+        [addCourseScheduleVC setCourseSchedule:nil];
+    } else if ([segue.identifier isEqualToString:@"dayCourseScheduleShowCourseScheduleSugeIdentifier"]) {
         PMCourseScheduleEditViewController *editCourseScheduleVC = (PMCourseScheduleEditViewController*)segue.destinationViewController;
+        [editCourseScheduleVC setDelegate:self];
         NSIndexPath *selectedIndexPath = [self.courseScheduleTableView indexPathForSelectedRow];
         if (selectedIndexPath && selectedIndexPath.row < [self.targetDayCourseSchedule.courseSchedules count]) {
             [editCourseScheduleVC setCourseSchedule:[self.targetDayCourseSchedule.courseSchedules objectAtIndex:selectedIndexPath.row]];

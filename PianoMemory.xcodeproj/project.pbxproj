@@ -26,6 +26,7 @@
 		9E08E87B19E8DAFF00DFD7CA /* PMTimeSchedule+Wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E87A19E8DAFF00DFD7CA /* PMTimeSchedule+Wrapper.m */; };
 		9E08E87E19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E87D19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m */; };
 		9E08E88219E92AA100DFD7CA /* PMUISettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E88119E92AA100DFD7CA /* PMUISettings.m */; };
+		9EA0C2B81A038A6C001564BB /* PMReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0C2B71A038A6C001564BB /* PMReportViewController.m */; };
 		9EA48B291A00A928004B03E9 /* PMCourseScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA48B281A00A928004B03E9 /* PMCourseScheduleViewController.m */; };
 		9EA76B7419F4BAA600B5613B /* btn_add_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA76B7219F4BAA600B5613B /* btn_add_green.png */; };
 		9EA76B7519F4BAA600B5613B /* btn_add_green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA76B7319F4BAA600B5613B /* btn_add_green@2x.png */; };
@@ -33,7 +34,6 @@
 		9EC9DF9819FF6334008E3499 /* PMDayCourseSchedule+Wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC9DF9719FF6334008E3499 /* PMDayCourseSchedule+Wrapper.m */; };
 		9EF130E819E029A900843F02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF130E719E029A900843F02 /* main.m */; };
 		9EF130EB19E029A900843F02 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF130EA19E029A900843F02 /* AppDelegate.m */; };
-		9EF130EE19E029AA00843F02 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF130ED19E029AA00843F02 /* ViewController.m */; };
 		9EF130F119E029AA00843F02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EF130EF19E029AA00843F02 /* Main.storyboard */; };
 		9EF130F319E029AA00843F02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EF130F219E029AA00843F02 /* Images.xcassets */; };
 		9EF130F619E029AA00843F02 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EF130F419E029AA00843F02 /* LaunchScreen.xib */; };
@@ -134,6 +134,8 @@
 		9E08E87D19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMTimeScheduleEditViewController.m; sourceTree = "<group>"; };
 		9E08E88019E92AA100DFD7CA /* PMUISettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUISettings.h; sourceTree = "<group>"; };
 		9E08E88119E92AA100DFD7CA /* PMUISettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMUISettings.m; sourceTree = "<group>"; };
+		9EA0C2B61A038A6C001564BB /* PMReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMReportViewController.h; sourceTree = "<group>"; };
+		9EA0C2B71A038A6C001564BB /* PMReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMReportViewController.m; sourceTree = "<group>"; };
 		9EA48B271A00A928004B03E9 /* PMCourseScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCourseScheduleViewController.h; sourceTree = "<group>"; };
 		9EA48B281A00A928004B03E9 /* PMCourseScheduleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMCourseScheduleViewController.m; sourceTree = "<group>"; };
 		9EA76B7219F4BAA600B5613B /* btn_add_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_add_green.png; sourceTree = "<group>"; };
@@ -147,8 +149,6 @@
 		9EF130E719E029A900843F02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9EF130E919E029A900843F02 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9EF130EA19E029A900843F02 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9EF130EC19E029A900843F02 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9EF130ED19E029AA00843F02 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9EF130F019E029AA00843F02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9EF130F219E029AA00843F02 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9EF130F519E029AA00843F02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -309,6 +309,15 @@
 			name = uisettting;
 			sourceTree = "<group>";
 		};
+		9EA0C2B51A038A3D001564BB /* report */ = {
+			isa = PBXGroup;
+			children = (
+				9EA0C2B61A038A6C001564BB /* PMReportViewController.h */,
+				9EA0C2B71A038A6C001564BB /* PMReportViewController.m */,
+			);
+			name = report;
+			sourceTree = "<group>";
+		};
 		9EA48B261A00A8B7004B03E9 /* courseschedule */ = {
 			isa = PBXGroup;
 			children = (
@@ -358,8 +367,6 @@
 				9EF1311A19E02FF200843F02 /* Utils */,
 				9EF130E919E029A900843F02 /* AppDelegate.h */,
 				9EF130EA19E029A900843F02 /* AppDelegate.m */,
-				9EF130EC19E029A900843F02 /* ViewController.h */,
-				9EF130ED19E029AA00843F02 /* ViewController.m */,
 				9EF130EF19E029AA00843F02 /* Main.storyboard */,
 				9EF130F219E029AA00843F02 /* Images.xcassets */,
 				9EF130F419E029AA00843F02 /* LaunchScreen.xib */,
@@ -485,6 +492,7 @@
 				9E08E87519E8D92000DFD7CA /* timeschedule */,
 				9EA48B261A00A8B7004B03E9 /* courseschedule */,
 				9E08E84019E2C45100DFD7CA /* daycourseschedule */,
+				9EA0C2B51A038A3D001564BB /* report */,
 				9E08E84519E2C88200DFD7CA /* PMMoreViewController.h */,
 				9E08E84619E2C88200DFD7CA /* PMMoreViewController.m */,
 			);
@@ -757,6 +765,7 @@
 				9E08E85619E3789E00DFD7CA /* PMCourse+Wrapper.m in Sources */,
 				9E08E84A19E2CF5000DFD7CA /* PMCourseViewController.m in Sources */,
 				9E08E83F19E29E1B00DFD7CA /* UIViewController+Extend.m in Sources */,
+				9EA0C2B81A038A6C001564BB /* PMReportViewController.m in Sources */,
 				9EF1317B19E0C9BA00843F02 /* PMStudentBrowseViewController.m in Sources */,
 				9EF1318319E103D300843F02 /* LunarCalendar.m in Sources */,
 				9E08E86D19E77CA400DFD7CA /* PMObject.m in Sources */,
@@ -771,7 +780,6 @@
 				9EF131A719E24B9300843F02 /* PMDateUpdte.m in Sources */,
 				9EF1318D19E1770700843F02 /* PMDayCourseScheduleViewController.m in Sources */,
 				9EF1319519E2299E00843F02 /* PMStudent+Wrapper.m in Sources */,
-				9EF130EE19E029AA00843F02 /* ViewController.m in Sources */,
 				9E08E85019E2DD7D00DFD7CA /* PMCourseEditViewController.m in Sources */,
 				9E08E85319E2E3C700DFD7CA /* UIView+Extend.m in Sources */,
 				9EF130EB19E029A900843F02 /* AppDelegate.m in Sources */,
