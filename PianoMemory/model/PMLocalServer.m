@@ -434,4 +434,30 @@
     }
     return [dayCourseSchedules firstObject];
 }
+
+- (BOOL)updateHistoryDayCourseScheduleWithCourseSchedule:(PMCourseSchedule*)courseSchedule
+{
+    if (PMCourseScheduleRepeatTypeNone == courseSchedule.repeatType &&
+        courseSchedule.localDBId) {
+        return YES;
+    }
+    NSArray *dayCourseScheduleArray =[self queryDayCourseSchedulesFrom:courseSchedule.effectiveDateTimestamp toEndTime:[[[NSDate date] zb_dateAfterDay:1] zb_getDayTimestamp] createIfNotExsit:YES];
+    for (PMDayCourseSchedule *dayCourseSchedule in dayCourseScheduleArray) {
+        BOOL isExist = NO;
+        for (PMCourseSchedule *item in dayCourseSchedule.courseSchedules) {
+            if ([item.localDBId isEqualToString:courseSchedule.localDBId]) {
+                isExist = YES;
+            }
+        }
+        if (!isExist) {
+            if (dayCourseSchedule.courseSchedules) {
+                [dayCourseSchedule.courseSchedules addObject:courseSchedule];
+            } else {
+                dayCourseSchedule.courseSchedules = [NSMutableArray arrayWithObject:courseSchedule];
+            }
+            [self saveDayCourseSchedule:dayCourseSchedule];
+        }
+    }
+    return YES;
+}
 @end

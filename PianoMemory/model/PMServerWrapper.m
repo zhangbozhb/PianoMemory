@@ -420,4 +420,20 @@
         }
     }];
 }
+
+- (void)updateHistoryDayCourseScheduleWithCourseSchedule:(PMCourseSchedule*)courseSchedule success:(void(^)())success failure:(void(^)(HCErrorMessage *error))failure
+{
+    [self asyncProcessing:^{
+        BOOL isSucceed = [self.localServer updateHistoryDayCourseScheduleWithCourseSchedule:courseSchedule];
+        if (isSucceed) {
+            if (success) {
+                success();
+            }
+        } else {
+            if (failure) {
+                failure([self errorUnknown]);
+            }
+        }
+    }];
+}
 @end

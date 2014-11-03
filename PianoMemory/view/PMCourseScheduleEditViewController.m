@@ -21,13 +21,15 @@
 #import "NSDate+Extend.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 
-@interface PMCourseScheduleEditViewController () <UITextFieldDelegate, PMCoursePickerDelegate, PMStudentPickerDelgate,PMTimeSchedulePickerDelgate, UIScrollViewDelegate>
+const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始日期早于今天，是否将本课程安排添加到历史数据中?";
+
+@interface PMCourseScheduleEditViewController () <UITextFieldDelegate, PMCoursePickerDelegate, PMStudentPickerDelgate,PMTimeSchedulePickerDelgate, UIScrollViewDelegate, UIAlertViewDelegate>
 
 @property (nonatomic) PMCourseSchedule *changedCourseSchedule;
 @property (weak, nonatomic) UITextField *currentDateField;
 
-//xib reference
 
+//xib reference
 @property (weak, nonatomic) IBOutlet UINavigationItem *myNavigationItem;
 
 @property (weak, nonatomic) IBOutlet UIView *anchorView;
@@ -115,19 +117,47 @@
             [self.delegate courseScheduleEdit:self updateCourseSchedule:self.changedCourseSchedule indexPath:self.indexPath];
         }
     } else {
-        __weak PMCourseScheduleEditViewController *pSelf = self;
-        [[PMServerWrapper defaultServer] updateCourseSchedule:self.changedCourseSchedule success:^(PMCourseSchedule *courseSchedule) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (pSelf.delegate &&
-                    [pSelf.delegate respondsToSelector:@selector(courseScheduleEdit:updateCourseSchedule:indexPath:)]) {
-                    [pSelf.delegate courseScheduleEdit:pSelf updateCourseSchedule:courseSchedule indexPath:pSelf.indexPath];
-                }
+        if (self.changedCourseSchedule.effectiveDateTimestamp <= [[NSDate date] zb_getDayTimestamp]) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                message:[addToHistoryDayCourseSchedule copy]
+                                                               delegate:self
+                                                      cancelButtonTitle:@"取消"
+                                                      otherButtonTitles:@"确定", nil];
+            [alertView show];
+        } else {
+            [self saveCourseSchedule:NO];
+        }
+    }
+}
 
-                MBProgressHUD *toast = [[MBProgressHUD alloc] initWithView:pSelf.view];
-                [pSelf.view addSubview:toast];
-                toast.removeFromSuperViewOnHide = YES;
-                toast.mode = MBProgressHUDModeText;
-                toast.animationType = MBProgressHUDAnimationFade;
+- (void)saveCourseSchedule:(BOOL)addToHistoryDayCourseSchedule
+{
+    MBProgressHUD *toast = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:toast];
+    toast.removeFromSuperViewOnHide = YES;
+    toast.mode = MBProgressHUDModeIndeterminate;
+    toast.animationType = MBProgressHUDAnimationFade;
+    [toast setLabelText:@"正在保存课程..."];
+    [toast show:YES];
+
+    __weak PMCourseScheduleEditViewController *pSelf = self;
+    [[PMServerWrapper defaultServer] updateCourseSchedule:self.changedCourseSchedule success:^(PMCourseSchedule *courseSchedule) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (pSelf.delegate &&
+                [pSelf.delegate respondsToSelector:@selector(courseScheduleEdit:updateCourseSchedule:indexPath:)]) {
+                [pSelf.delegate courseScheduleEdit:pSelf updateCourseSchedule:courseSchedule indexPath:pSelf.indexPath];
+            }
+
+            if (addToHistoryDayCourseSchedule) {
+                [toast setLabelText:@"正在更新历史课程安排..."];
+                [[PMServerWrapper defaultServer] updateHistoryDayCourseScheduleWithCourseSchedule:courseSchedule success:^{
+                    [toast hide:YES];
+                    [pSelf.navigationController popViewControllerAnimated:YES];
+                } failure:^(HCErrorMessage *error) {
+                    [toast hide:YES];
+                    [pSelf.navigationController popViewControllerAnimated:YES];
+                }];
+            } else {
                 [toast setLabelText:@"课程保存成功"];
                 [toast showAnimated:YES whileExecutingBlock:^{
                     sleep(2);
@@ -135,20 +165,22 @@
                     [toast removeFromSuperview];
                     [pSelf.navigationController popViewControllerAnimated:YES];
                 }];
-            });
-        } failure:^(HCErrorMessage *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                MBProgressHUD *toast = [[MBProgressHUD alloc] initWithView:pSelf.view];
-                [pSelf.view addSubview:toast];
-                toast.removeFromSuperViewOnHide = YES;
-                toast.mode = MBProgressHUDModeText;
-                toast.animationType = MBProgressHUDAnimationFade;
-                [toast setLabelText:@"课程保存失败"];
-                [toast setDetailsLabelText:error.errorMessage];
-                [toast show:YES];
-                [toast hide:YES afterDelay:2];
-            });
-        }];
+            }
+        });
+    } failure:^(HCErrorMessage *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [toast setLabelText:@"课程保存失败"];
+            [toast setDetailsLabelText:error.errorMessage];
+            [toast show:YES];
+            [toast hide:YES afterDelay:2];
+        });
+    }];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if ([alertView.message isEqualToString:[addToHistoryDayCourseSchedule copy]]) {
+        [self saveCourseSchedule:1==buttonIndex];
     }
 }
 

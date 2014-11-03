@@ -26,6 +26,7 @@
 		9E08E87B19E8DAFF00DFD7CA /* PMTimeSchedule+Wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E87A19E8DAFF00DFD7CA /* PMTimeSchedule+Wrapper.m */; };
 		9E08E87E19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E87D19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m */; };
 		9E08E88219E92AA100DFD7CA /* PMUISettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E88119E92AA100DFD7CA /* PMUISettings.m */; };
+		9E5B5C281A07CF0100F9E424 /* PMDayStatistics.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C271A07CF0100F9E424 /* PMDayStatistics.m */; };
 		9EA0C2B81A038A6C001564BB /* PMReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0C2B71A038A6C001564BB /* PMReportViewController.m */; };
 		9EA48B291A00A928004B03E9 /* PMCourseScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA48B281A00A928004B03E9 /* PMCourseScheduleViewController.m */; };
 		9EA76B7419F4BAA600B5613B /* btn_add_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA76B7219F4BAA600B5613B /* btn_add_green.png */; };
@@ -134,6 +135,8 @@
 		9E08E87D19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMTimeScheduleEditViewController.m; sourceTree = "<group>"; };
 		9E08E88019E92AA100DFD7CA /* PMUISettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUISettings.h; sourceTree = "<group>"; };
 		9E08E88119E92AA100DFD7CA /* PMUISettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMUISettings.m; sourceTree = "<group>"; };
+		9E5B5C261A07CF0100F9E424 /* PMDayStatistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMDayStatistics.h; sourceTree = "<group>"; };
+		9E5B5C271A07CF0100F9E424 /* PMDayStatistics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMDayStatistics.m; sourceTree = "<group>"; };
 		9EA0C2B61A038A6C001564BB /* PMReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMReportViewController.h; sourceTree = "<group>"; };
 		9EA0C2B71A038A6C001564BB /* PMReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMReportViewController.m; sourceTree = "<group>"; };
 		9EA48B271A00A928004B03E9 /* PMCourseScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCourseScheduleViewController.h; sourceTree = "<group>"; };
@@ -309,6 +312,15 @@
 			name = uisettting;
 			sourceTree = "<group>";
 		};
+		9E5B5C251A07B6C300F9E424 /* statistics */ = {
+			isa = PBXGroup;
+			children = (
+				9E5B5C261A07CF0100F9E424 /* PMDayStatistics.h */,
+				9E5B5C271A07CF0100F9E424 /* PMDayStatistics.m */,
+			);
+			name = statistics;
+			sourceTree = "<group>";
+		};
 		9EA0C2B51A038A3D001564BB /* report */ = {
 			isa = PBXGroup;
 			children = (
@@ -414,6 +426,7 @@
 		9EF1310F19E02FF200843F02 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				9E5B5C251A07B6C300F9E424 /* statistics */,
 				9E08E87119E826B200DFD7CA /* business */,
 				9EF1319A19E2323B00843F02 /* localserver */,
 				9EF1317C19E0CC1300843F02 /* base */,
@@ -795,6 +808,7 @@
 				9EF131A419E24B1000843F02 /* UIViewController+DataUpdate.m in Sources */,
 				9EF1315A19E02FF200843F02 /* UIImage+Additional.m in Sources */,
 				9EF1319219E184E300843F02 /* PMStudentEditViewController.m in Sources */,
+				9E5B5C281A07CF0100F9E424 /* PMDayStatistics.m in Sources */,
 				9EF1317F19E0CD6C00843F02 /* PMStudentBrowseTableViewCell.m in Sources */,
 				9E08E87E19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m in Sources */,
 				9EF1315519E02FF200843F02 /* NSDate+Extend.m in Sources */,

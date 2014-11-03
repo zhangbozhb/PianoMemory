@@ -29,22 +29,24 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self loaddatat];
+    [self loadCurrentMonthData];
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return 7;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return nil;
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    [cell.textLabel setText:[NSString stringWithFormat:@"%d", indexPath.row]];
+    return cell;
 }
 
 
-- (void)loaddatat
+- (void)loadCurrentMonthData
 {
     NSDate *currentDate = [NSDate date];
     NSDictionary *params = @{@"starttime":[[NSNumber numberWithLong:

@@ -51,4 +51,6 @@
 //param 	starttime, endtime, create
 - (void)queryDayCourseSchedules:(NSDictionary *)parameters success:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure;
 - (void)queryDayCourseScheduleOfDate:(NSDate*)date success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
+
+- (void)updateHistoryDayCourseScheduleWithCourseSchedule:(PMCourseSchedule*)courseSchedule success:(void(^)())success failure:(void(^)(HCErrorMessage *error))failure;
 @end

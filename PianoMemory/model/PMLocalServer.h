@@ -53,4 +53,6 @@
 - (NSArray*)queryAllDayCourseSchedule;
 - (NSArray*)queryDayCourseSchedulesFrom:(NSInteger)startTime toEndTime:(NSInteger)endTime createIfNotExsit:(BOOL)createIfNotExsit;
 - (PMDayCourseSchedule *)queryDayCourseScheduleOfDate:(NSDate*)date createIfNotExsit:(BOOL)createIfNotExsit;
+
+- (BOOL)updateHistoryDayCourseScheduleWithCourseSchedule:(PMCourseSchedule*)courseSchedule;
 @end
