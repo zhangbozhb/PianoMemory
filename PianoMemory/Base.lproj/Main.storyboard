@@ -1857,27 +1857,27 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y5k-vB-Y4o" userLabel="anchro view">
-                                <rect key="frame" x="0.0" y="114" width="320" height="530"/>
+                                <rect key="frame" x="0.0" y="114" width="320" height="640"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="530" id="Eit-VX-MDq"/>
+                                    <constraint firstAttribute="height" constant="640" id="Eit-VX-MDq"/>
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Flu-UL-M3d">
                                 <rect key="frame" x="0.0" y="114" width="320" height="637"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2rw-Zz-VQf" userLabel="content view">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="530"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="640"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gng-op-ajF" userLabel="char view">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gng-op-ajF" userLabel="char view" customClass="PMDayReportView">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="gng-op-ajF" secondAttribute="height" multiplier="1:1" id="CZ5-Fx-PwP"/>
                                                 </constraints>
                                             </view>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="30" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="A6q-jR-Riz">
-                                                <rect key="frame" x="0.0" y="320" width="320" height="210"/>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="40" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="A6q-jR-Riz">
+                                                <rect key="frame" x="0.0" y="320" width="320" height="320"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <outlet property="dataSource" destination="UYe-qD-duu" id="szj-zI-kG0"/>

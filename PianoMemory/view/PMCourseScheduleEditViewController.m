@@ -228,8 +228,8 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
     if ([self.repeatSwitch isOn]) {
         [self.changedCourseSchedule setRepeatType:PMCourseScheduleRepeatTypeWeek];
 
-        PMCourseScheduleRepeatDataWeekDay weekday = [PMCourseSchedule getRepeatWeekDayFromWeekDayIndex:[[NSDate date] zb_getWeekDay]-1];
-        [self.changedCourseSchedule setRepeatWeekDay:weekday];
+        PMCourseScheduleRepeatDataWeekDay repateWeekday = [PMCourseScheduleRepeat repeatWeekDayFromDate:[NSDate date]];
+        [self.changedCourseSchedule setRepeatWeekDay:repateWeekday];
     } else {
         [self.changedCourseSchedule setRepeatType:PMCourseScheduleRepeatTypeNone];
     }
@@ -237,8 +237,8 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
 }
 
 - (IBAction)repeatDateChangeAction:(id)sender {
-    PMCourseScheduleRepeatDataWeekDay weekday = [PMCourseSchedule getRepeatWeekDayFromWeekDayIndex:[self.weekDaySegmentControl selectedSegmentIndex]];
-    [self.changedCourseSchedule setRepeatWeekDay:weekday];
+    PMCourseScheduleRepeatDataWeekDay repateWeekday = [PMCourseScheduleRepeat repeatWeekDayFromDayIndexInWeek:[self.weekDaySegmentControl selectedSegmentIndex]];
+    [self.changedCourseSchedule setRepeatWeekDay:repateWeekday];
 }
 
 #pragma delegate textfield
@@ -330,8 +330,8 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
         [self.repeatSwitch setOn:YES];
         [self.weekDaySegmentControl setEnabled:YES];
         NSArray *weekDays = [self.changedCourseSchedule getRepeatWeekDays];
-        NSInteger weekDayIndex = [PMCourseSchedule getWeekDayIndexFromRepeatWeekDay:[[weekDays firstObject] longValue]];
-        [self.weekDaySegmentControl setSelectedSegmentIndex:weekDayIndex];
+        NSInteger dayIndexInWeek = [PMCourseScheduleRepeat dayIndexInWeekFromRepeatWeekDay:[[weekDays firstObject] longValue]];
+        [self.weekDaySegmentControl setSelectedSegmentIndex:dayIndexInWeek];
     } else  {
         [self.repeatSwitch setOn:NO];
         [self.weekDaySegmentControl setEnabled:NO];

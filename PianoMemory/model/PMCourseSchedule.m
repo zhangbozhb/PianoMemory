@@ -102,75 +102,11 @@
     if (PMCourseScheduleRepeatTypeWeek == self.repeatType &&
         self.effectiveDateTimestamp <= timestamp &&
         timestamp < self.expireDateTimestamp) {
-        NSCalendar *calendar = [NSCalendar currentCalendar];
-        NSDateComponents *components = [calendar components:NSWeekdayCalendarUnit fromDate:date];
-        PMCourseScheduleRepeatDataWeekDay repeatWeekDay = [[self class]
-                                                           getRepeatWeekDayFromWeekDayIndex:[components weekday]-1];
+        PMCourseScheduleRepeatDataWeekDay repeatWeekDay = [PMCourseScheduleRepeat repeatWeekDayFromDate:date];
         return [self availableForRepeatWeekDay:repeatWeekDay];
     }
     return NO;
 }
 
-+ (NSInteger)getWeekDayIndexFromRepeatWeekDay:(PMCourseScheduleRepeatDataWeekDay)repeateWeekDay
-{
-    NSInteger weekDayIndex = 0;
-    switch (repeateWeekDay) {
-        case PMCourseScheduleRepeatDataWeekDaySunday:
-            weekDayIndex = 0;
-            break;
-        case PMCourseScheduleRepeatDataWeekDayMonday:
-            weekDayIndex = 1;
-            break;
-        case PMCourseScheduleRepeatDataWeekDayTuesday:
-            weekDayIndex = 2;
-            break;
-        case PMCourseScheduleRepeatDataWeekDayWednesday:
-            weekDayIndex = 3;
-            break;
-        case PMCourseScheduleRepeatDataWeekDayThursday:
-            weekDayIndex = 4;
-            break;
-        case PMCourseScheduleRepeatDataWeekDayFriday:
-            weekDayIndex = 5;
-            break;
-        case PMCourseScheduleRepeatDataWeekDayStaturday:
-            weekDayIndex = 6;
-            break;
-        default:
-            break;
-    }
-    return weekDayIndex;
-}
 
-+ (PMCourseScheduleRepeatDataWeekDay)getRepeatWeekDayFromWeekDayIndex:(NSInteger)weekDayIndex
-{
-    PMCourseScheduleRepeatDataWeekDay repeateWeekDay = PMCourseScheduleRepeatDataWeekDaySunday;
-    switch (weekDayIndex) {
-        case 0:
-            repeateWeekDay = PMCourseScheduleRepeatDataWeekDaySunday;
-            break;
-        case 1:
-            repeateWeekDay = PMCourseScheduleRepeatDataWeekDayMonday;
-            break;
-        case 2:
-            repeateWeekDay = PMCourseScheduleRepeatDataWeekDayTuesday;
-            break;
-        case 3:
-            repeateWeekDay = PMCourseScheduleRepeatDataWeekDayWednesday;
-            break;
-        case 4:
-            repeateWeekDay = PMCourseScheduleRepeatDataWeekDayThursday;
-            break;
-        case 5:
-            repeateWeekDay = PMCourseScheduleRepeatDataWeekDayFriday;
-            break;
-        case 6:
-            repeateWeekDay = PMCourseScheduleRepeatDataWeekDayStaturday;
-            break;
-        default:
-            break;
-    }
-    return repeateWeekDay;
-
-}
 @end

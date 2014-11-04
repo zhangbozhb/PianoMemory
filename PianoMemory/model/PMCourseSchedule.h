@@ -10,24 +10,9 @@
 #import "PMCourse.h"
 #import "PMTimeSchedule.h"
 #import "PMStudent.h"
+#import "PMCourseScheduleRepeat.h"
 
-typedef enum {
-    PMCourseScheduleRepeatTypeNone = 0,
-    PMCourseScheduleRepeatTypeDay,
-    PMCourseScheduleRepeatTypeWeek,
-    PMCourseScheduleRepeatTypeMonth,
-    PMCourseScheduleRepeatTypeYear,
-}PMCourseScheduleRepeatType;
 
-typedef enum {
-    PMCourseScheduleRepeatDataWeekDayMonday = 1 ,
-    PMCourseScheduleRepeatDataWeekDayTuesday = 1 << 1,
-    PMCourseScheduleRepeatDataWeekDayWednesday  = 1 << 2,
-    PMCourseScheduleRepeatDataWeekDayThursday  = 1 << 3,
-    PMCourseScheduleRepeatDataWeekDayFriday  = 1 << 4,
-    PMCourseScheduleRepeatDataWeekDayStaturday  = 1 << 5,
-    PMCourseScheduleRepeatDataWeekDaySunday = 1 << 6,
-}PMCourseScheduleRepeatDataWeekDay;
 
 @interface PMCourseSchedule : PMObject
 @property (nonatomic) PMCourse *course;
@@ -47,7 +32,4 @@ typedef enum {
 - (void)removeRepeatWeekDay:(PMCourseScheduleRepeatDataWeekDay)repeatWeekDay;
 - (BOOL)availableForRepeatWeekDay:(PMCourseScheduleRepeatDataWeekDay)repeatWeekDay;
 - (BOOL)availableFordDate:(NSDate*)date;
-
-+ (NSInteger)getWeekDayIndexFromRepeatWeekDay:(PMCourseScheduleRepeatDataWeekDay)repeateWeekDay;
-+ (PMCourseScheduleRepeatDataWeekDay)getRepeatWeekDayFromWeekDayIndex:(NSInteger)weekDayIndex;
 @end

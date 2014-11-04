@@ -395,7 +395,7 @@
         if (!dayCourseSchedule &&
             targetDayTimestamp < maxCreateTimestamp) {
             //创建 day
-            PMCourseScheduleRepeatDataWeekDay repeatWeekDay = [PMCourseSchedule getRepeatWeekDayFromWeekDayIndex:[targetDay zb_getWeekDay]-1];
+            PMCourseScheduleRepeatDataWeekDay repeatWeekDay = [PMCourseScheduleRepeat repeatWeekDayFromDate:targetDay];
             NSArray *repeatWeekDayCourseSchedules = [repreatWeekDayMapping objectForKey:[NSNumber numberWithInteger:repeatWeekDay]];
             NSMutableArray *canditeCourseSchedules = [NSMutableArray array];
             for (PMCourseSchedule *courseSchedule in repeatWeekDayCourseSchedules) {
