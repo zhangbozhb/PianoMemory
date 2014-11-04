@@ -52,7 +52,7 @@
 - (void)setup
 {
     self.layer.maxRadius = 100;
-    self.layer.minRadius = 20;
+    self.layer.minRadius = 50;
     self.layer.animationDuration = 0.6;
     self.layer.showTitles = ShowTitlesAlways;
     if ([self.layer.self respondsToSelector:@selector(setContentsScale:)])
