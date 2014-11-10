@@ -19,6 +19,7 @@
 #import "PMUISettings.h"
 
 #import "NSDate+Extend.h"
+#import "UIView+Extend.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 
 const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始日期早于今天，是否将本课程安排添加到历史数据中?";
@@ -26,7 +27,7 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
 @interface PMCourseScheduleEditViewController () <UITextFieldDelegate, PMCoursePickerDelegate, PMStudentPickerDelgate,PMTimeSchedulePickerDelgate, UIScrollViewDelegate, UIAlertViewDelegate>
 
 @property (nonatomic) PMCourseSchedule *changedCourseSchedule;
-@property (weak, nonatomic) UITextField *currentDateField;
+@property (weak, nonatomic) UILabel *currentDateField;
 
 
 //xib reference
@@ -36,12 +37,12 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
 @property (weak, nonatomic) IBOutlet UIScrollView *myScrollView;
 @property (weak, nonatomic) IBOutlet UIView *myContentView;
 
-@property (weak, nonatomic) IBOutlet UITextField *coureNameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *studentNameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *startTimeTextField;
-@property (weak, nonatomic) IBOutlet UITextField *endTimeTextField;
-@property (weak, nonatomic) IBOutlet UITextField *effectiveDateTextField;
-@property (weak, nonatomic) IBOutlet UITextField *expirationDateTextField;
+@property (weak, nonatomic) IBOutlet UILabel *coureNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *studentNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *startTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *endTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *effectiveDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *expirationDateLabel;
 @property (weak, nonatomic) IBOutlet UITextView *courseScheduleDescriptionTextView;
 @property (weak, nonatomic) IBOutlet UIDatePicker *myDatePicker;
 @property (weak, nonatomic) IBOutlet UISwitch *repeatSwitch;
@@ -60,6 +61,14 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
     [self.myScrollView addGestureRecognizer:hideDatePickerGesture];
 
     [self.myDatePicker setBackgroundColor:[UIColor whiteColor]];
+
+    NSArray *viewContainerArray = [NSArray arrayWithObjects:self.coureNameLabel, self.studentNameLabel,
+                                   self.startTimeLabel, self.endTimeLabel, self.effectiveDateLabel,
+                                   self.expirationDateLabel, nil];
+    UIColor *boardColor = [UIColor colorWithRed:230.f/255.f green:230.f/255.f blue:230.f/255.f alpha:1.f];
+    for (UIView *containerView in viewContainerArray) {
+        [containerView zb_addBorder:1.f borderColor:boardColor cornerRadius:6.f];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -86,12 +95,12 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
 
 - (NSString *)checkInputErrorsOfUI
 {
-    if (0 == [self.coureNameTextField.text length] &&
+    if (0 == [self.coureNameLabel.text length] &&
         self.changedCourseSchedule.course) {
         return @"课程不能为空";
     }
 
-    if (0 == [self.studentNameTextField.text length] &&
+    if (0 == [self.studentNameLabel.text length] &&
         (self.changedCourseSchedule.students || 0 == [self.changedCourseSchedule.students count])) {
         return @"学生不能为空";
     }
@@ -185,14 +194,14 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
 }
 
 - (IBAction)pickEffectiveDateAction:(id)sender {
-    if (self.currentDateField == self.effectiveDateTextField) {
+    if (self.currentDateField == self.effectiveDateLabel) {
         [self hideDatePicker];
     } else {
-        self.currentDateField = self.effectiveDateTextField;
+        self.currentDateField = self.effectiveDateLabel;
         [self.myDatePicker setDatePickerMode:UIDatePickerModeDate];
         [self.myDatePicker setHidden:NO];
 
-        CGPoint targetOffset = CGPointMake(0, self.effectiveDateTextField.frame.origin.y+self.effectiveDateTextField.frame.size.height+self.myDatePicker.frame.size.height-self.myScrollView.frame.size.height);
+        CGPoint targetOffset = CGPointMake(0, self.effectiveDateLabel.frame.origin.y+self.effectiveDateLabel.frame.size.height+self.myDatePicker.frame.size.height-self.myScrollView.frame.size.height);
         if (targetOffset.y < targetOffset.y) {
             [self.myScrollView setContentOffset:targetOffset];
         }
@@ -200,13 +209,13 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
 }
 
 - (IBAction)pickExpireDateAction:(id)sender {
-    if (self.currentDateField == self.expirationDateTextField) {
+    if (self.currentDateField == self.expirationDateLabel) {
         [self hideDatePicker];
     } else {
-        self.currentDateField = self.expirationDateTextField;
+        self.currentDateField = self.expirationDateLabel;
         [self.myDatePicker setDatePickerMode:UIDatePickerModeDate];
         [self.myDatePicker setHidden:NO];
-        CGPoint targetOffset = CGPointMake(0, self.expirationDateTextField.frame.origin.y+self.expirationDateTextField.frame.size.height+self.myDatePicker.frame.size.height-self.myScrollView.frame.size.height);
+        CGPoint targetOffset = CGPointMake(0, self.expirationDateLabel.frame.origin.y+self.expirationDateLabel.frame.size.height+self.myDatePicker.frame.size.height-self.myScrollView.frame.size.height);
         if (targetOffset.y < targetOffset.y) {
             [self.myScrollView setContentOffset:targetOffset];
         }
@@ -215,10 +224,10 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
 
 
 - (IBAction)dateTimePickerValueChangeAction:(id)sender {
-    if (self.currentDateField == self.effectiveDateTextField) {
+    if (self.currentDateField == self.effectiveDateLabel) {
         self.changedCourseSchedule.effectiveDateTimestamp = [self.myDatePicker.date zb_getDayTimestamp];
         [self refreshEffectiveExpireTimeUI];
-    } else if (self.currentDateField == self.expirationDateTextField) {
+    } else if (self.currentDateField == self.expirationDateLabel) {
         self.changedCourseSchedule.expireDateTimestamp = [[self.myDatePicker.date zb_dateAfterDay:1] zb_getDayTimestamp] - 1;
         [self refreshEffectiveExpireTimeUI];
     }
@@ -283,18 +292,18 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
 - (void)refreshCourseNameUI
 {
     if (self.changedCourseSchedule.course) {
-        self.coureNameTextField.text = [self.changedCourseSchedule.course getNotNilName];
+        self.coureNameLabel.text = [self.changedCourseSchedule.course getNotNilName];
     } else {
-        self.coureNameTextField.text = nil;
+        self.coureNameLabel.text = nil;
     }
 }
 
 - (void)refreshStudentNameUI
 {
     if (self.changedCourseSchedule.students) {
-        self.studentNameTextField.text = [self getNameStringOfStudents:self.changedCourseSchedule.students];
+        self.studentNameLabel.text = [self getNameStringOfStudents:self.changedCourseSchedule.students];
     } else {
-        self.studentNameTextField.text = nil;
+        self.studentNameLabel.text = nil;
     }
 }
 
@@ -302,8 +311,8 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:[self effectiveExpireDateFormatterString]];
-    self.effectiveDateTextField.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.changedCourseSchedule.effectiveDateTimestamp]];
-    self.expirationDateTextField.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.changedCourseSchedule.expireDateTimestamp]];
+    self.effectiveDateLabel.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.changedCourseSchedule.effectiveDateTimestamp]];
+    self.expirationDateLabel.text = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.changedCourseSchedule.expireDateTimestamp]];
 }
 
 - (NSString *)effectiveExpireDateFormatterString
@@ -315,8 +324,8 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:[self timeScheduleFormatterString]];
-    self.startTimeTextField.text = [self.changedCourseSchedule.timeSchedule getStartTimeWithTimeFormatter:[self timeScheduleFormatterString]];
-    self.endTimeTextField.text = [self.changedCourseSchedule.timeSchedule getEndTimeWithTimeFormatter:[self timeScheduleFormatterString]];
+    self.startTimeLabel.text = [self.changedCourseSchedule.timeSchedule getStartTimeWithTimeFormatter:[self timeScheduleFormatterString]];
+    self.endTimeLabel.text = [self.changedCourseSchedule.timeSchedule getEndTimeWithTimeFormatter:[self timeScheduleFormatterString]];
 }
 
 - (NSString *)timeScheduleFormatterString

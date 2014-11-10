@@ -24,7 +24,7 @@ static NSString *const menuTableViewCellReuseIdentifier = @"menuTableViewCelReus
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.menuArray = [NSArray arrayWithObjects:@"课程管理", @"时间管理", @"课程安排管理", nil];
+    self.menuArray = [NSArray arrayWithObjects:@"课程管理", @"时间管理", @"排课管理", nil];
 }
 
 
@@ -38,6 +38,13 @@ static NSString *const menuTableViewCellReuseIdentifier = @"menuTableViewCelReus
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:menuTableViewCellReuseIdentifier];
     [cell.textLabel setText:[self.menuArray objectAtIndex:indexPath.row]];
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    if (0 == indexPath.row) {
+        [cell.imageView setImage:[UIImage imageNamed:@"course_manage"]];
+    } else if (1 == indexPath.row) {
+        [cell.imageView setImage:[UIImage imageNamed:@"time_manage"]];
+    } else if (2 == indexPath.row) {
+        [cell.imageView setImage:[UIImage imageNamed:@"schedule_manage"]];
+    }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
