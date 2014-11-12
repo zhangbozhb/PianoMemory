@@ -9,7 +9,7 @@
         <!--我的课程-->
         <scene sceneID="l2q-Uw-VpR">
             <objects>
-                <navigationController id="2WA-BC-Oib" sceneMemberID="viewController">
+                <navigationController id="2WA-BC-Oib" customClass="PMNavDayScheduleViewController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="我的课程" id="IAH-L3-GMX"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Fl1-9S-8zV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -830,7 +830,7 @@
         <!--统计-->
         <scene sceneID="ROe-Ff-veW">
             <objects>
-                <navigationController title="统计" id="ETj-CA-VhO" sceneMemberID="viewController">
+                <navigationController title="统计" id="ETj-CA-VhO" customClass="PMNavReportViewController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="统计" id="sFT-9d-xKp"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ffa-Ha-uQX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -864,7 +864,7 @@
         <!--更多-->
         <scene sceneID="B9Z-KZ-sCd">
             <objects>
-                <navigationController id="XL4-cA-Kr9" sceneMemberID="viewController">
+                <navigationController id="XL4-cA-Kr9" customClass="PMNavMoreViewController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="更多" id="Dbm-9e-6oV"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="W4o-Wi-XJA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
