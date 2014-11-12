@@ -847,7 +847,7 @@
         <!--学生-->
         <scene sceneID="d3Y-tk-8Zp">
             <objects>
-                <navigationController id="8QV-zx-hPd" sceneMemberID="viewController">
+                <navigationController id="8QV-zx-hPd" customClass="PMNavStuduentViewController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="学生" id="aqQ-XG-71r"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LHl-0B-Ipm">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
