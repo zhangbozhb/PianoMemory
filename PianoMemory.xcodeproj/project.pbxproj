@@ -58,6 +58,13 @@
 		9E8AF2B41A1357F300378B31 /* PMNavReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8AF2B31A1357F300378B31 /* PMNavReportViewController.m */; };
 		9E8AF2B71A135A7500378B31 /* PMNavMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8AF2B61A135A7500378B31 /* PMNavMoreViewController.m */; };
 		9E8AF2B91A135A8E00378B31 /* tab_more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8AF2B81A135A8E00378B31 /* tab_more@2x.png */; };
+		9E8AF2BB1A1484DF00378B31 /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8AF2BA1A1484DF00378B31 /* launch.png */; };
+		9E8AF2BE1A14895D00378B31 /* launch-4.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8AF2BC1A14895D00378B31 /* launch-4.png */; };
+		9E8AF2BF1A14895D00378B31 /* launch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8AF2BD1A14895D00378B31 /* launch@2x.png */; };
+		9E8AF2C21A19A9B400378B31 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8AF2C01A19A9B400378B31 /* Icon@2x.png */; };
+		9E8AF2C31A19A9B400378B31 /* Icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8AF2C11A19A9B400378B31 /* Icon@3x.png */; };
+		9E8AF2C51A19E61F00378B31 /* daycoursescheule-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8AF2C41A19E61F00378B31 /* daycoursescheule-bg.png */; };
+		9E8AF2C71A19EBF000378B31 /* staff-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8AF2C61A19EBF000378B31 /* staff-bg.png */; };
 		9EA0C2B81A038A6C001564BB /* PMReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0C2B71A038A6C001564BB /* PMReportViewController.m */; };
 		9EA48B291A00A928004B03E9 /* PMCourseScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA48B281A00A928004B03E9 /* PMCourseScheduleViewController.m */; };
 		9EA76B7419F4BAA600B5613B /* btn_add_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA76B7219F4BAA600B5613B /* btn_add_green.png */; };
@@ -215,6 +222,13 @@
 		9E8AF2B51A135A7500378B31 /* PMNavMoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMNavMoreViewController.h; sourceTree = "<group>"; };
 		9E8AF2B61A135A7500378B31 /* PMNavMoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMNavMoreViewController.m; sourceTree = "<group>"; };
 		9E8AF2B81A135A8E00378B31 /* tab_more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_more@2x.png"; sourceTree = "<group>"; };
+		9E8AF2BA1A1484DF00378B31 /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
+		9E8AF2BC1A14895D00378B31 /* launch-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launch-4.png"; sourceTree = "<group>"; };
+		9E8AF2BD1A14895D00378B31 /* launch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launch@2x.png"; sourceTree = "<group>"; };
+		9E8AF2C01A19A9B400378B31 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		9E8AF2C11A19A9B400378B31 /* Icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@3x.png"; sourceTree = "<group>"; };
+		9E8AF2C41A19E61F00378B31 /* daycoursescheule-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "daycoursescheule-bg.png"; sourceTree = "<group>"; };
+		9E8AF2C61A19EBF000378B31 /* staff-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "staff-bg.png"; sourceTree = "<group>"; };
 		9EA0C2B61A038A6C001564BB /* PMReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMReportViewController.h; sourceTree = "<group>"; };
 		9EA0C2B71A038A6C001564BB /* PMReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMReportViewController.m; sourceTree = "<group>"; };
 		9EA48B271A00A928004B03E9 /* PMCourseScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCourseScheduleViewController.h; sourceTree = "<group>"; };
@@ -523,6 +537,13 @@
 		9EF1310E19E02FF200843F02 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9E8AF2C61A19EBF000378B31 /* staff-bg.png */,
+				9E8AF2C41A19E61F00378B31 /* daycoursescheule-bg.png */,
+				9E8AF2C01A19A9B400378B31 /* Icon@2x.png */,
+				9E8AF2C11A19A9B400378B31 /* Icon@3x.png */,
+				9E8AF2BC1A14895D00378B31 /* launch-4.png */,
+				9E8AF2BD1A14895D00378B31 /* launch@2x.png */,
+				9E8AF2BA1A1484DF00378B31 /* launch.png */,
 				9E8AF2B81A135A8E00378B31 /* tab_more@2x.png */,
 				9E8AF2B01A1357CA00378B31 /* tab_statistics@2x.png */,
 				9E8AF2AB1A13517200378B31 /* tab_schedule@2x.png */,
@@ -857,17 +878,24 @@
 				9E8AF21E1A1073F900378B31 /* calendar_effect@2x.png in Resources */,
 				9E8AF2AC1A13517200378B31 /* tab_schedule@2x.png in Resources */,
 				9E8AF22C1A1078AF00378B31 /* course_edit@2x.png in Resources */,
+				9E8AF2BF1A14895D00378B31 /* launch@2x.png in Resources */,
 				9E8AF2191A10618D00378B31 /* time_manage@2x.png in Resources */,
+				9E8AF2BB1A1484DF00378B31 /* launch.png in Resources */,
 				9E8AF27F1A133FCE00378B31 /* button_save.png in Resources */,
 				9E8AF21F1A1073F900378B31 /* calendar_expire@2x.png in Resources */,
 				9E8AF2271A10751800378B31 /* clock_pause.png in Resources */,
 				9E8AF2241A10751800378B31 /* clock_add.png in Resources */,
 				9E8AF2301A107D8C00378B31 /* schedule_manage@2x.png in Resources */,
+				9E8AF2C71A19EBF000378B31 /* staff-bg.png in Resources */,
 				9E8AF2B11A1357CA00378B31 /* tab_statistics@2x.png in Resources */,
 				9EF130F119E029AA00843F02 /* Main.storyboard in Resources */,
+				9E8AF2BE1A14895D00378B31 /* launch-4.png in Resources */,
 				9EF130F619E029AA00843F02 /* LaunchScreen.xib in Resources */,
 				9EA76B7519F4BAA600B5613B /* btn_add_green@2x.png in Resources */,
 				9E8AF2B91A135A8E00378B31 /* tab_more@2x.png in Resources */,
+				9E8AF2C21A19A9B400378B31 /* Icon@2x.png in Resources */,
+				9E8AF2C51A19E61F00378B31 /* daycoursescheule-bg.png in Resources */,
+				9E8AF2C31A19A9B400378B31 /* Icon@3x.png in Resources */,
 				9E8AF2801A133FCE00378B31 /* tab_user@2x.png in Resources */,
 				9EF130F319E029AA00843F02 /* Images.xcassets in Resources */,
 				9E8AF22E1A107B5C00378B31 /* course_manage@2x.png in Resources */,
@@ -1123,6 +1151,7 @@
 			baseConfigurationReference = 8E3E829EA93340459F867233 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = PianoMemory/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1135,6 +1164,7 @@
 			baseConfigurationReference = 8A8C793517012ED87D1571DA /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = PianoMemory/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

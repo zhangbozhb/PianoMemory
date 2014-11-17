@@ -12,6 +12,8 @@
 #import "PMWeekDayStat.h"
 #import "PMDayReportView.h"
 
+static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCellReuseIdentifier";
+
 @interface PMReportViewController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic) NSArray *weekDayStatArray;
 @property (nonatomic) PMWeekDayStat *totalDayStat;
@@ -49,7 +51,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[reportTableViewCellReuseIdentifier copy]];
     if (indexPath.row < [self.weekDayStatArray count]) {
         PMWeekDayStat *dayStat = [self.weekDayStatArray objectAtIndex:indexPath.row];
         [cell.textLabel setText:[PMCourseScheduleRepeat displayTextOfRepeatWeekDay:dayStat.repeatWeekday]];
@@ -61,7 +63,6 @@
         CGFloat averageHour = (0 != self.totalDayStat.courseCount)? self.totalDayStat.durationInHour/self.totalDayStat.courseCount:0.f;
         [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld节\t课时:%.2f\t平均时长:%.2f",
                                        (long)self.totalDayStat.courseCount, self.totalDayStat.durationInHour,averageHour]];
-
     }
     return cell;
 }

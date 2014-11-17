@@ -48,9 +48,12 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="daycoursescheule-bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="Pud-dU-9wA">
+                                <rect key="frame" x="0.0" y="144" width="600" height="407"/>
+                            </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Hui-ao-FN8">
                                 <rect key="frame" x="0.0" y="144" width="600" height="407"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="dayCourseScheduleTableViewCellReuseIdentifier" id="VvM-2H-g5g" customClass="PMCourseScheduleTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -127,6 +130,7 @@
                                                     </variation>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="w52-Mr-Q4e" firstAttribute="top" secondItem="gCR-zz-M5L" secondAttribute="top" constant="1" id="0iw-0Z-Sht"/>
                                                 <constraint firstItem="NB8-RK-H36" firstAttribute="leading" secondItem="Pca-YG-zyw" secondAttribute="trailing" id="4ac-Yz-p2h"/>
@@ -160,6 +164,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="courseNameLabel" destination="Bl8-4t-46Y" id="7CB-H1-tCb"/>
                                             <outlet property="endTimeLabel" destination="Pca-YG-zyw" id="a56-Eb-UfU"/>
@@ -179,7 +184,11 @@
                             <constraint firstItem="u9s-Xc-zCf" firstAttribute="leading" secondItem="ejB-LD-Usd" secondAttribute="leading" id="BkR-mt-RLl"/>
                             <constraint firstItem="Hui-ao-FN8" firstAttribute="top" secondItem="u9s-Xc-zCf" secondAttribute="bottom" id="Iut-nJ-9Yt"/>
                             <constraint firstAttribute="trailing" secondItem="Hui-ao-FN8" secondAttribute="trailing" id="Twr-6x-fOZ"/>
+                            <constraint firstAttribute="trailing" secondItem="Pud-dU-9wA" secondAttribute="trailing" id="ZiG-iZ-Nn5"/>
+                            <constraint firstItem="Pud-dU-9wA" firstAttribute="leading" secondItem="ejB-LD-Usd" secondAttribute="leading" id="apC-iB-Nl4"/>
                             <constraint firstItem="yYZ-p4-VvG" firstAttribute="top" secondItem="Hui-ao-FN8" secondAttribute="bottom" id="dDL-uv-Kav"/>
+                            <constraint firstItem="yYZ-p4-VvG" firstAttribute="top" secondItem="Pud-dU-9wA" secondAttribute="bottom" id="eSt-yI-AXF"/>
+                            <constraint firstItem="Pud-dU-9wA" firstAttribute="top" secondItem="u9s-Xc-zCf" secondAttribute="bottom" id="em8-Yp-WqG"/>
                             <constraint firstItem="u9s-Xc-zCf" firstAttribute="top" secondItem="fV5-7J-ely" secondAttribute="bottom" id="gW3-QI-jPM"/>
                             <constraint firstItem="Hui-ao-FN8" firstAttribute="leading" secondItem="ejB-LD-Usd" secondAttribute="leading" id="jw4-Av-PO7"/>
                             <constraint firstAttribute="trailing" secondItem="u9s-Xc-zCf" secondAttribute="trailing" id="oSh-tf-GdN"/>
@@ -1905,9 +1914,36 @@
                                                     <constraint firstAttribute="centerY" secondItem="D6l-lW-kkc" secondAttribute="centerY" id="pYD-nF-a4x"/>
                                                 </constraints>
                                             </view>
+                                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="staff-bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="Y9W-3r-1Bh">
+                                                <rect key="frame" x="0.0" y="320" width="320" height="320"/>
+                                            </imageView>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="40" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="A6q-jR-Riz">
                                                 <rect key="frame" x="0.0" y="320" width="320" height="320"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <prototypes>
+                                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="reportTableViewCellReuseIdentifier" textLabel="q3O-zR-BPr" detailTextLabel="0MS-nK-nz9" rowHeight="30" style="IBUITableViewCellStyleValue1" id="pNN-h2-nWe">
+                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pNN-h2-nWe" id="tve-oR-ctf">
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="q3O-zR-BPr">
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0MS-nK-nz9">
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        </tableViewCellContentView>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    </tableViewCell>
+                                                </prototypes>
                                                 <connections>
                                                     <outlet property="dataSource" destination="UYe-qD-duu" id="szj-zI-kG0"/>
                                                     <outlet property="delegate" destination="UYe-qD-duu" id="Mnm-JP-niW"/>
@@ -1918,11 +1954,15 @@
                                         <constraints>
                                             <constraint firstItem="gng-op-ajF" firstAttribute="leading" secondItem="2rw-Zz-VQf" secondAttribute="leading" id="0Pl-Xy-hnX"/>
                                             <constraint firstAttribute="bottom" secondItem="A6q-jR-Riz" secondAttribute="bottom" id="ALn-k9-HPe"/>
+                                            <constraint firstAttribute="bottom" secondItem="Y9W-3r-1Bh" secondAttribute="bottom" id="EUX-rM-2or"/>
                                             <constraint firstAttribute="trailing" secondItem="gng-op-ajF" secondAttribute="trailing" id="T1T-VL-mW0"/>
+                                            <constraint firstItem="Y9W-3r-1Bh" firstAttribute="leading" secondItem="2rw-Zz-VQf" secondAttribute="leading" id="V2t-yq-z8v"/>
+                                            <constraint firstAttribute="trailing" secondItem="Y9W-3r-1Bh" secondAttribute="trailing" id="V7F-Pt-c9K"/>
                                             <constraint firstItem="A6q-jR-Riz" firstAttribute="top" secondItem="gng-op-ajF" secondAttribute="bottom" id="ad8-wZ-gBy"/>
                                             <constraint firstItem="gng-op-ajF" firstAttribute="top" secondItem="2rw-Zz-VQf" secondAttribute="top" id="gPN-lb-GVd"/>
                                             <constraint firstAttribute="trailing" secondItem="A6q-jR-Riz" secondAttribute="trailing" id="hW2-H4-CKC"/>
                                             <constraint firstItem="A6q-jR-Riz" firstAttribute="leading" secondItem="2rw-Zz-VQf" secondAttribute="leading" id="tds-fe-sdY"/>
+                                            <constraint firstItem="Y9W-3r-1Bh" firstAttribute="top" secondItem="gng-op-ajF" secondAttribute="bottom" id="zrS-uu-OX9"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -1976,6 +2016,8 @@
         <image name="calendar_expire.png" width="24" height="24"/>
         <image name="clock_add.png" width="32" height="32"/>
         <image name="course_edit.png" width="24" height="24"/>
+        <image name="daycoursescheule-bg.png" width="704" height="1024"/>
+        <image name="staff-bg.png" width="630" height="853"/>
         <image name="users_edit.png" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
