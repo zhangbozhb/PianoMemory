@@ -381,7 +381,7 @@
     //2, 构建dayCourseScheduleMapping
     NSMutableDictionary *dayCourseScheduleMapping = [NSMutableDictionary dictionary];
     for (PMDayCourseSchedule *dayCourseSchedule in dayCourseScheduleArray) {
-        NSTimeInterval scheduleTimestamp = [[NSDate dateWithTimeIntervalSince1970:dayCourseSchedule.scheduleTimestamp] zb_getDayTimestamp];
+        NSTimeInterval scheduleTimestamp = [[NSDate dateWithTimeIntervalSince1970:dayCourseSchedule.scheduleTimestamp] zb_timestampOfDay];
         [dayCourseScheduleMapping setObject:dayCourseSchedule forKey:[NSNumber numberWithLong:scheduleTimestamp]];
     }
 
@@ -389,7 +389,7 @@
     //3, 递归每天的dayCourseSchedule
     NSTimeInterval maxCreateTimestamp = [[[NSDate date] zb_dateAfterDay:1] timeIntervalSince1970];
     NSDate *targetDay = [NSDate dateWithTimeIntervalSince1970:startTime];
-    long targetDayTimestamp = [targetDay zb_getDayTimestamp];
+    long targetDayTimestamp = [targetDay zb_timestampOfDay];
     while (targetDayTimestamp < endTime) {
         PMDayCourseSchedule *dayCourseSchedule = [dayCourseScheduleMapping objectForKey:[NSNumber numberWithLong:targetDayTimestamp]];
         if (!dayCourseSchedule &&
@@ -413,7 +413,7 @@
             [dayCourseScheduleArray addObject:dayCourseSchedule];
         }
         targetDay = [targetDay zb_dateAfterDay:1];
-        targetDayTimestamp = [targetDay zb_getDayTimestamp];
+        targetDayTimestamp = [targetDay zb_timestampOfDay];
     }
     return dayCourseScheduleArray;
 }
@@ -421,8 +421,8 @@
 
 - (PMDayCourseSchedule *)queryDayCourseScheduleOfDate:(NSDate*)date createIfNotExsit:(BOOL)createIfNotExsit
 {
-    NSInteger startTime = [date zb_getDayTimestamp];
-    NSInteger endTime = [[date zb_dateAfterDay:1] zb_getDayTimestamp];
+    NSInteger startTime = [date zb_timestampOfDay];
+    NSInteger endTime = [[date zb_dateAfterDay:1] zb_timestampOfDay];
     NSArray *dayCourseSchedules = [self queryDayCourseSchedulesFrom:startTime toEndTime:endTime createIfNotExsit:NO];
     if (0 == [dayCourseSchedules count]) {
         NSArray *courseSchedules = [self queryCourseScheduleOfDate:date];
@@ -441,7 +441,7 @@
         courseSchedule.localDBId) {
         return YES;
     }
-    NSArray *dayCourseScheduleArray =[self queryDayCourseSchedulesFrom:courseSchedule.effectiveDateTimestamp toEndTime:[[[NSDate date] zb_dateAfterDay:1] zb_getDayTimestamp] createIfNotExsit:YES];
+    NSArray *dayCourseScheduleArray =[self queryDayCourseSchedulesFrom:courseSchedule.effectiveDateTimestamp toEndTime:[[[NSDate date] zb_dateAfterDay:1] zb_timestampOfDay] createIfNotExsit:YES];
     for (PMDayCourseSchedule *dayCourseSchedule in dayCourseScheduleArray) {
         BOOL isExist = NO;
         for (PMCourseSchedule *item in dayCourseSchedule.courseSchedules) {

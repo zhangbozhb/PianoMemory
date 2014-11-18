@@ -25,7 +25,7 @@
     if (!dateFormatString) {
         dateFormatString = [self defaultDateTimeFormat];
     }
-    NSDate *targetDate = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] zb_getDayTimestamp]+self.startTime];
+    NSDate *targetDate = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] zb_timestampOfDay]+self.startTime];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:dateFormatString];
     return [dateFormatter stringFromDate:targetDate];
@@ -36,7 +36,7 @@
     if (!dateFormatString) {
         dateFormatString = [self defaultDateTimeFormat];
     }
-    NSDate *targetDate = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] zb_getDayTimestamp]+self.endTime];
+    NSDate *targetDate = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] zb_timestampOfDay]+self.endTime];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:dateFormatString];
     return [dateFormatter stringFromDate:targetDate];

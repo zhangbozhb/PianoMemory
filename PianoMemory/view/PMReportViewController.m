@@ -73,9 +73,9 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
     NSDate *currentDate = [NSDate date];
     [self refreshTitleUIWithDate:currentDate];
     NSDictionary *params = @{@"starttime":[[NSNumber numberWithLong:
-                                            [currentDate zb_getMonthTimestamp]] stringValue],
+                                            [currentDate zb_timestampOfMonth]] stringValue],
                              @"endtime":[[NSNumber numberWithLong:
-                                          [[currentDate zb_dateafterMonth:1] zb_getMonthTimestamp]] stringValue]};
+                                          [[currentDate zb_dateAfterMonth:1] zb_timestampOfMonth]] stringValue]};
     [[PMServerWrapper defaultServer] queryDayCourseSchedules:params success:^(NSArray *array) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self refreshUIWithDayCourseSchedules:array];

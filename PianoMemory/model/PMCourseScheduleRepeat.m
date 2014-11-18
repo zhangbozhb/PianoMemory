@@ -75,7 +75,7 @@
 
 + (PMCourseScheduleRepeatDataWeekDay)repeatWeekDayFromDate:(NSDate *)date
 {
-    NSInteger dayIndexInWeek = [date zb_getWeekDay] - 1;
+    NSInteger dayIndexInWeek = [date zb_weekDay] - 1;
     return [self repeatWeekDayFromDayIndexInWeek:dayIndexInWeek];
 }
 

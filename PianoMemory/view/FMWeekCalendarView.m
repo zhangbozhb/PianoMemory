@@ -133,8 +133,8 @@
     }
     NSDate *startDate = [self.weekDays firstObject];
     NSDate *endDate = [self.weekDays lastObject];
-    if ([date zb_getDayTimestamp] < [startDate zb_getDayTimestamp] ||
-        [date zb_getDayTimestamp] > [endDate zb_getDayTimestamp]) {
+    if ([date zb_timestampOfDay] < [startDate zb_timestampOfDay] ||
+        [date zb_timestampOfDay] > [endDate zb_timestampOfDay]) {
         return NO;
     }
     return YES;
@@ -147,7 +147,7 @@
 
     NSDate *currentDate = [NSDate date];
     if ([self isDateVisiable:currentDate]) {
-        NSInteger weekDay = [currentDate zb_getWeekDay] - 1;
+        NSInteger weekDay = [currentDate zb_weekDay] - 1;
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSaveGState(context);
         CGContextSetFillColorWithColor(context, self.currentDateColor.CGColor);
@@ -161,7 +161,7 @@
 
     if (self.selectedDate &&
         [self isDateVisiable:self.selectedDate]) {
-        NSInteger weekDay = [self.selectedDate zb_getWeekDay] - 1;
+        NSInteger weekDay = [self.selectedDate zb_weekDay] - 1;
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSaveGState(context);
         CGContextSetFillColorWithColor(context, self.selectedDateColor.CGColor);
@@ -200,7 +200,7 @@
 
 - (NSArray*)getWeekDays
 {
-    NSInteger weekDay = [self.visiableDate zb_getWeekDay];
+    NSInteger weekDay = [self.visiableDate zb_weekDay];
     NSInteger startDayOff = 1 - weekDay;
     NSDate *startDay = [self.visiableDate zb_dateAfterDay:startDayOff];
     NSMutableArray *weekDays = [NSMutableArray array];
@@ -283,7 +283,7 @@
 {
     CGPoint tapPoint = [tap locationInView:self];
     NSDate *selectedDate = [self.weekDays objectAtIndex:[self positionOfWeekDayIndex:tapPoint]];
-    if ([self.selectedDate zb_getDayTimestamp] != [selectedDate zb_getDayTimestamp]) {
+    if ([self.selectedDate zb_timestampOfDay] != [selectedDate zb_timestampOfDay]) {
         self.selectedDate = selectedDate;
         [self setNeedsDisplay];
     }

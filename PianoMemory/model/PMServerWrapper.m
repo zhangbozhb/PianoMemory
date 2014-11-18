@@ -393,7 +393,7 @@
         endtime = [endtimeString integerValue];
     }
     if (starttime >= endtime) {
-        endtime = [[[NSDate dateWithTimeIntervalSince1970:starttime] zb_dateAfterDay:1] zb_getDayTimestamp]-1;
+        endtime = [[[NSDate dateWithTimeIntervalSince1970:starttime] zb_dateAfterDay:1] zb_timestampOfDay]-1;
     }
     BOOL createIfNotExist = YES;
     if (createValue && [createValue isKindOfClass:[NSNumber class]]) {
@@ -413,7 +413,7 @@
         if (!targetDate) {
             targetDate = [NSDate date];
         }
-        BOOL createIfNotExsit = ([[[NSDate date] zb_dateAfterDay:1] zb_getDayTimestamp] > [date timeIntervalSince1970])?YES:NO;
+        BOOL createIfNotExsit = ([[[NSDate date] zb_dateAfterDay:1] zb_timestampOfDay] > [date timeIntervalSince1970])?YES:NO;
         PMDayCourseSchedule *dayCourseSchedule = [self.localServer queryDayCourseScheduleOfDate:targetDate createIfNotExsit:createIfNotExsit];
         if (success) {
             success(dayCourseSchedule);

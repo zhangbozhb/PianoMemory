@@ -92,7 +92,7 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
 #pragma delegate FMWeekCalendarViewDelegate
 - (void)weekCalendarView:(FMWeekCalendarView *)weekCalendarView selectedDate:(NSDate *)selectedDate
 {
-    if ([self.targetDate zb_getDayTimestamp] != [selectedDate zb_getDayTimestamp]) {
+    if ([self.targetDate zb_timestampOfDay] != [selectedDate zb_timestampOfDay]) {
         self.targetDate = selectedDate;
         self.shouldFetchData = YES;
         [self loadCustomerData];
@@ -108,6 +108,17 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
     } else {
         [self.targetDayCourseSchedule.courseSchedules replaceObjectAtIndex:indexPath.row withObject:courseSchedule];
     }
+    [self saveDayCourseSchedule:self.targetDayCourseSchedule];
+}
+
+- (void)saveDayCourseSchedule:(PMDayCourseSchedule *)dayCourseSchedule
+{
+    __weak PMDayCourseScheduleViewController *pSelf = self;
+    [[PMServerWrapper defaultServer] createDayCourseSchedule:dayCourseSchedule success:^(PMDayCourseSchedule *retDayCourseSchedule) {
+        pSelf.targetDayCourseSchedule = retDayCourseSchedule;
+    } failure:^(HCErrorMessage *error) {
+    }];;
+
 }
 
 #pragma ui and customer data
@@ -128,7 +139,7 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
 
 - (void)refreshUI
 {
-    if ([self.targetDate zb_getDayTimestamp] == [[NSDate date] zb_getDayTimestamp]) {
+    if ([self.targetDate zb_timestampOfDay] == [[NSDate date] zb_timestampOfDay]) {
         [self.myNavigationitem setTitle:@"今日课程"];
     } else {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

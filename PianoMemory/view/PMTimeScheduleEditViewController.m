@@ -59,7 +59,7 @@
     } else {
         _changedTimeSchedle = [[PMTimeSchedule alloc] init];
         NSDate *currentDate = [NSDate date];
-        _changedTimeSchedle.startTime = _changedTimeSchedle.endTime = [currentDate timeIntervalSince1970] - [currentDate zb_getDayTimestamp];
+        _changedTimeSchedle.startTime = _changedTimeSchedle.endTime = [currentDate timeIntervalSince1970] - [currentDate zb_timestampOfDay];
     }
 }
 
@@ -71,7 +71,7 @@
         } else {
             _changedTimeSchedle = [[PMTimeSchedule alloc] init];
             NSDate *currentDate = [NSDate date];
-            _changedTimeSchedle.startTime = _changedTimeSchedle.endTime = [currentDate timeIntervalSince1970] - [currentDate zb_getDayTimestamp];
+            _changedTimeSchedle.startTime = _changedTimeSchedle.endTime = [currentDate timeIntervalSince1970] - [currentDate zb_timestampOfDay];
         }
     }
     return _changedTimeSchedle;
@@ -84,8 +84,8 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:[self.changedTimeSchedle defaultDateTimeFormat]];
     NSDate *targetDate = [dateFormatter dateFromString:self.targetLabel.text];
-    NSTimeInterval timestampInday = [targetDate timeIntervalSince1970] - [targetDate zb_getDayTimestamp];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] zb_getDayTimestamp] + timestampInday];
+    NSTimeInterval timestampInday = [targetDate timeIntervalSince1970] - [targetDate zb_timestampOfDay];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] zb_timestampOfDay] + timestampInday];
     [self.myDatePicker setDate:date];
     [self.myDatePicker setHidden:NO];
 }
@@ -97,15 +97,15 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:[self.changedTimeSchedle defaultDateTimeFormat]];
     NSDate *targetDate = [dateFormatter dateFromString:self.targetLabel.text];
-    NSTimeInterval timestampInday = [targetDate timeIntervalSince1970] - [targetDate zb_getDayTimestamp];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] zb_getDayTimestamp] + timestampInday];
+    NSTimeInterval timestampInday = [targetDate timeIntervalSince1970] - [targetDate zb_timestampOfDay];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] zb_timestampOfDay] + timestampInday];
     [self.myDatePicker setDate:date];
     [self.myDatePicker setHidden:NO];
 }
 
 - (IBAction)datePickerValueChangeAction:(id)sender {
     NSDate *selectDate = [self.myDatePicker date];
-    NSTimeInterval timestampInDay = [selectDate timeIntervalSince1970]-[selectDate zb_getDayTimestamp];
+    NSTimeInterval timestampInDay = [selectDate timeIntervalSince1970]-[selectDate zb_timestampOfDay];
 
     if (self.targetLabel == self.startTimeLabel) {
         [self.changedTimeSchedle setStartTime:timestampInDay];

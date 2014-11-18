@@ -87,8 +87,8 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
 {
     if (!_changedCourseSchedule) {
         _changedCourseSchedule = [[PMCourseSchedule alloc] init];
-        _changedCourseSchedule.effectiveDateTimestamp = [[NSDate date] zb_getDayTimestamp];
-        _changedCourseSchedule.expireDateTimestamp = [[[NSDate date] zb_dateAfterYear:100] zb_getDayTimestamp] - 1;
+        _changedCourseSchedule.effectiveDateTimestamp = [[NSDate date] zb_timestampOfDay];
+        _changedCourseSchedule.expireDateTimestamp = [[[NSDate date] zb_dateAfterYear:100] zb_timestampOfDay] - 1;
     }
     return _changedCourseSchedule;
 }
@@ -126,7 +126,7 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
             [self.delegate courseScheduleEdit:self updateCourseSchedule:self.changedCourseSchedule indexPath:self.indexPath];
         }
     } else {
-        if (self.changedCourseSchedule.effectiveDateTimestamp <= [[NSDate date] zb_getDayTimestamp]) {
+        if (self.changedCourseSchedule.effectiveDateTimestamp <= [[NSDate date] zb_timestampOfDay]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                 message:[addToHistoryDayCourseSchedule copy]
                                                                delegate:self
@@ -225,10 +225,10 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
 
 - (IBAction)dateTimePickerValueChangeAction:(id)sender {
     if (self.currentDateField == self.effectiveDateLabel) {
-        self.changedCourseSchedule.effectiveDateTimestamp = [self.myDatePicker.date zb_getDayTimestamp];
+        self.changedCourseSchedule.effectiveDateTimestamp = [self.myDatePicker.date zb_timestampOfDay];
         [self refreshEffectiveExpireTimeUI];
     } else if (self.currentDateField == self.expirationDateLabel) {
-        self.changedCourseSchedule.expireDateTimestamp = [[self.myDatePicker.date zb_dateAfterDay:1] zb_getDayTimestamp] - 1;
+        self.changedCourseSchedule.expireDateTimestamp = [[self.myDatePicker.date zb_dateAfterDay:1] zb_timestampOfDay] - 1;
         [self refreshEffectiveExpireTimeUI];
     }
 }
