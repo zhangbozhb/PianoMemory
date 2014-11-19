@@ -56,12 +56,12 @@
     return _dayLabelWidth;
 }
 
-- (UIColor *)wordDayColor
+- (UIColor *)workDayColor
 {
-    if (!_wordDayColor) {
-        _wordDayColor = [UIColor colorWithRed:26/256.0  green:168/256.0 blue:186/256.0 alpha:1];
+    if (!_workDayColor) {
+        _workDayColor = [UIColor colorWithRed:26/256.0  green:168/256.0 blue:186/256.0 alpha:1];
     }
-    return _wordDayColor;
+    return _workDayColor;
 }
 
 - (UIColor *)weekEndColor
@@ -83,7 +83,7 @@
     [masterLabel setTextAlignment:NSTextAlignmentCenter];
     [masterLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:17.0f]];
     self.masterLabel = masterLabel;
-    self.masterLabel.textColor = self.wordDayColor;
+    self.masterLabel.textColor = self.workDayColor;
     [self addSubview:self.masterLabel];
 
     CGFloat xOffset = 5.0f;
@@ -104,7 +104,7 @@
     [dayOfTheWeekLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:15.0f]];
     self.day2OfTheWeekLabel = dayOfTheWeekLabel;
     self.day2OfTheWeekLabel.textAlignment=NSTextAlignmentCenter;
-    self.day2OfTheWeekLabel.textColor = self.wordDayColor;
+    self.day2OfTheWeekLabel.textColor = self.workDayColor;
     [self addSubview:self.day2OfTheWeekLabel];
 
     xOffset += self.dayLabelWidth + 5.0f;
@@ -113,7 +113,7 @@
     [dayOfTheWeekLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:15.0f]];
     self.day3OfTheWeekLabel = dayOfTheWeekLabel;
     self.day3OfTheWeekLabel.textAlignment=NSTextAlignmentCenter;
-    self.day3OfTheWeekLabel.textColor = self.wordDayColor;
+    self.day3OfTheWeekLabel.textColor = self.workDayColor;
     [self addSubview:self.day3OfTheWeekLabel];
 
     xOffset += self.dayLabelWidth + 5.0f;
@@ -122,7 +122,7 @@
     [dayOfTheWeekLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:15.0f]];
     self.day4OfTheWeekLabel = dayOfTheWeekLabel;
     self.day4OfTheWeekLabel.textAlignment=NSTextAlignmentCenter;
-    self.day4OfTheWeekLabel.textColor = self.wordDayColor;
+    self.day4OfTheWeekLabel.textColor = self.workDayColor;
     [self addSubview:self.day4OfTheWeekLabel];
 
     xOffset += self.dayLabelWidth + 5.0f;
@@ -131,7 +131,7 @@
     [dayOfTheWeekLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:15.0f]];
     self.day5OfTheWeekLabel = dayOfTheWeekLabel;
     self.day5OfTheWeekLabel.textAlignment=NSTextAlignmentCenter;
-    self.day5OfTheWeekLabel.textColor = self.wordDayColor;
+    self.day5OfTheWeekLabel.textColor = self.workDayColor;
     [self addSubview:self.day5OfTheWeekLabel];
 
     xOffset += self.dayLabelWidth + 5.0f;
@@ -140,7 +140,7 @@
     [dayOfTheWeekLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:15.0f]];
     self.day6OfTheWeekLabel = dayOfTheWeekLabel;
     self.day6OfTheWeekLabel.textAlignment=NSTextAlignmentCenter;
-    self.day6OfTheWeekLabel.textColor = self.wordDayColor;
+    self.day6OfTheWeekLabel.textColor = self.workDayColor;
     [self addSubview:self.day6OfTheWeekLabel];
 
     xOffset += self.dayLabelWidth + 5.0f;

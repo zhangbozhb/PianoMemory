@@ -17,15 +17,16 @@ typedef NS_ENUM(NSInteger, CollectionViewCellDayType) {
 };
 
 @interface PMCalendarDayModel : NSObject
+@property ( nonatomic) CollectionViewCellDayType style;//显示的样式
+@property (nonatomic) NSDate *date;
+@property (nonatomic, strong) NSString *holiday;//节日
 
-@property (assign, nonatomic) CollectionViewCellDayType style;//显示的样式
-
-@property (nonatomic, assign) NSUInteger day;//天
-@property (nonatomic, assign) NSUInteger month;//月
-@property (nonatomic, assign) NSUInteger year;//年
-@property (nonatomic, assign) NSUInteger week;//周
+@property (nonatomic, readonly) NSUInteger day;//天
+@property (nonatomic, readonly) NSUInteger month;//月
+@property (nonatomic, readonly) NSUInteger year;//年
+@property (nonatomic, readonly) NSUInteger week;//周
 
 
-- (NSDate *)date;//返回当前天的NSDate对象
-- (NSString *)toString;//返回当前天的NSString对象
+- (instancetype)initWithDate:(NSDate*)date;
+- (instancetype)initWithYear:(NSUInteger)year month:(NSUInteger)month day:(NSUInteger)day;
 @end

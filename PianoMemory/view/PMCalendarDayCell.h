@@ -12,4 +12,9 @@
 @property (nonatomic, readonly) UILabel *dayLabel;//今天的日期或者是节日
 @property (nonatomic, readonly) UILabel *dayTitleLabel;//显示标签
 @property (nonatomic, readonly) UIImageView *imgview;//选中时的图片
+
+
+@property (nonatomic) UIColor *workDayColor;
+@property (nonatomic) UIColor *weekEndColor;
+@property (nonatomic) UIColor *futureDayColor;
 @end

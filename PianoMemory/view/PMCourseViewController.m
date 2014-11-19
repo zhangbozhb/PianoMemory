@@ -11,7 +11,7 @@
 #import "PMServerWrapper.h"
 #import "PMCourseEditViewController.h"
 
-#import "PMDateUpdte.h"
+#import "PMDataUpdate.h"
 #import "UIViewController+DataUpdate.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 
@@ -147,8 +147,8 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
 - (void)handleDataUpdated:(NSNotification *)notification
 {
     [super handleDataUpdated:notification];
-    if (PMLocalServer_DateUpateType_Course == [PMDateUpdte dateUpdateType:notification.object] ||
-        PMLocalServer_DateUpateType_ALL == [PMDateUpdte dateUpdateType:notification.object]) {
+    if (PMLocalServer_DataUpateType_Course == [PMDataUpdate dataUpdateType:notification.object] ||
+        PMLocalServer_DataUpateType_ALL == [PMDataUpdate dataUpdateType:notification.object]) {
         self.shouldFetchData = YES;
     }
 }

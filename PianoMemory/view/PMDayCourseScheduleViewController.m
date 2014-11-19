@@ -11,7 +11,7 @@
 #import "PMCourseSchedule.h"
 #import "NSDate+Extend.h"
 #import "UIViewController+DataUpdate.h"
-#import "PMDateUpdte.h"
+#import "PMDataUpdate.h"
 #import "PMServerWrapper.h"
 #import "PMDayCourseSchedule.h"
 #import "FMWeekCalendarView.h"

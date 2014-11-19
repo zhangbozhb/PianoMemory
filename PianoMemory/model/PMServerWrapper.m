@@ -8,7 +8,7 @@
 
 #import "PMServerWrapper.h"
 #import "PMLocalServer.h"
-#import "PMDateUpdte.h"
+#import "PMDataUpdate.h"
 #import "NSDate+Extend.h"
 
 
@@ -65,7 +65,7 @@
                 if (success) {
                     success(student);
                 }
-                [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_Student]];
+                [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_Student]];
             } else {
                 if (failure) {
                     failure([self errorUnknown]);
@@ -89,7 +89,7 @@
                 if (success) {
                     success(student);
                 }
-                [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_Student]];
+                [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_Student]];
             } else {
                 if (failure) {
                     failure([self errorUnknown]);
@@ -113,7 +113,7 @@
                 if (success) {
                     success(student);
                 }
-                [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_Student]];
+                [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_Student]];
             } else {
                 if (failure) {
                     failure([self errorUnknown]);
@@ -145,7 +145,7 @@
             if (success) {
                 success(course);
             }
-            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_Course]];
+            [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_Course]];
         } else {
             if (failure) {
                 failure([self errorUnknown]);
@@ -162,7 +162,7 @@
             if (success) {
                 success(course);
             }
-            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_Course]];
+            [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_Course]];
         } else {
             if (failure) {
                 failure([self errorUnknown]);
@@ -178,7 +178,7 @@
             if (success) {
                 success(course);
             }
-            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_Course]];
+            [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_Course]];
         } else {
             if (failure) {
                 failure([self errorUnknown]);
@@ -210,7 +210,7 @@
             if (success) {
                 success(timeSchedule);
             }
-            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_TimeSchedule]];
+            [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_TimeSchedule]];
         } else {
             if (failure) {
                 failure([self errorUnknown]);
@@ -226,7 +226,7 @@
             if (success) {
                 success(timeSchedule);
             }
-            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_TimeSchedule]];
+            [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_TimeSchedule]];
         } else {
             if (failure) {
                 failure([self errorUnknown]);
@@ -242,7 +242,7 @@
             if (success) {
                 success(timeSchedule);
             }
-            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_TimeSchedule]];
+            [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_TimeSchedule]];
         } else {
             if (failure) {
                 failure([self errorUnknown]);
@@ -269,7 +269,7 @@
             if (success) {
                 success(courseSchedule);
             }
-            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_CourseSchedule]];
+            [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_CourseSchedule]];
         } else {
             if (failure) {
                 failure([self errorUnknown]);
@@ -285,7 +285,7 @@
             if (success) {
                 success(courseSchedule);
             }
-            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_CourseSchedule]];
+            [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_CourseSchedule]];
         } else {
             if (failure) {
                 failure([self errorUnknown]);
@@ -301,7 +301,7 @@
             if (success) {
                 success(courseSchedule);
             }
-            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_CourseSchedule]];
+            [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_CourseSchedule]];
         } else {
             if (failure) {
                 failure([self errorUnknown]);
@@ -337,7 +337,7 @@
             if (success) {
                 success(dayCourseSchedule);
             }
-            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_DayCourseSchedule]];
+            [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_DayCourseSchedule]];
         } else {
             if (failure) {
                 failure([self errorUnknown]);
@@ -353,7 +353,7 @@
             if (success) {
                 success(dayCourseSchedule);
             }
-            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_DayCourseSchedule]];
+            [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_DayCourseSchedule]];
         } else {
             if (failure) {
                 failure([self errorUnknown]);
@@ -369,7 +369,7 @@
             if (success) {
                 success(dayCourseSchedule);
             }
-            [PMDateUpdte notificationDataUpated:[PMDateUpdte dateUpdateTypeToString:PMLocalServer_DateUpateType_DayCourseSchedule]];
+            [PMDataUpdate notificationDataUpated:[PMDataUpdate dataUpdateTypeToString:PMLocalServer_DataUpateType_DayCourseSchedule]];
         } else {
             if (failure) {
                 failure([self errorUnknown]);

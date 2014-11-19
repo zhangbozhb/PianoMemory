@@ -119,7 +119,7 @@
 		9EF1319919E2322300843F02 /* PMLocalServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1319819E2322300843F02 /* PMLocalServer.m */; };
 		9EF131A119E24AEC00843F02 /* UIViewController+WithKeyboardNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF131A019E24AEC00843F02 /* UIViewController+WithKeyboardNotification.m */; };
 		9EF131A419E24B1000843F02 /* UIViewController+DataUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF131A319E24B1000843F02 /* UIViewController+DataUpdate.m */; };
-		9EF131A719E24B9300843F02 /* PMDateUpdte.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF131A619E24B9300843F02 /* PMDateUpdte.m */; };
+		9EF131A719E24B9300843F02 /* PMDataUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF131A619E24B9300843F02 /* PMDataUpdate.m */; };
 		9EF131A919E2507400843F02 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EF131A819E2507400843F02 /* AddressBookUI.framework */; };
 		9EF131AB19E2656900843F02 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EF131AA19E2656900843F02 /* AddressBook.framework */; };
 		9EF131AE19E27C0000843F02 /* PMServerWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF131AD19E27C0000843F02 /* PMServerWrapper.m */; };
@@ -336,8 +336,8 @@
 		9EF131A019E24AEC00843F02 /* UIViewController+WithKeyboardNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+WithKeyboardNotification.m"; sourceTree = "<group>"; };
 		9EF131A219E24B1000843F02 /* UIViewController+DataUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DataUpdate.h"; sourceTree = "<group>"; };
 		9EF131A319E24B1000843F02 /* UIViewController+DataUpdate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DataUpdate.m"; sourceTree = "<group>"; };
-		9EF131A519E24B9300843F02 /* PMDateUpdte.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMDateUpdte.h; sourceTree = "<group>"; };
-		9EF131A619E24B9300843F02 /* PMDateUpdte.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMDateUpdte.m; sourceTree = "<group>"; };
+		9EF131A519E24B9300843F02 /* PMDataUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMDataUpdate.h; sourceTree = "<group>"; };
+		9EF131A619E24B9300843F02 /* PMDataUpdate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMDataUpdate.m; sourceTree = "<group>"; };
 		9EF131A819E2507400843F02 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		9EF131AA19E2656900843F02 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		9EF131AC19E27C0000843F02 /* PMServerWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMServerWrapper.h; sourceTree = "<group>"; };
@@ -805,8 +805,8 @@
 		9EF1319E19E24AB200843F02 /* dataupdate */ = {
 			isa = PBXGroup;
 			children = (
-				9EF131A519E24B9300843F02 /* PMDateUpdte.h */,
-				9EF131A619E24B9300843F02 /* PMDateUpdte.m */,
+				9EF131A519E24B9300843F02 /* PMDataUpdate.h */,
+				9EF131A619E24B9300843F02 /* PMDataUpdate.m */,
 				9EF131A219E24B1000843F02 /* UIViewController+DataUpdate.h */,
 				9EF131A319E24B1000843F02 /* UIViewController+DataUpdate.m */,
 			);
@@ -1018,7 +1018,7 @@
 				9E8AF2941A133FE500378B31 /* UINavigationItem+Extend.m in Sources */,
 				9E8AF2961A133FE500378B31 /* UITabBarItem+Extend.m in Sources */,
 				9E08E86719E6C04400DFD7CA /* PMStudentPickerViewController.m in Sources */,
-				9EF131A719E24B9300843F02 /* PMDateUpdte.m in Sources */,
+				9EF131A719E24B9300843F02 /* PMDataUpdate.m in Sources */,
 				9EF1318D19E1770700843F02 /* PMDayCourseScheduleViewController.m in Sources */,
 				9E8AF2B41A1357F300378B31 /* PMNavReportViewController.m in Sources */,
 				9E8AF2931A133FE500378B31 /* UINavigationController+Extend.m in Sources */,

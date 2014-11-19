@@ -11,7 +11,7 @@
 @interface PMCalendarMonthHeaderView : UICollectionReusableView
 @property (nonatomic) CGFloat dayLabelWidth;
 @property (nonatomic) CGFloat dayLabelHeight;
-@property (nonatomic) UIColor *wordDayColor;
+@property (nonatomic) UIColor *workDayColor;
 @property (nonatomic) UIColor *weekEndColor;
 
 @property (weak, nonatomic) UILabel *masterLabel;

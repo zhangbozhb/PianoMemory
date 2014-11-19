@@ -7,7 +7,7 @@
 //
 
 #import "UIViewController+DataUpdate.h"
-#import "PMDateUpdte.h"
+#import "PMDataUpdate.h"
 
 @implementation UIViewController (DataUpdate)
 

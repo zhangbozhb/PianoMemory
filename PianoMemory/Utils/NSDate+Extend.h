@@ -14,6 +14,9 @@
 //- (NSInteger)zb_getYearTimestamp;
 //- (NSInteger)zb_getWeekDay;
 
+
+- (NSDateComponents*)zb_dateComponents;
+
 - (NSInteger)zb_timestampOfDay;
 - (NSInteger)zb_timestampOfMonth;
 - (NSInteger)zb_timestampOfYear;

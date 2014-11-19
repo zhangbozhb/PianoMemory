@@ -7,8 +7,36 @@
 //
 
 #import "PMCalendarDayCell.h"
+#import "PMCalendarDayModel.h"
 
 @implementation PMCalendarDayCell
+#pragma override property
+- (UIColor *)workDayColor
+{
+    if (!_workDayColor) {
+        _workDayColor = [UIColor colorWithRed:26/256.0  green:168/256.0 blue:186/256.0 alpha:1];
+    }
+    return _workDayColor;
+}
+
+- (UIColor *)weekEndColor
+{
+    if (!_weekEndColor) {
+        _weekEndColor = [UIColor redColor];
+    }
+    return _weekEndColor;
+}
+
+- (UIColor *)futureDayColor
+{
+    if (!_futureDayColor) {
+        _futureDayColor = [UIColor colorWithRed:26/256.0  green:168/256.0 blue:186/256.0 alpha:1];
+    }
+    return _futureDayColor;
+}
+
+
+#pragma other function
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -42,80 +70,77 @@
 }
 
 
-//- (void)setModel:(CalendarDayModel *)model
-//{
-//
-//
-//    switch (model.style) {
-//        case CellDayTypeEmpty://不显示
-//            [self hidden_YES];
-//            break;
-//
-//        case CellDayTypePast://过去的日期
-//            [self hidden_NO];
-//
-//            if (model.holiday) {
-//                day_lab.text = model.holiday;
-//            }else{
-//                day_lab.text = [NSString stringWithFormat:@"%d",model.day];
-//            }
-//
-//            day_lab.textColor = [UIColor lightGrayColor];
-//            day_title.text = model.Chinese_calendar;
-//            imgview.hidden = YES;
-//            break;
-//
-//        case CellDayTypeFutur://将来的日期
-//            [self hidden_NO];
-//
-//            if (model.holiday) {
-//                day_lab.text = model.holiday;
-//                day_lab.textColor = [UIColor orangeColor];
-//            }else{
-//                day_lab.text = [NSString stringWithFormat:@"%d",model.day];
-//                day_lab.textColor = COLOR_THEME;
-//            }
-//
-//            day_title.text = model.Chinese_calendar;
-//            imgview.hidden = YES;
-//            break;
-//
-//        case CellDayTypeWeek://周末
-//            [self hidden_NO];
-//
-//            if (model.holiday) {
-//                day_lab.text = model.holiday;
-//                day_lab.textColor = [UIColor orangeColor];
-//            }else{
-//                day_lab.text = [NSString stringWithFormat:@"%d",model.day];
-//                day_lab.textColor = COLOR_THEME1;
-//            }
-//
-//            day_title.text = model.Chinese_calendar;
-//            imgview.hidden = YES;
-//            break;
-//
-//        case CellDayTypeClick://被点击的日期
-//            [self hidden_NO];
-//            day_lab.text = [NSString stringWithFormat:@"%d",model.day];
-//            day_lab.textColor = [UIColor whiteColor];
-//            day_title.text = model.Chinese_calendar;
-//            imgview.hidden = NO;
-//
-//            break;
-//
-//        default:
-//
-//            break;
-//    }
-//}
+- (void)setModel:(PMCalendarDayModel *)model
+{
+    switch (model.style) {
+        case CellDayTypeEmpty://不显示
+            [self hidden_YES];
+            break;
+
+        case CellDayTypePast://过去的日期
+            [self hidden_NO];
+
+            if (model.holiday) {
+                self.dayLabel.text = model.holiday;
+            }else{
+                self.dayLabel.text = [NSString stringWithFormat:@"%d",model.day];
+            }
+
+            self.dayLabel.textColor = [UIColor lightGrayColor];
+            self.dayTitleLabel.text = model.Chinese_calendar;
+            self.imgview.hidden = YES;
+            break;
+
+        case CellDayTypeFutur://将来的日期
+            [self hidden_NO];
+
+            if (model.holiday) {
+                self.dayLabel.text = model.holiday;
+                self.dayLabel.textColor = [UIColor orangeColor];
+            }else{
+                self.dayLabel.text = [NSString stringWithFormat:@"%d",model.day];
+                self.dayLabel.textColor = self.futureDayColor;
+            }
+
+            self.dayTitleLabel.text = model.Chinese_calendar;
+            self.self.imgview.hidden = YES;
+            break;
+
+        case CellDayTypeWeek://周末
+            [self hidden_NO];
+
+            if (model.holiday) {
+                self.dayLabel.text = model.holiday;
+                self.dayLabel.textColor = [UIColor orangeColor];
+            }else{
+                self.dayLabel.text = [NSString stringWithFormat:@"%d",model.day];
+                self.dayLabel.textColor = self.weekEndColor;
+            }
+
+            self.dayTitleLabel.text = model.Chinese_calendar;
+            self.imgview.hidden = YES;
+            break;
+
+        case CellDayTypeClick://被点击的日期
+            [self hidden_NO];
+            self.dayLabel.text = [NSString stringWithFormat:@"%d",model.day];
+            self.dayLabel.textColor = [UIColor whiteColor];
+            self.dayTitleLabel.text = model.Chinese_calendar;
+            self.imgview.hidden = NO;
+            break;
+
+        default:
+
+            break;
+    }
+}
 
 
 
 - (void)hidden_YES{
     self.dayLabel.hidden = YES;
     self.dayTitleLabel.hidden = YES;
-    self.imgview.hidden = YES;
+    self.self.imgview.hidden = YES;
 }
 
 

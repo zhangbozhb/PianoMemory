@@ -14,7 +14,7 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import <APAddressBook/APContact.h>
 #import <MBProgressHUD/MBProgressHUD.h>
-#import "PMDateUpdte.h"
+#import "PMDataUpdate.h"
 #import "UIViewController+DataUpdate.h"
 #import "UISearchBar+Extend.h"
 #import "UIDevice+Extend.h"
@@ -325,8 +325,8 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
 - (void)handleDataUpdated:(NSNotification *)notification
 {
     [super handleDataUpdated:notification];
-    if (PMLocalServer_DateUpateType_Student == [PMDateUpdte dateUpdateType:notification.object] ||
-        PMLocalServer_DateUpateType_ALL == [PMDateUpdte dateUpdateType:notification.object]) {
+    if (PMLocalServer_DataUpateType_Student == [PMDataUpdate dataUpdateType:notification.object] ||
+        PMLocalServer_DataUpateType_ALL == [PMDataUpdate dataUpdateType:notification.object]) {
         self.shouldFetchData = YES;
     }
 }

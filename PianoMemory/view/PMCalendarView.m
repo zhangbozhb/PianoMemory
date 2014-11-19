@@ -12,6 +12,7 @@
 #import "PMCalendarDayCell.h"
 #import "PMCalendarDayModel.h"
 #import "NSDate+Extend.h"
+#import "LunarCalendar.h"
 
 
 static NSString *MonthHeader = @"MonthHeaderView";
@@ -49,9 +50,56 @@ static NSString *DayCell = @"DayCell";
 }
 
 #pragma common functions
-- (NSArray *)calendarMonthFromDate:(NSDate*)fromDate toDate:(NSDate*)toDate
+- (NSArray *)calendarMonthFromDate:(NSDate*)fromDate toDate:(NSDate*)toDate selectdate:(NSDate*)selectdate
 {
-    return nil;
+    NSDateComponents *todayDC= [fromDate zb_dateComponents];
+    NSDateComponents *beforeDC= [toDate zb_dateComponents];
+    NSInteger todayYear = todayDC.year;
+    NSInteger todayMonth = todayDC.month;
+    NSInteger beforeYear = beforeDC.year;
+    NSInteger beforeMonth = beforeDC.month;
+
+    NSInteger months = (beforeYear-todayYear) * 12 + (beforeMonth - todayMonth);
+
+    NSMutableArray *calendarMonth = [[NSMutableArray alloc]init];//每个月的dayModel数组
+
+    for (int i = 0; i <= months; i++) {
+        NSDate *month = [fromDate zb_dateAfterMonth:i];
+        NSMutableArray *calendarDays = [[NSMutableArray alloc]init];
+        [self calculateDaysInPreviousMonthWithDate:month andArray:calendarDays];
+        [self calculateDaysInCurrentMonthWithDate:month andArray:calendarDays];
+        [self calculateDaysInPreviousMonthWithDate:[month zb_dateAfterMonth:1] andArray:calendarDays];//计算下月份的天数
+
+        [calendarMonth insertObject:calendarDays atIndex:i];
+    }
+
+    return calendarMonth;
+}
+
+
+
+#pragma mark - 日历上+当前+下月份的天数
+//计算上月份的天数
+- (void)calculateDaysInPreviousMonthWithDate:(NSDate *)date andArray:(NSMutableArray *)array
+{
+    NSDate *firstDayOfCurrentMonthe = [date zb_firstDayOfCurrentMonth]; //本月第一天
+    NSUInteger weekDay = [firstDayOfCurrentMonthe zb_weekDay];//本月第一天是礼拜几
+    for (NSInteger index = weekDay; index > 1; --index) {
+        PMCalendarDayModel *calendarDay = [[PMCalendarDayModel alloc] initWithDate:[firstDayOfCurrentMonthe zb_dateAfterDay:-index+1]];
+        calendarDay.style = CellDayTypeEmpty;//不显示
+        [array addObject:calendarDay];
+    };
+}
+
+//计算当月的天数
+- (void)calculateDaysInCurrentMonthWithDate:(NSDate *)date andArray:(NSMutableArray *)array
+{
+
+    NSUInteger numberOfDayOfCurrentMonth = [date zb_numberOfDayOfCurrentMonth]; //本月第一天
+    for (NSInteger index = 0; index < numberOfDayOfCurrentMonth; ++index) {
+        PMCalendarDayModel *calendarDay = [[PMCalendarDayModel alloc] initWithDate:[date zb_dateAfterDay:index]];
+        [array addObject:calendarDay];
+    };
 }
 
 #pragma init

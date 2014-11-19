@@ -7,15 +7,38 @@
 //
 
 #import "PMCalendarDayModel.h"
+#import "NSDate+Extend.h"
 
 @implementation PMCalendarDayModel
-//返回当前天的NSDate对象
-- (NSDate *)date
+- (instancetype)initWithDate:(NSDate*)date
 {
-    NSDateComponents *c = [[NSDateComponents alloc] init];
-    c.year = self.year;
-    c.month = self.month;
-    c.day = self.day;
-    return [[NSCalendar currentCalendar] dateFromComponents:c];
+    self = [super init];
+    if (self) {
+        self.date = date;
+    }
+    return self;
+}
+
+- (instancetype)initWithYear:(NSUInteger)year month:(NSUInteger)month day:(NSUInteger)day
+{
+    self = [super init];
+    if (self) {
+
+        NSDateComponents *components = [[NSDateComponents alloc] init];
+        components.year = year;
+        components.month = month;
+        components.day = day;
+        self.date = [[NSCalendar currentCalendar] dateFromComponents:components];
+    }
+    return self;
+}
+
+- (void)setDate:(NSDate *)date
+{
+    NSDateComponents *components = [date zb_dateComponents];
+    _year = components.year;
+    _month = components.month;
+    _day = components.day;
+    _date = date;
 }
 @end

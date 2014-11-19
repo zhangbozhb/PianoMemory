@@ -12,7 +12,7 @@
 #import "PMCourseEditViewController.h"
 #import "PMTimeScheduleEditViewController.h"
 
-#import "PMDateUpdte.h"
+#import "PMDataUpdate.h"
 #import "UIViewController+DataUpdate.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 
@@ -151,8 +151,8 @@ static NSString *const timeScheduleTableViewCellReuseIdentifier = @"timeSchedule
 - (void)handleDataUpdated:(NSNotification *)notification
 {
     [super handleDataUpdated:notification];
-    if (PMLocalServer_DateUpateType_TimeSchedule == [PMDateUpdte dateUpdateType:notification.object] ||
-        PMLocalServer_DateUpateType_ALL == [PMDateUpdte dateUpdateType:notification.object]) {
+    if (PMLocalServer_DataUpateType_TimeSchedule == [PMDataUpdate dataUpdateType:notification.object] ||
+        PMLocalServer_DataUpateType_ALL == [PMDataUpdate dataUpdateType:notification.object]) {
         self.shouldFetchData = YES;
     }
 }
