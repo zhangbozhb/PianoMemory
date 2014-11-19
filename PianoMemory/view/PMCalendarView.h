@@ -14,8 +14,8 @@
 @end
 
 @interface PMCalendarView : UIView
-@property (nonatomic) NSDate *minVisiableDate;
-@property (nonatomic) NSDate *maxVisiableDate;
+@property (nonatomic) NSDate *startDate;
+@property (nonatomic) NSDate *endDate;
 @property (nonatomic) NSDate *seletedDate;
 
 @property (nonatomic, weak) id<PMCalendarViewDelegate>delegate;

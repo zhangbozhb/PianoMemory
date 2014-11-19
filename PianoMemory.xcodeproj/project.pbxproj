@@ -75,6 +75,7 @@
 		9EC4A6791A1B149D0089A208 /* PMCalendarDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC4A6781A1B149D0089A208 /* PMCalendarDayCell.m */; };
 		9EC4A67C1A1B16130089A208 /* PMCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC4A67B1A1B16130089A208 /* PMCalendarView.m */; };
 		9EC4A67F1A1B292B0089A208 /* PMCalendarDayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC4A67E1A1B292B0089A208 /* PMCalendarDayModel.m */; };
+		9EC4A6871A1C958C0089A208 /* calendar_day_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC4A6861A1C958C0089A208 /* calendar_day_selected.png */; };
 		9EC9DF9819FF6334008E3499 /* PMDayCourseSchedule+Wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC9DF9719FF6334008E3499 /* PMDayCourseSchedule+Wrapper.m */; };
 		9EF130E819E029A900843F02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF130E719E029A900843F02 /* main.m */; };
 		9EF130EB19E029A900843F02 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF130EA19E029A900843F02 /* AppDelegate.m */; };
@@ -252,6 +253,7 @@
 		9EC4A67B1A1B16130089A208 /* PMCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMCalendarView.m; sourceTree = "<group>"; };
 		9EC4A67D1A1B292B0089A208 /* PMCalendarDayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCalendarDayModel.h; sourceTree = "<group>"; };
 		9EC4A67E1A1B292B0089A208 /* PMCalendarDayModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMCalendarDayModel.m; sourceTree = "<group>"; };
+		9EC4A6861A1C958C0089A208 /* calendar_day_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_day_selected.png; sourceTree = "<group>"; };
 		9EC9DF9619FF6334008E3499 /* PMDayCourseSchedule+Wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PMDayCourseSchedule+Wrapper.h"; sourceTree = "<group>"; };
 		9EC9DF9719FF6334008E3499 /* PMDayCourseSchedule+Wrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PMDayCourseSchedule+Wrapper.m"; sourceTree = "<group>"; };
 		9EF130E219E029A900843F02 /* PianoMemory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PianoMemory.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -570,6 +572,7 @@
 		9EF1310E19E02FF200843F02 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9EC4A6861A1C958C0089A208 /* calendar_day_selected.png */,
 				9E8AF2C61A19EBF000378B31 /* staff-bg.png */,
 				9E8AF2C41A19E61F00378B31 /* daycoursescheule-bg.png */,
 				9E8AF2C01A19A9B400378B31 /* Icon@2x.png */,
@@ -907,6 +910,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E8AF2261A10751800378B31 /* clock_go.png in Resources */,
+				9EC4A6871A1C958C0089A208 /* calendar_day_selected.png in Resources */,
 				9EA76B7419F4BAA600B5613B /* btn_add_green.png in Resources */,
 				9E8AF21E1A1073F900378B31 /* calendar_effect@2x.png in Resources */,
 				9E8AF2AC1A13517200378B31 /* tab_schedule@2x.png in Resources */,

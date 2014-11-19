@@ -14,20 +14,13 @@
     self = [super init];
     if (self) {
         self.headerReferenceSize = CGSizeMake(320.0f, 65.0f);//头部视图的框架大小
-
         self.itemSize = CGSizeMake(320/7, 70.0f);//每个cell的大小
-
         self.minimumLineSpacing = 0.0f;//每行的最小间距
-
         self.minimumInteritemSpacing = 0.0f;//每列的最小间距
-
         self.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);//网格视图的/上/左/下/右,的边距
     }
-
     return self;
 }
-
-
 
 - (NSArray *) layoutAttributesForElementsInRect:(CGRect)rect {
     NSMutableArray *answer = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
@@ -47,28 +40,20 @@
     }
 
     [missingSections enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:idx];
-
         UICollectionViewLayoutAttributes *layoutAttributes = [self layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader atIndexPath:indexPath];
-
         [answer addObject:layoutAttributes];
-
     }];
 
     for (UICollectionViewLayoutAttributes *layoutAttributes in answer) {
-
         if ([layoutAttributes.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
-
             NSInteger section = layoutAttributes.indexPath.section;
             NSInteger numberOfItemsInSection = [cv numberOfItemsInSection:section];
-
             NSIndexPath *firstObjectIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
             NSIndexPath *lastObjectIndexPath = [NSIndexPath indexPathForItem:MAX(0, (numberOfItemsInSection - 1)) inSection:section];
 
             UICollectionViewLayoutAttributes *firstObjectAttrs;
             UICollectionViewLayoutAttributes *lastObjectAttrs;
-
             if (numberOfItemsInSection > 0) {
                 firstObjectAttrs = [self layoutAttributesForItemAtIndexPath:firstObjectIndexPath];
                 lastObjectAttrs = [self layoutAttributesForItemAtIndexPath:lastObjectIndexPath];
@@ -96,14 +81,10 @@
             };
         }
     }
-
     return answer;
-
 }
 
 - (BOOL) shouldInvalidateLayoutForBoundsChange:(CGRect)newBound {
-
     return YES;
-
 }
 @end

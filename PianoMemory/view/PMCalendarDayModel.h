@@ -17,9 +17,10 @@ typedef NS_ENUM(NSInteger, CollectionViewCellDayType) {
 };
 
 @interface PMCalendarDayModel : NSObject
-@property ( nonatomic) CollectionViewCellDayType style;//显示的样式
+@property (nonatomic) CollectionViewCellDayType style;//显示的样式
 @property (nonatomic) NSDate *date;
-@property (nonatomic, strong) NSString *holiday;//节日
+@property (nonatomic) NSString *holiday;//节日
+@property (nonatomic) NSString *lunaCalendar;//农历
 
 @property (nonatomic, readonly) NSUInteger day;//天
 @property (nonatomic, readonly) NSUInteger month;//月
