@@ -14,34 +14,36 @@
 #import "PMDataUpdate.h"
 #import "PMServerWrapper.h"
 #import "PMDayCourseSchedule.h"
-#import "FMWeekCalendarView.h"
 #import "PMCourseScheduleEditViewController.h"
 #import "PMDayCourseSchedule+Wrapper.h"
 
 static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCourseScheduleTableViewCellReuseIdentifier";
 
-@interface PMDayCourseScheduleViewController () <UITableViewDataSource, UITableViewDelegate, FMWeekCalendarViewDelegate, PMCourseScheduleEditProtocol>
-
-@property (nonatomic) NSDate *targetDate;
+@interface PMDayCourseScheduleViewController () <UITableViewDataSource, UITableViewDelegate, PMCourseScheduleEditProtocol>
 @property (nonatomic) PMDayCourseSchedule *targetDayCourseSchedule;
 @property (nonatomic) BOOL shouldFetchData;
 
 //xib reference
 @property (weak, nonatomic) IBOutlet UINavigationItem *myNavigationitem;
-@property (weak, nonatomic) IBOutlet FMWeekCalendarView *weekCalendarView;
 @property (weak, nonatomic) IBOutlet UITableView *courseScheduleTableView;
 
 @end
 
 @implementation PMDayCourseScheduleViewController
 
+- (NSDate *)targetDate
+{
+    if (!_targetDate) {
+        _targetDate = [NSDate date];
+    }
+    return _targetDate;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self registerForDataUpdate];
     self.shouldFetchData = YES;
-    self.targetDate = [NSDate date];
-    [self.weekCalendarView setDelegate:self];
     self.targetDayCourseSchedule = [[PMDayCourseSchedule alloc] init];
 }
 
@@ -86,16 +88,6 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
     if (UITableViewCellEditingStyleDelete == editingStyle) {
         [self.targetDayCourseSchedule.courseSchedules removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }
-}
-
-#pragma delegate FMWeekCalendarViewDelegate
-- (void)weekCalendarView:(FMWeekCalendarView *)weekCalendarView selectedDate:(NSDate *)selectedDate
-{
-    if ([self.targetDate zb_timestampOfDay] != [selectedDate zb_timestampOfDay]) {
-        self.targetDate = selectedDate;
-        self.shouldFetchData = YES;
-        [self loadCustomerData];
     }
 }
 
