@@ -286,17 +286,6 @@
     }
     return courseSchedules;
 }
-- (NSArray *)queryCourseScheduleOfDate:(NSDate*)date
-{
-    NSMutableArray *targetCourseSchedules = [NSMutableArray array];
-    NSArray *allCourseSchedules = [self queryAllCourseSchedule];
-    for (PMCourseSchedule *courseSchedule in allCourseSchedules) {
-        if ([courseSchedule availableFordDate:date]) {
-            [targetCourseSchedules addObject:courseSchedule];
-        }
-    }
-    return targetCourseSchedules;
-}
 - (NSDictionary *)queryCourseScheduleMapingOfRepeatWeekDay
 {
     NSArray *allCourseSchedules = [self queryAllCourseSchedule];
@@ -327,6 +316,26 @@
         }
     }
     return repreatWeekDayMapping;
+}
+- (NSArray *)queryCourseScheduleOfDate:(NSDate*)date
+{
+    //1,获取周一，周二..每天的 courseMapping
+    NSDictionary *repreatWeekDayMapping = [self queryCourseScheduleMapingOfRepeatWeekDay];
+
+    //2, 获取 weekday
+    PMCourseScheduleRepeatDataWeekDay repeatWeekDay = [PMCourseScheduleRepeat repeatWeekDayFromDate:date];
+    NSArray *candidateCourseSchedules = [repreatWeekDayMapping objectForKey:[NSNumber numberWithInteger:repeatWeekDay]];
+
+    //3，filter time
+    long timestamp  = [date timeIntervalSince1970];
+    NSMutableArray *targetCourseSchedules = [NSMutableArray array];
+    for (PMCourseSchedule *courseSchedule in candidateCourseSchedules) {
+        if (courseSchedule.effectiveDateTimestamp <= timestamp
+            && timestamp < courseSchedule.expireDateTimestamp) {
+            [targetCourseSchedules addObject:courseSchedule];
+        }
+    }
+    return targetCourseSchedules;
 }
 
 #pragma dayCourseSchedule
@@ -377,14 +386,12 @@
     //1,获取周一，周二每天的 courseMapping
     NSDictionary *repreatWeekDayMapping = [self queryCourseScheduleMapingOfRepeatWeekDay];
 
-
     //2, 构建dayCourseScheduleMapping
     NSMutableDictionary *dayCourseScheduleMapping = [NSMutableDictionary dictionary];
     for (PMDayCourseSchedule *dayCourseSchedule in dayCourseScheduleArray) {
         NSTimeInterval scheduleTimestamp = [[NSDate dateWithTimeIntervalSince1970:dayCourseSchedule.scheduleTimestamp] zb_timestampOfDay];
         [dayCourseScheduleMapping setObject:dayCourseSchedule forKey:[NSNumber numberWithLong:scheduleTimestamp]];
     }
-
 
     //3, 递归每天的dayCourseSchedule
     NSTimeInterval maxCreateTimestamp = [[[NSDate date] zb_dateAfterDay:1] timeIntervalSince1970];
@@ -396,15 +403,15 @@
             targetDayTimestamp < maxCreateTimestamp) {
             //创建 day
             PMCourseScheduleRepeatDataWeekDay repeatWeekDay = [PMCourseScheduleRepeat repeatWeekDayFromDate:targetDay];
-            NSArray *repeatWeekDayCourseSchedules = [repreatWeekDayMapping objectForKey:[NSNumber numberWithInteger:repeatWeekDay]];
-            NSMutableArray *canditeCourseSchedules = [NSMutableArray array];
-            for (PMCourseSchedule *courseSchedule in repeatWeekDayCourseSchedules) {
+            NSArray *candidateCourseSchedules = [repreatWeekDayMapping objectForKey:[NSNumber numberWithInteger:repeatWeekDay]];
+            NSMutableArray *targetCourseSchedules = [NSMutableArray array];
+            for (PMCourseSchedule *courseSchedule in candidateCourseSchedules) {
                 if (courseSchedule.effectiveDateTimestamp <= targetDayTimestamp &&
-                    targetDayTimestamp <= courseSchedule.expireDateTimestamp) {
-                    [canditeCourseSchedules addObject:[courseSchedule copy]];
+                    targetDayTimestamp < courseSchedule.expireDateTimestamp) {
+                    [targetCourseSchedules addObject:[courseSchedule copy]];
                 }
             }
-            PMDayCourseSchedule *createdDayCourseSchedule = [PMBusiness createDayCourseScheduleWithCourseSchedules:canditeCourseSchedules atDate:targetDay];
+            PMDayCourseSchedule *createdDayCourseSchedule = [PMBusiness createDayCourseScheduleWithCourseSchedules:targetCourseSchedules atDate:targetDay];
             [self saveDayCourseSchedule:createdDayCourseSchedule];
             dayCourseSchedule = createdDayCourseSchedule;
         }

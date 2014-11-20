@@ -44,7 +44,7 @@
 - (BOOL)deleteCourseSchedule:(PMCourseSchedule*)courseSchedule;
 - (PMCourseSchedule*)queryCourseScheduleWithId:(NSString*)courseScheduleId;
 - (NSArray*)queryAllCourseSchedule;
-- (NSArray *)queryCourseScheduleOfDate:(NSDate*)date;
+- (NSArray *)queryCourseScheduleOfDate:(NSDate*)date;       //查询逻辑上某一天的课程
 
 #pragma dayCourseSchedule
 - (BOOL)saveDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule;
