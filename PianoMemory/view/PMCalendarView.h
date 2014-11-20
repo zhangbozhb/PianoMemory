@@ -19,4 +19,6 @@
 @property (nonatomic) NSDate *seletedDate;
 
 @property (nonatomic, weak) id<PMCalendarViewDelegate>delegate;
+
+- (void)scrollToDate:(NSDate*)date animated:(BOOL)animated;
 @end

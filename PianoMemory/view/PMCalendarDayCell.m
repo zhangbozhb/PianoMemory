@@ -46,24 +46,29 @@
 }
 
 - (void)initView{
-
     //选中时显示的图片
-    _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 15, self.bounds.size.width-10, self.bounds.size.width-10)];
+    _imageView = [[UIImageView alloc] init];
     [self addSubview:_imageView];
 
     //日期
-    _dayLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 15, self.bounds.size.width, self.bounds.size.width-10)];
+    _dayLabel = [[UILabel alloc]init];
     _dayLabel.textAlignment = NSTextAlignmentCenter;
     _dayLabel.font = [UIFont systemFontOfSize:14];
     [self addSubview:_dayLabel];
 
     //农历
-    _dayTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.bounds.size.height-15, self.bounds.size.width, 13)];
+    _dayTitleLabel = [[UILabel alloc] init];
     _dayTitleLabel.textColor = [UIColor lightGrayColor];
     _dayTitleLabel.font = [UIFont boldSystemFontOfSize:10];
     _dayTitleLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_dayTitleLabel];
+}
 
-
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self.imageView setFrame:CGRectMake(5, 15, self.bounds.size.width-10, self.bounds.size.width-10)];
+    [self.dayLabel setFrame:CGRectMake(0, 15, self.bounds.size.width, self.bounds.size.width-10)];
+    [self.dayTitleLabel setFrame:CGRectMake(0, self.bounds.size.height-15, self.bounds.size.width, 13)];
 }
 @end

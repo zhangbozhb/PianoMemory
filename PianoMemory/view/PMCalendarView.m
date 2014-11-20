@@ -19,8 +19,8 @@ static NSString *kmonthHeaderReuseIdentifier = @"monthHeaderReuseIdentifier";
 static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
 
 @interface PMCalendarView () <UICollectionViewDataSource,UICollectionViewDelegate>
-@property(nonatomic ,strong) UICollectionView* collectionView;//网格视图
-@property(nonatomic ,strong) NSMutableArray *calendarMonth;//每个月份的中的daymodel容器数组
+@property (nonatomic) UICollectionView* collectionView;//网格视图
+@property (nonatomic) NSMutableDictionary *monthCalendarDaysMapping;
 @end
 
 @implementation PMCalendarView
@@ -28,7 +28,7 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
 - (NSDate *)startDate
 {
     if (!_startDate) {
-        _startDate = [[NSDate date] zb_dateAfterYear:-1];
+        _startDate = [[NSDate date] zb_dateAfterYear:0];
     }
     return _startDate;
 }
@@ -49,170 +49,26 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
     return _seletedDate;
 }
 
-#pragma common functions
-- (NSArray *)calendarMonthFromDate:(NSDate*)fromDate toDate:(NSDate*)toDate selectedDate:(NSDate*)selectedDate
-{
-    NSDateComponents *todayDC= [fromDate zb_dateComponents];
-    NSDateComponents *beforeDC= [toDate zb_dateComponents];
-    NSInteger todayYear = todayDC.year;
-    NSInteger todayMonth = todayDC.month;
-    NSInteger beforeYear = beforeDC.year;
-    NSInteger beforeMonth = beforeDC.month;
-
-    NSInteger months = (beforeYear-todayYear) * 12 + (beforeMonth - todayMonth);
-
-    NSMutableArray *calendarMonth = [[NSMutableArray alloc] init];//每个月的dayModel数组
-    for (int i = 0; i <= months; i++) {
-        NSDate *month = [fromDate zb_dateAfterMonth:i];
-        NSArray *dayInPreviousMonth = [self calculateDaysInPreviousMonthWithDate:month];
-        NSArray *dayInCurrentMonth =  [self calculateDaysInCurrentMonthWithDate:month];
-        NSArray *dayInFollowingMonth =  [self calculateDaysInFollowingMonthWithDate:month];//计算下月份的天数
-
-        [self updateCalendarDayStyle:dayInCurrentMonth selectedDate:selectedDate];
-        NSMutableArray *calendarDays = [[NSMutableArray alloc] init];
-        [calendarDays addObjectsFromArray:dayInPreviousMonth];
-        [calendarDays addObjectsFromArray:dayInCurrentMonth];
-        [calendarDays addObjectsFromArray:dayInFollowingMonth];
-        [calendarMonth addObject:calendarDays];
-    }
-
-    return calendarMonth;
-}
-
-
-#pragma mark - 日历上+当前+下月份的天数
-//计算上月份的天数
-- (NSArray*)calculateDaysInPreviousMonthWithDate:(NSDate *)date
-{
-    NSDate *firstDayOfCurrentMonthe = [date zb_firstDayOfCurrentMonth]; //本月第一天
-    NSUInteger weekDay = [firstDayOfCurrentMonthe zb_weekDay];//本月第一天是礼拜几
-    NSMutableArray *targetArray = [NSMutableArray arrayWithCapacity:weekDay];
-    for (NSInteger index = weekDay; index > 1; --index) {
-        PMCalendarDayModel *calendarDay = [[PMCalendarDayModel alloc] initWithDate:[firstDayOfCurrentMonthe zb_dateAfterDay:-index+1]];
-        calendarDay.style = CellDayTypeEmpty;//不显示
-        [targetArray addObject:calendarDay];
-    };
-    return targetArray;
-}
-
-//计算当月的天数
-- (NSArray*)calculateDaysInCurrentMonthWithDate:(NSDate *)date
-{
-    NSUInteger numberOfDayOfCurrentMonth = [date zb_numberOfDayOfCurrentMonth]; //本月第一天
-    NSMutableArray *targetArray = [NSMutableArray arrayWithCapacity:numberOfDayOfCurrentMonth];
-    for (NSInteger index = 0; index < numberOfDayOfCurrentMonth; ++index) {
-        PMCalendarDayModel *calendarDay = [[PMCalendarDayModel alloc] initWithDate:[date zb_dateAfterDay:index]];
-        [targetArray addObject:calendarDay];
-    };
-    return targetArray;
-}
-
-//计算下月份的天数
-- (NSArray*)calculateDaysInFollowingMonthWithDate:(NSDate *)date
-{
-    NSDate *firstDayOfCurrentMonthe = [[date zb_dateAfterMonth:1] zb_firstDayOfCurrentMonth]; //下一个月第一天
-    NSUInteger weekDay = [firstDayOfCurrentMonthe zb_weekDay];//下月第一天是礼拜几
-    NSMutableArray *targetArray = [NSMutableArray arrayWithCapacity:weekDay];
-    for (NSInteger index = weekDay; index > 1; --index) {
-        PMCalendarDayModel *calendarDay = [[PMCalendarDayModel alloc] initWithDate:[firstDayOfCurrentMonthe zb_dateAfterDay:-index+1]];
-        calendarDay.style = CellDayTypeFutur;
-        [targetArray addObject:calendarDay];
-    };
-    return targetArray;
-}
-
-#pragma set modle style
-- (void)updateCalendarDayStyle:(NSArray *)calendarDays selectedDate:(NSDate*)selectedDate
-{
-    NSDate *today = [NSDate date];
-    NSDateComponents *calendarToDay  = [today zb_dateComponents];//今天
-    for (PMCalendarDayModel *calendarDay in calendarDays) {
-        //选中日期
-        if (selectedDate && NSOrderedSame == [selectedDate compare:calendarDay.date]) {
-             calendarDay.style = CellDayTypeClick;
-        } else {    //没被点击选中
-            NSComparisonResult result = [today compare:calendarDay.date];
-            if (NSOrderedSame == result) {
-
-            } else if (NSOrderedAscending == result) {
-                calendarDay.style = CellDayTypePast;
-            } else {
-                //周末
-                if (calendarDay.week == 1 || calendarDay.week == 7){
-                    calendarDay.style = CellDayTypeWeek;
-                }else {  //工作日
-                    calendarDay.style = CellDayTypeFutur;
-                }
-            }
-        }
-
-        //节日设定
-        if (1 ==  calendarDay.month &&
-            1 == calendarDay.day) { //元旦
-            calendarDay.holiday = @"元旦";
-        } else if (2 ==  calendarDay.month &&
-                   14 == calendarDay.day) { //情人节
-            calendarDay.holiday = @"情人节";
-        } else if (3 ==  calendarDay.month &&
-                   8 == calendarDay.day) { //妇女节
-            calendarDay.holiday = @"妇女节";
-        } else if (5 ==  calendarDay.month &&
-                   1 == calendarDay.day) { //劳动节
-            calendarDay.holiday = @"劳动节";
-        } else if (6 ==  calendarDay.month &&
-                   1 == calendarDay.day) { //儿童节
-            calendarDay.holiday = @"儿童节";
-        } else if (8 ==  calendarDay.month &&
-                   1 == calendarDay.day) { //建军节
-            calendarDay.holiday = @"建军节";
-        } else if (9 ==  calendarDay.month &&
-                   10 == calendarDay.day) { //教师节
-            calendarDay.holiday = @"教师节";
-        } else if (10 ==  calendarDay.month &&
-                   1 == calendarDay.day) { //国庆节
-            calendarDay.holiday = @"国庆节";
-        } else if (11 ==  calendarDay.month &&
-                   11 == calendarDay.day) { //光棍节
-            calendarDay.holiday = @"光棍节";
-        }
-
-        //特殊处理:
-        if (calendarToDay.year == calendarDay.year &&
-            calendarToDay.month == calendarDay.month &&
-            calendarToDay.day == calendarDay.day) {
-            calendarDay.holiday = @"今天";
-        }else if(calendarToDay.year == calendarDay.year &&
-                 calendarToDay.month == calendarDay.month &&
-                 calendarToDay.day == calendarDay.day -1){
-            calendarDay.holiday = @"明天";
-        }else if(calendarToDay.year == calendarDay.year &&
-                 calendarToDay.month == calendarDay.month &&
-                 calendarToDay.day == calendarDay.day -2){
-            calendarDay.holiday = @"后天";
-        }
-    }
-}
-
 #pragma init
 - (void)commonInit
 {
-    self.calendarMonth = [NSMutableArray arrayWithArray:
-                          [self calendarMonthFromDate:self.startDate
-                                               toDate:self.endDate
-                                         selectedDate:nil]];    //每个月份的数组
+    self.monthCalendarDaysMapping = [NSMutableDictionary dictionary];
     PMCalendarMonthCollectionViewLayout *layout = [PMCalendarMonthCollectionViewLayout new];
-    self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds
-                                             collectionViewLayout:layout]; //初始化网格视图大小
-    [self.collectionView registerClass:[PMCalendarDayCell class]
-            forCellWithReuseIdentifier:kdayCellReuseIdentifier];    //cell重用设置ID
-    [self.collectionView registerClass:[PMCalendarMonthHeaderView class]
-            forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                   withReuseIdentifier:kmonthHeaderReuseIdentifier];
-        self.collectionView.bounces = NO;             //将网格视图的下拉效果关闭
-    self.collectionView.delegate = self;//实现网格视图的delegate
-    self.collectionView.dataSource = self;//实现网格视图的dataSource
-    self.collectionView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:self.collectionView];
+    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:self.bounds
+                                                          collectionViewLayout:layout]; //初始化网格视图大小
+    [collectionView registerClass:[PMCalendarDayCell class] forCellWithReuseIdentifier:kdayCellReuseIdentifier];
+    [collectionView registerClass:[PMCalendarMonthHeaderView class]
+       forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+              withReuseIdentifier:kmonthHeaderReuseIdentifier];
+    collectionView.bounces = NO;   //将网格视图的下拉效果关闭
+    collectionView.delegate = self;    //实现网格视图的delegate
+    collectionView.dataSource = self;  //实现网格视图的dataSource
+    collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    collectionView.backgroundColor = [UIColor clearColor];
+    [collectionView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+    [self addSubview:collectionView];
+    self.collectionView = collectionView;
+    [self setBackgroundColor:[UIColor purpleColor]];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -233,29 +89,172 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
     return self;
 }
 
+#pragma common functions
+- (NSArray*)calendarDaysForMonth:(NSDate*)targetMonth
+{
+    NSArray *dayInPreviousMonth = [self calculateDaysInPreviousMonthWithDate:targetMonth];
+    NSArray *dayInCurrentMonth =  [self calculateDaysInCurrentMonthWithDate:targetMonth];
+    NSArray *dayInFollowingMonth =  [self calculateDaysInFollowingMonthWithDate:targetMonth];
+    NSMutableArray *calendarDays = [[NSMutableArray alloc] init];
+    [calendarDays addObjectsFromArray:dayInPreviousMonth];
+    [calendarDays addObjectsFromArray:dayInCurrentMonth];
+    [calendarDays addObjectsFromArray:dayInFollowingMonth];
+    [calendarDays enumerateObjectsUsingBlock:^(PMCalendarDayModel* calendarDay, NSUInteger idx, BOOL *stop) {
+        calendarDay.lunaCalendar = [calendarDay.date chineseCalendarDate].DayLunar;
+        calendarDay.holiday = [self holidayOfCalendarDay:calendarDay];
+    }];
+    return calendarDays;
+}
+
+
+#pragma mark - 日历上+当前+下月份的天数
+//计算上月份的天数
+- (NSArray*)calculateDaysInPreviousMonthWithDate:(NSDate *)date
+{
+    NSDate *firstDayOfCurrentMonth = [date zb_firstDayOfCurrentMonth]; //本月第一天
+    NSUInteger weekDay = [firstDayOfCurrentMonth zb_weekDay];//本月第一天是礼拜几
+    NSMutableArray *targetArray = [NSMutableArray arrayWithCapacity:weekDay];
+    for (NSInteger index = weekDay; index > 1; --index) {
+        PMCalendarDayModel *calendarDay = [[PMCalendarDayModel alloc] initWithDate:[firstDayOfCurrentMonth zb_dateAfterDay:-index+1]];
+        calendarDay.style = CellDayTypeEmpty;//不显示
+        [targetArray addObject:calendarDay];
+    };
+    return targetArray;
+}
+
+//计算当月的天数
+- (NSArray*)calculateDaysInCurrentMonthWithDate:(NSDate *)date
+{
+    NSDate *firstDayOfCurrentMonth = [date zb_firstDayOfCurrentMonth]; //本月第一天
+    NSUInteger numberOfDayOfCurrentMonth = [date zb_numberOfDayOfCurrentMonth];
+    NSMutableArray *targetArray = [NSMutableArray arrayWithCapacity:numberOfDayOfCurrentMonth];
+    for (NSInteger index = 0; index < numberOfDayOfCurrentMonth; ++index) {
+        PMCalendarDayModel *calendarDay = [[PMCalendarDayModel alloc] initWithDate:[firstDayOfCurrentMonth zb_dateAfterDay:index]];
+        [targetArray addObject:calendarDay];
+    };
+    return targetArray;
+}
+
+//计算下月份的天数
+- (NSArray*)calculateDaysInFollowingMonthWithDate:(NSDate *)date
+{
+    NSDate *lastDayOfCurrentMonth = [[[date zb_dateAfterMonth:1] zb_firstDayOfCurrentMonth] zb_dateAfterDay:-1]; //本月最后一天
+    NSUInteger weekDay = [lastDayOfCurrentMonth zb_weekDay];
+    NSMutableArray *targetArray = [NSMutableArray arrayWithCapacity:weekDay];
+    for (NSInteger index = weekDay; index < 7; ++index) {
+        PMCalendarDayModel *calendarDay = [[PMCalendarDayModel alloc] initWithDate:[lastDayOfCurrentMonth zb_dateAfterDay:index-weekDay+1]];
+        calendarDay.style = CellDayTypeFutur;
+        [targetArray addObject:calendarDay];
+    };
+    return targetArray;
+}
+
+- (NSString *)holidayOfCalendarDay:(PMCalendarDayModel *)calendarDay
+{
+    NSString *holiday = nil;
+    //节日设定
+    if (1 ==  calendarDay.month &&
+        1 == calendarDay.day) { //元旦
+        holiday = @"元旦";
+    } else if (2 ==  calendarDay.month &&
+               14 == calendarDay.day) { //情人节
+        holiday = @"情人节";
+    } else if (3 ==  calendarDay.month &&
+               8 == calendarDay.day) { //妇女节
+        holiday = @"妇女节";
+    } else if (5 ==  calendarDay.month &&
+               1 == calendarDay.day) { //劳动节
+        holiday = @"劳动节";
+    } else if (6 ==  calendarDay.month &&
+               1 == calendarDay.day) { //儿童节
+        holiday = @"儿童节";
+    } else if (8 ==  calendarDay.month &&
+               1 == calendarDay.day) { //建军节
+        holiday = @"建军节";
+    } else if (9 ==  calendarDay.month &&
+               10 == calendarDay.day) { //教师节
+        holiday = @"教师节";
+    } else if (10 ==  calendarDay.month &&
+               1 == calendarDay.day) { //国庆节
+        holiday = @"国庆节";
+    } else if (11 ==  calendarDay.month &&
+               11 == calendarDay.day) { //光棍节
+        holiday = @"光棍节";
+    }
+    return holiday;
+}
+
+#pragma set modle style
+- (void)updateCalendarDayStyle:(PMCalendarDayModel *)calendarDay selectedDate:(NSDate*)selectedDate
+{
+    NSDate *today = [NSDate date];
+    NSDateComponents *calendarToDay = [today zb_dateComponents];    //今天
+    NSDateComponents *calendarSelected = [selectedDate zb_dateComponents];
+    //选中日期
+    if (selectedDate
+        && calendarSelected.year == calendarDay.year
+        && calendarSelected.month == calendarDay.month
+        && calendarSelected.day == calendarDay.day) {
+        calendarDay.style = CellDayTypeClick;
+    } else {    //没被点击选中
+        if (calendarToDay.year > calendarDay.year
+            || (calendarToDay.year == calendarDay.year && calendarToDay.month > calendarDay.month)
+            || (calendarToDay.year == calendarDay.year && calendarToDay.month == calendarDay.month && calendarToDay.day > calendarDay.day) ) {
+            calendarDay.style = CellDayTypePast;
+        } else {
+            //周末
+            if (calendarDay.week == 1 || calendarDay.week == 7){
+                calendarDay.style = CellDayTypeWeek;
+            }else {  //工作日
+                calendarDay.style = CellDayTypeFutur;
+            }
+        }
+    }
+    //特殊处理:
+    if (calendarToDay.year == calendarDay.year &&
+        calendarToDay.month == calendarDay.month &&
+        calendarToDay.day == calendarDay.day) {
+        calendarDay.holiday = @"今天";
+    }else if(calendarToDay.year == calendarDay.year &&
+             calendarToDay.month == calendarDay.month &&
+             calendarToDay.day == calendarDay.day -1){
+        calendarDay.holiday = @"明天";
+    }else if(calendarToDay.year == calendarDay.year &&
+             calendarToDay.month == calendarDay.month &&
+             calendarToDay.day == calendarDay.day -2){
+        calendarDay.holiday = @"后天";
+    }
+}
 
 #pragma mark - CollectionView代理方法
 //定义展示的Section的个数
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return self.calendarMonth.count;
+    NSDateComponents *startComponent = [self.startDate zb_dateComponents];
+    NSDateComponents *endComponent = [self.endDate zb_dateComponents];
+    NSInteger month = (endComponent.year - startComponent.year) * 12 + endComponent.month - startComponent.month;
+    return month;
 }
 
 //定义展示的UICollectionViewCell的个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSMutableArray *monthArray = [self.calendarMonth objectAtIndex:section];
-    return monthArray.count;
+    NSArray *calendarDays = [self calendarDaysForSection:section];
+    return [calendarDays count];
 }
-
 
 //每个UICollectionView展示的内容
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PMCalendarDayCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kdayCellReuseIdentifier forIndexPath:indexPath];
-    NSMutableArray *monthArray = [self.calendarMonth objectAtIndex:indexPath.section];
-    PMCalendarDayModel *model = [monthArray objectAtIndex:indexPath.row];
-    [self refreshCalendarDayCell:cell calendarDayModel:model];
+    NSDate *targetMonth = [self calendarMonthDateForSection:indexPath.section];
+    NSArray *calendarDays = [self calendarDaysForSection:indexPath.section];
+    PMCalendarDayModel *dayModel = [calendarDays objectAtIndex:indexPath.row];
+    [self updateCalendarDayStyle:dayModel selectedDate:self.seletedDate];
+    if ([targetMonth zb_getMonth] != dayModel.month) {
+        [dayModel setStyle:CellDayTypeEmpty];
+    }
+    [self refreshCalendarDayCell:cell calendarDayModel:dayModel];
     return cell;
 }
 
@@ -263,28 +262,36 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
 {
     UICollectionReusableView *reusableview = nil;
     if (kind == UICollectionElementKindSectionHeader){
-        NSMutableArray *month_Array = [self.calendarMonth objectAtIndex:indexPath.section];
-        PMCalendarDayModel *model = [month_Array objectAtIndex:15];
         PMCalendarMonthHeaderView *monthHeader = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kmonthHeaderReuseIdentifier forIndexPath:indexPath];
-        monthHeader.masterLabel.text = [NSString stringWithFormat:@"%d年 %d月",model.year,model.month];//@"日期";
-        monthHeader.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8f];
+
+        NSDate *targetMonth = [self calendarMonthDateForSection:indexPath.section];
+        NSDateComponents *targetComponent = [targetMonth zb_dateComponents];
+        [monthHeader.masterLabel setText:[NSString stringWithFormat:@"%d年 %d月",
+                                          targetComponent.year,
+                                          targetComponent.month]];
         reusableview = monthHeader;
     }
     return reusableview;
 }
 
-
 //UICollectionView被选中时调用的方法
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSMutableArray *month_Array = [self.calendarMonth objectAtIndex:indexPath.section];
-    PMCalendarDayModel *model = [month_Array objectAtIndex:indexPath.row];
-    if (model.style == CellDayTypeFutur || model.style == CellDayTypeWeek ||model.style == CellDayTypeClick) {
+    NSArray *calendarDays = [self calendarDaysForSection:indexPath.section];
+    PMCalendarDayModel *model = [calendarDays objectAtIndex:indexPath.row];
+    if (CellDayTypeEmpty != model.style) {
+        NSMutableArray *targetIndexPathArray = [NSMutableArray arrayWithObject:indexPath];
+        NSIndexPath *preSelectedIndexPath = [self selectedIndexOfDate:self.seletedDate];
+        if (preSelectedIndexPath &&
+            NSOrderedSame != [preSelectedIndexPath compare:indexPath]) {
+            [targetIndexPathArray addObject:preSelectedIndexPath];
+        }
+        self.seletedDate = model.date;
+        [collectionView reloadItemsAtIndexPaths:targetIndexPathArray];
         if (self.delegate
             && [self.delegate respondsToSelector:@selector(calendarView:selectDate:)]) {
             [self.delegate calendarView:self selectDate:model.date];
         }
-        [self.collectionView reloadData];
     }
 }
 //返回这个UICollectionView是否可以被选择
@@ -293,8 +300,7 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
     return YES;
 }
 
-
-#pragma OTHER
+#pragma other
 - (void)refreshCalendarDayCell:(PMCalendarDayCell *)cell calendarDayModel:(PMCalendarDayModel *)calendarDayModel
 {
     if (CellDayTypeEmpty == calendarDayModel.style) {
@@ -335,4 +341,54 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
     }
 }
 
+- (NSDate*)calendarMonthDateForSection:(NSInteger)section
+{
+    return [self.startDate zb_dateAfterMonth:section];
+}
+
+- (NSArray*)calendarDaysForSection:(NSInteger)section
+{
+    NSArray *targetClendrDays = [self.monthCalendarDaysMapping objectForKey:[NSNumber numberWithInteger:section]];
+    if (!targetClendrDays) {
+        NSDate *targetMonth = [self calendarMonthDateForSection:section];
+        targetClendrDays = [self calendarDaysForMonth:targetMonth];
+        [self.monthCalendarDaysMapping setObject:targetClendrDays forKey:[NSNumber numberWithInteger:section]];
+    }
+    return targetClendrDays;
+}
+
+- (NSIndexPath*)selectedIndexOfDate:(NSDate*)date
+{
+    NSIndexPath *indexPath = nil;
+    if (date) {
+        NSDateComponents *dateComponent = [date zb_dateComponents];
+        NSDate *firstDayOfCurrentMonth = [date zb_firstDayOfCurrentMonth]; //本月第一天
+        NSUInteger weekDay = [firstDayOfCurrentMonth zb_weekDay];//本月第一天是礼拜几
+        if (dateComponent.year >= [self.startDate zb_getYear]) {
+            NSInteger month = (dateComponent.year-[self.startDate zb_getYear])*12+dateComponent.month-[self.startDate zb_getMonth];
+            indexPath = [NSIndexPath indexPathForRow:weekDay+dateComponent.day-2
+                                           inSection:month];
+        }
+    }
+    return indexPath;
+}
+
+- (void)scrollToDate:(NSDate*)date animated:(BOOL)animated
+{
+    if (!date) {
+        date = (self.seletedDate)?self.seletedDate:[NSDate date];
+    }
+    NSIndexPath *indexPath = [self selectedIndexOfDate:date];
+    if (indexPath) {
+        [self.collectionView scrollToItemAtIndexPath:indexPath
+                                    atScrollPosition:UICollectionViewScrollPositionCenteredVertically
+                                            animated:animated];
+    }
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    [super drawRect:rect];
+    [self scrollToDate:nil animated:NO];
+}
 @end

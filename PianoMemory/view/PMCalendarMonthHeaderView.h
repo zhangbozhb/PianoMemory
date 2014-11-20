@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface PMCalendarMonthHeaderView : UICollectionReusableView
-@property (nonatomic) CGFloat dayLabelWidth;
+@property (nonatomic) CGFloat titleHeight;
 @property (nonatomic) CGFloat dayLabelHeight;
+
 @property (nonatomic) UIColor *workDayColor;
 @property (nonatomic) UIColor *weekEndColor;
-
-@property (weak, nonatomic) UILabel *masterLabel;
+@property (nonatomic) UILabel *masterLabel;
 @end
