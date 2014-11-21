@@ -109,7 +109,7 @@
     }
     NSMutableArray *targetValues = [NSMutableArray arrayWithCapacity:[weekDayStats count]];
     for (PMWeekDayStat *dayStat in weekDayStats) {
-        PMDayReportPieElement *element = [PMDayReportPieElement pieElementWithValue:dayStat.courseCount color:[self randomColor]];
+        PMDayReportPieElement *element = [PMDayReportPieElement pieElementWithValue:dayStat.courseCount+0.1f color:[self randomColor]];
         element.dayStatistics = dayStat;
         [targetValues addObject:element];
     }
