@@ -26,7 +26,12 @@ static char innerDataKey;
 
 - (CGRect)viewOriginFrame
 {
-    return ((NSValue*)[self.innerData objectForKey:@"viewOriginFrame"]).CGRectValue;
+    CGRect originFrame = CGRectZero;
+    NSValue *originFrameValue = ((NSValue*)[self.innerData objectForKey:@"viewOriginFrame"]);
+    if (originFrameValue) {
+        originFrame = originFrameValue.CGRectValue;
+    }
+    return originFrame;
 }
 
 - (void)setViewOriginFrame:(CGRect)originFrame
@@ -73,6 +78,10 @@ static char innerDataKey;
 
 - (void)handleKeyboardAppear:(NSTimeInterval)duration keyboardHeight:(CGFloat)keyboardHeight
 {
+    if ([self hasSetOriginFrame]) {
+        return;
+    }
+
     [self setViewOriginFrame:self.view.frame];
     CGRect orgFrame = self.view.frame;
     CGRect targetFrame = orgFrame;
@@ -95,12 +104,18 @@ static char innerDataKey;
 
 - (void)handleKeyboardDisAppear:(NSTimeInterval)duration keyboardHeight:(CGFloat)keyboardHeight {
     CGRect newFrame = self.viewOriginFrame;
-    if (!CGRectEqualToRect(newFrame, CGRectZero)
+    if ([self hasSetOriginFrame]
         &&!CGRectEqualToRect(newFrame, self.view.frame)) {
         [UIView animateWithDuration:duration animations:^{
             [self.view setFrame:newFrame];
         }];
     }
+    self.viewOriginFrame = CGRectZero;
+}
+
+- (BOOL)hasSetOriginFrame
+{
+    return !CGRectEqualToRect(self.viewOriginFrame, CGRectZero);
 }
 
 @end

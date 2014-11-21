@@ -9,11 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface NSDate (Extend)
-//- (NSInteger)zb_getDayTimestamp;
-//- (NSInteger)zb_getMonthTimestamp;
-//- (NSInteger)zb_getYearTimestamp;
-//- (NSInteger)zb_getWeekDay;
-
 
 - (NSDateComponents*)zb_dateComponents;
 

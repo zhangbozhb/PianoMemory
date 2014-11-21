@@ -10,6 +10,10 @@
 
 @interface UIImage (Extend)
 
+// 返回一个resize后的image
+- (UIImage *)zb_LimitMemSized:(CGFloat)maxMemsize;
+
 //将图片缩放到指定的 size
-- (UIImage*)zb_scaledToSize:(CGSize)toSize;
+- (UIImage *)zb_scaledToFitToSize:(CGSize)newSize;
+- (UIImage *)zb_scaledToFillToSize:(CGSize)newSize;
 @end
