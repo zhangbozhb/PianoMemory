@@ -11,6 +11,7 @@
 @class PMCalendarView;
 @protocol PMCalendarViewDelegate <NSObject>
 - (void)calendarView:(PMCalendarView*)calendarView selectDate:(NSDate*)selectDate;
+- (NSString*)calendarView:(PMCalendarView*)calendarView tipOfDate:(NSDate*)date;
 @end
 
 @interface PMCalendarView : UIView
@@ -21,4 +22,5 @@
 @property (nonatomic, weak) id<PMCalendarViewDelegate>delegate;
 
 - (void)scrollToDate:(NSDate*)date animated:(BOOL)animated;
+- (void)refreshUI;
 @end

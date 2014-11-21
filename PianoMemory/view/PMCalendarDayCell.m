@@ -62,6 +62,13 @@
     _dayTitleLabel.font = [UIFont boldSystemFontOfSize:10];
     _dayTitleLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_dayTitleLabel];
+
+    //tip label
+    _tipLabel = [[UILabel alloc] init];
+    _tipLabel.textColor = [UIColor redColor];
+    _tipLabel.font = [UIFont boldSystemFontOfSize:10];
+    _tipLabel.textAlignment = NSTextAlignmentLeft;
+    [self addSubview:_tipLabel];
 }
 
 - (void)layoutSubviews
@@ -70,5 +77,6 @@
     [self.imageView setFrame:CGRectMake(5, 15, self.bounds.size.width-10, self.bounds.size.width-10)];
     [self.dayLabel setFrame:CGRectMake(0, 15, self.bounds.size.width, self.bounds.size.width-10)];
     [self.dayTitleLabel setFrame:CGRectMake(0, self.bounds.size.height-15, self.bounds.size.width, 13)];
+    [self.tipLabel setFrame:CGRectMake(0, 5, self.bounds.size.width, 15)];
 }
 @end

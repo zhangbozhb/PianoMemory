@@ -307,6 +307,7 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
         [cell.dayLabel setHidden:YES];
         [cell.dayTitleLabel setHidden:YES];
         [cell.imageView setHidden:YES];
+        [cell.tipLabel setHidden:YES];
     } else {
         [cell.dayLabel setHidden:NO];
         [cell.dayTitleLabel setHidden:NO];
@@ -337,6 +338,17 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
             [cell.imageView setHidden:NO];
         } else {
             [cell.imageView setHidden:YES];
+        }
+
+        if (self.delegate
+            && [self.delegate respondsToSelector:@selector(calendarView:tipOfDate:)]) {
+            NSString *tip = [self.delegate calendarView:self tipOfDate:calendarDayModel.date];
+            if (tip) {
+                [cell.tipLabel setText:tip];
+                [cell.tipLabel setHidden:NO];
+            } else {
+                [cell.tipLabel setHidden:YES];
+            }
         }
     }
 }
@@ -390,5 +402,10 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
 {
     [super drawRect:rect];
     [self scrollToDate:nil animated:NO];
+}
+
+- (void)refreshUI
+{
+    [self.collectionView reloadData];
 }
 @end

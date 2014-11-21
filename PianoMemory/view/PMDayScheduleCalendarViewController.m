@@ -11,9 +11,13 @@
 #import "PMDayCourseScheduleViewController.h"
 #import "PMDataUpdate.h"
 #import "UIViewController+DataUpdate.h"
+#import "PMServerWrapper.h"
+#import "NSDate+Extend.h"
 
 @interface PMDayScheduleCalendarViewController () <PMCalendarViewDelegate>
+@property (nonatomic) BOOL shouldFetchData;
 @property (nonatomic) NSDate *selectedDate;
+@property (nonatomic) NSMutableDictionary *tipOfDateMapping;
 //xib referrence
 @property (weak, nonatomic) IBOutlet PMCalendarView *calendarView;
 @end
@@ -24,6 +28,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.calendarView.delegate = self;
+    self.shouldFetchData = YES;
     [self.navigationItem setTitle:@"课程日历"];
     [self registerForDataUpdate];
 }
@@ -33,11 +38,23 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self loadCustomerData];
+}
+
 #pragma delegate PMCalendarViewDelegate
 - (void)calendarView:(PMCalendarView *)calendarView selectDate:(NSDate *)selectDate
 {
     self.selectedDate = selectDate;
     [self performSegueWithIdentifier:@"dayScheduleShowDayCourseScheduleSugeIdentifier" sender:self];
+}
+
+- (NSString *)calendarView:(PMCalendarView *)calendarView tipOfDate:(NSDate *)date
+{
+    NSInteger timestamp = [date zb_timestampOfDay];
+    return [self.tipOfDateMapping objectForKey:[NSNumber numberWithInteger:timestamp]];
 }
 
 
@@ -47,6 +64,7 @@
     [super handleDataUpdated:notification];
     if (PMLocalServer_DataUpateType_Student == [PMDataUpdate dataUpdateType:notification.object] ||
         PMLocalServer_DataUpateType_ALL == [PMDataUpdate dataUpdateType:notification.object]) {
+        self.shouldFetchData = YES;
     }
 }
 
@@ -56,5 +74,44 @@
         PMDayCourseScheduleViewController *dayScheduleVC = (PMDayCourseScheduleViewController*)segue.destinationViewController;
         [dayScheduleVC setTargetDate:self.selectedDate];
     }
+}
+
+- (void)refreshUI
+{
+    [self.calendarView refreshUI];
+}
+
+- (void)loadCustomerData
+{
+    if (!self.shouldFetchData) {
+        return;
+    }
+    //加载最近3个月的排课
+    NSDate *currentDate = [NSDate date];
+    NSDictionary *params = @{@"starttime":[[NSNumber numberWithLong:
+                                            [[currentDate zb_dateAfterMonth:-1] zb_timestampOfMonth]] stringValue],
+                             @"endtime":[[NSNumber numberWithLong:
+                                          [[currentDate zb_dateAfterMonth:2] zb_timestampOfMonth]] stringValue]};
+    __weak PMDayScheduleCalendarViewController *pSelf = self;
+    [[PMServerWrapper defaultServer] queryDayCourseSchedules:params success:^(NSArray *array) {
+        pSelf.shouldFetchData = NO;
+        [pSelf updateTipOfDateMappingWithDayCourseSchedules:array];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [pSelf refreshUI];
+        });
+    } failure:^(HCErrorMessage *error) {
+
+    }];
+}
+
+- (void)updateTipOfDateMappingWithDayCourseSchedules:(NSArray*)dayCourseSchedules
+{
+    NSMutableDictionary *tipMapping = [NSMutableDictionary dictionaryWithCapacity:90];
+    for (PMDayCourseSchedule *dayCourseSchedule in dayCourseSchedules) {
+        NSString *tipMappingValue = [NSString stringWithFormat:@"%ld", (long)[dayCourseSchedule.courseSchedules count]];
+        NSInteger scheduleTimestamp = [[NSDate dateWithTimeIntervalSince1970:dayCourseSchedule.scheduleTimestamp] zb_timestampOfDay];
+        [tipMapping setObject:tipMappingValue forKey:[NSNumber numberWithInteger:scheduleTimestamp]];
+    }
+    self.tipOfDateMapping = tipMapping;
 }
 @end
