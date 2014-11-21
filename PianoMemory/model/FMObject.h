@@ -11,4 +11,5 @@
 @interface FMObject : HCObject <NSCopying>
 @property (nonatomic) NSString *localDBId;
 @property (nonatomic) NSString *remoteDBId;
+- (BOOL)hasBeenSavedToLocalDB;
 @end

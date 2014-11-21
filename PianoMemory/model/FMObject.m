@@ -68,4 +68,8 @@
     return newString;
 }
 
+- (BOOL)hasBeenSavedToLocalDB
+{
+    return (nil != self.localDBId) && 0 != [self.localDBId length];
+}
 @end

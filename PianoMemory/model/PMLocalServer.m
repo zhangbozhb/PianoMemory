@@ -286,12 +286,14 @@
     }
     return courseSchedules;
 }
-- (NSDictionary *)queryCourseScheduleMapingOfRepeatWeekDay
+- (NSDictionary *)queryCourseScheduleMapingOfRepeatWeekDay:(NSInteger)startTime endTime:(NSInteger)endTime
 {
     NSArray *allCourseSchedules = [self queryAllCourseSchedule];
     NSMutableDictionary *repreatWeekDayMapping = [NSMutableDictionary dictionary];
     for (PMCourseSchedule *courseSchdeudle in allCourseSchedules) {
-        if (PMCourseScheduleRepeatTypeWeek == courseSchdeudle.repeatType) {
+        if (PMCourseScheduleRepeatTypeWeek == courseSchdeudle.repeatType
+            && startTime <= courseSchdeudle.expireDateTimestamp
+            && endTime > courseSchdeudle.effectiveDateTimestamp) {
             NSArray *weekDays = [NSArray arrayWithObjects:
                                  [NSNumber numberWithInteger:PMCourseScheduleRepeatDataWeekDaySunday],
                                  [NSNumber numberWithInteger:PMCourseScheduleRepeatDataWeekDayMonday],
@@ -319,15 +321,17 @@
 }
 - (NSArray *)queryCourseScheduleOfDate:(NSDate*)date
 {
+    NSInteger startTime = [date zb_timestampOfDay];
+    NSInteger endTime = [[date zb_dateAfterDay:1] zb_timestampOfDay];
     //1,获取周一，周二..每天的 courseMapping
-    NSDictionary *repreatWeekDayMapping = [self queryCourseScheduleMapingOfRepeatWeekDay];
+    NSDictionary *repreatWeekDayMapping = [self queryCourseScheduleMapingOfRepeatWeekDay:startTime endTime:endTime];
 
     //2, 获取 weekday
     PMCourseScheduleRepeatDataWeekDay repeatWeekDay = [PMCourseScheduleRepeat repeatWeekDayFromDate:date];
     NSArray *candidateCourseSchedules = [repreatWeekDayMapping objectForKey:[NSNumber numberWithInteger:repeatWeekDay]];
 
     //3，filter time
-    long timestamp  = [date timeIntervalSince1970];
+    NSInteger timestamp  = [date timeIntervalSince1970];
     NSMutableArray *targetCourseSchedules = [NSMutableArray array];
     for (PMCourseSchedule *courseSchedule in candidateCourseSchedules) {
         if (courseSchedule.effectiveDateTimestamp <= timestamp
@@ -364,7 +368,7 @@
     return dayCourseSchedules;
 }
 
-- (NSArray*)queryDayCourseSchedulesFrom:(NSInteger)startTime toEndTime:(NSInteger)endTime createIfNotExsit:(BOOL)createIfNotExsit
+- (NSArray*)queryDayCourseSchedulesFrom:(NSInteger)startTime toEndTime:(NSInteger)endTime fillNotExist:(BOOL)fillNotExist
 {
     NSMutableArray *dayCourseScheduleArray = [NSMutableArray array];
     NSDictionary *viewDayCourseSchedule = [self.localStorage viewDayCourseSchedule];
@@ -379,29 +383,29 @@
             }
         }
     }
-    if (!createIfNotExsit) {
+    //检查是否需要 fill, 或者直接返回
+    NSInteger endTime1 = [[NSDate dateWithTimeIntervalSince1970:endTime] zb_timestampOfDay];
+    if (!fillNotExist
+        || startTime + 3600 * 24 * [dayCourseScheduleArray count] >= endTime1) {
         return dayCourseScheduleArray;
     }
 
     //1,获取周一，周二每天的 courseMapping
-    NSDictionary *repreatWeekDayMapping = [self queryCourseScheduleMapingOfRepeatWeekDay];
+    NSDictionary *repreatWeekDayMapping = [self queryCourseScheduleMapingOfRepeatWeekDay:startTime endTime:endTime];
 
     //2, 构建dayCourseScheduleMapping
-    NSMutableDictionary *dayCourseScheduleMapping = [NSMutableDictionary dictionary];
+    NSMutableDictionary *dayCourseScheduleMapping = [NSMutableDictionary dictionaryWithCapacity:[dayCourseScheduleArray count]];
     for (PMDayCourseSchedule *dayCourseSchedule in dayCourseScheduleArray) {
         NSTimeInterval scheduleTimestamp = [[NSDate dateWithTimeIntervalSince1970:dayCourseSchedule.scheduleTimestamp] zb_timestampOfDay];
         [dayCourseScheduleMapping setObject:dayCourseSchedule forKey:[NSNumber numberWithLong:scheduleTimestamp]];
     }
 
     //3, 递归每天的dayCourseSchedule
-    NSTimeInterval maxCreateTimestamp = [[[NSDate date] zb_dateAfterDay:1] timeIntervalSince1970];
     NSDate *targetDay = [NSDate dateWithTimeIntervalSince1970:startTime];
-    long targetDayTimestamp = [targetDay zb_timestampOfDay];
+    NSInteger targetDayTimestamp = [targetDay zb_timestampOfDay];
     while (targetDayTimestamp < endTime) {
         PMDayCourseSchedule *dayCourseSchedule = [dayCourseScheduleMapping objectForKey:[NSNumber numberWithLong:targetDayTimestamp]];
-        if (!dayCourseSchedule &&
-            targetDayTimestamp < maxCreateTimestamp) {
-            //创建 day
+        if (!dayCourseSchedule) {   //填充缺失的 排课信息
             PMCourseScheduleRepeatDataWeekDay repeatWeekDay = [PMCourseScheduleRepeat repeatWeekDayFromDate:targetDay];
             NSArray *candidateCourseSchedules = [repreatWeekDayMapping objectForKey:[NSNumber numberWithInteger:repeatWeekDay]];
             NSMutableArray *targetCourseSchedules = [NSMutableArray array];
@@ -412,34 +416,12 @@
                 }
             }
             PMDayCourseSchedule *createdDayCourseSchedule = [PMBusiness createDayCourseScheduleWithCourseSchedules:targetCourseSchedules atDate:targetDay];
-            [self saveDayCourseSchedule:createdDayCourseSchedule];
-            dayCourseSchedule = createdDayCourseSchedule;
-        }
-
-        if(dayCourseSchedule) {
-            [dayCourseScheduleArray addObject:dayCourseSchedule];
+            [dayCourseScheduleArray addObject:createdDayCourseSchedule];
         }
         targetDay = [targetDay zb_dateAfterDay:1];
         targetDayTimestamp = [targetDay zb_timestampOfDay];
     }
     return dayCourseScheduleArray;
-}
-
-
-- (PMDayCourseSchedule *)queryDayCourseScheduleOfDate:(NSDate*)date createIfNotExsit:(BOOL)createIfNotExsit
-{
-    NSInteger startTime = [date zb_timestampOfDay];
-    NSInteger endTime = [[date zb_dateAfterDay:1] zb_timestampOfDay];
-    NSArray *dayCourseSchedules = [self queryDayCourseSchedulesFrom:startTime toEndTime:endTime createIfNotExsit:NO];
-    if (0 == [dayCourseSchedules count]) {
-        NSArray *courseSchedules = [self queryCourseScheduleOfDate:date];
-        PMDayCourseSchedule *dayCourseSchedule = [PMBusiness createDayCourseScheduleWithCourseSchedules:courseSchedules atDate:date];
-        if (createIfNotExsit) {
-            [self saveDayCourseSchedule:dayCourseSchedule];
-        }
-        return dayCourseSchedule;
-    }
-    return [dayCourseSchedules firstObject];
 }
 
 - (BOOL)updateHistoryDayCourseScheduleWithCourseSchedule:(PMCourseSchedule*)courseSchedule
@@ -448,21 +430,23 @@
         courseSchedule.localDBId) {
         return YES;
     }
-    NSArray *dayCourseScheduleArray =[self queryDayCourseSchedulesFrom:courseSchedule.effectiveDateTimestamp toEndTime:[[[NSDate date] zb_dateAfterDay:1] zb_timestampOfDay] createIfNotExsit:YES];
+    NSArray *dayCourseScheduleArray =[self queryDayCourseSchedulesFrom:courseSchedule.effectiveDateTimestamp toEndTime:[[[NSDate date] zb_dateAfterDay:1] zb_timestampOfDay] fillNotExist:YES];
     for (PMDayCourseSchedule *dayCourseSchedule in dayCourseScheduleArray) {
-        BOOL isExist = NO;
-        for (PMCourseSchedule *item in dayCourseSchedule.courseSchedules) {
-            if ([item.localDBId isEqualToString:courseSchedule.localDBId]) {
-                isExist = YES;
+        if ([dayCourseSchedule hasBeenSavedToLocalDB]) {    //只更新已经 save 到 db 的排课
+            BOOL isExist = NO;
+            for (PMCourseSchedule *item in dayCourseSchedule.courseSchedules) {
+                if ([item.localDBId isEqualToString:courseSchedule.localDBId]) {
+                    isExist = YES;
+                }
             }
-        }
-        if (!isExist) {
-            if (dayCourseSchedule.courseSchedules) {
-                [dayCourseSchedule.courseSchedules addObject:courseSchedule];
-            } else {
-                dayCourseSchedule.courseSchedules = [NSMutableArray arrayWithObject:courseSchedule];
+            if (!isExist) {
+                if (dayCourseSchedule.courseSchedules) {
+                    [dayCourseSchedule.courseSchedules addObject:courseSchedule];
+                } else {
+                    dayCourseSchedule.courseSchedules = [NSMutableArray arrayWithObject:courseSchedule];
+                }
+                [self saveDayCourseSchedule:dayCourseSchedule];
             }
-            [self saveDayCourseSchedule:dayCourseSchedule];
         }
     }
     return YES;

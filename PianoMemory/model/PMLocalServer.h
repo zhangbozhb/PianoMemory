@@ -51,8 +51,24 @@
 - (BOOL)deleteDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule;
 - (PMDayCourseSchedule*)queryDayCourseScheduleWithId:(NSString*)dayCourseScheduleId;
 - (NSArray*)queryAllDayCourseSchedule;
-- (NSArray*)queryDayCourseSchedulesFrom:(NSInteger)startTime toEndTime:(NSInteger)endTime createIfNotExsit:(BOOL)createIfNotExsit;
-- (PMDayCourseSchedule *)queryDayCourseScheduleOfDate:(NSDate*)date createIfNotExsit:(BOOL)createIfNotExsit;
+/**
+ *	@brief	获取指定时间段内的 每日排课信息
+ *
+ *	@param 	startTime 	开始时间
+ *	@param 	endTime 	截至时间
+ *	@param 	fillNotExist 	如果在指定时间段类的排课信息，没有创建，则自动填充
+ *
+ *	@return	排课信息
+ */
+- (NSArray*)queryDayCourseSchedulesFrom:(NSInteger)startTime toEndTime:(NSInteger)endTime fillNotExist:(BOOL)fillNotExist;
 
+/**
+ *	@brief	将课程安排添加到历史数据中
+ *
+ *	@param 	courseSchedule 	课程安排
+ *
+ *	@return	是否成功添加
+ */
 - (BOOL)updateHistoryDayCourseScheduleWithCourseSchedule:(PMCourseSchedule*)courseSchedule;
+
 @end

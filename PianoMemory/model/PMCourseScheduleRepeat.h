@@ -13,7 +13,7 @@ typedef enum {
     PMCourseScheduleRepeatTypeWeek,
     PMCourseScheduleRepeatTypeMonth,
     PMCourseScheduleRepeatTypeYear,
-}PMCourseScheduleRepeatType;
+} PMCourseScheduleRepeatType;
 
 typedef enum {
     PMCourseScheduleRepeatDataWeekDayMonday = 1 ,

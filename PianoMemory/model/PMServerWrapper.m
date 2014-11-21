@@ -382,8 +382,6 @@
 {
     NSString *starttimeString = [parameters objectForKey:@"starttime"];
     NSString *endtimeString = [parameters objectForKey:@"endtime"];
-    NSNumber *createValue = [parameters objectForKey:@"create"];
-
     NSInteger starttime = 0;
     NSInteger endtime = NSIntegerMax;
     if (starttimeString) {
@@ -393,18 +391,15 @@
         endtime = [endtimeString integerValue];
     }
     if (starttime >= endtime) {
-        endtime = [[[NSDate dateWithTimeIntervalSince1970:starttime] zb_dateAfterDay:1] zb_timestampOfDay]-1;
-    }
-    BOOL createIfNotExist = YES;
-    if (createValue && [createValue isKindOfClass:[NSNumber class]]) {
-        createIfNotExist = [createValue boolValue];
+        endtime = [[[NSDate dateWithTimeIntervalSince1970:starttime] zb_dateAfterDay:1] zb_timestampOfDay];
     }
 
     [self asyncProcessing:^{
-        NSArray *array = [self.localServer queryDayCourseSchedulesFrom:starttime toEndTime:endtime createIfNotExsit:createIfNotExist];
+        NSArray *array = [self.localServer queryDayCourseSchedulesFrom:starttime toEndTime:endtime fillNotExist:YES];
         if (success) {
             success(array);
-        }    }];
+        }
+    }];
 }
 - (void)queryDayCourseScheduleOfDate:(NSDate*)date success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure
 {
@@ -413,10 +408,12 @@
         if (!targetDate) {
             targetDate = [NSDate date];
         }
-        BOOL createIfNotExsit = ([[[NSDate date] zb_dateAfterDay:1] zb_timestampOfDay] > [date timeIntervalSince1970])?YES:NO;
-        PMDayCourseSchedule *dayCourseSchedule = [self.localServer queryDayCourseScheduleOfDate:targetDate createIfNotExsit:createIfNotExsit];
+
+        NSInteger startTime = [date zb_timestampOfDay];
+        NSInteger endTime = [[date zb_dateAfterDay:1] zb_timestampOfDay];
+        NSArray *dayCourseScheduleArray = [self.localServer queryDayCourseSchedulesFrom:startTime toEndTime:endTime fillNotExist:YES];
         if (success) {
-            success(dayCourseSchedule);
+            success([dayCourseScheduleArray firstObject]);
         }
     }];
 }

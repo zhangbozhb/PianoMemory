@@ -48,7 +48,7 @@
 - (void)createDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
 - (void)updateDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
 - (void)deleteDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
-//param 	starttime, endtime, create
+//param 	starttime, endtime
 - (void)queryDayCourseSchedules:(NSDictionary *)parameters success:(void(^)(NSArray *array))success failure:(void(^)(HCErrorMessage *error))failure;
 - (void)queryDayCourseScheduleOfDate:(NSDate*)date success:(void(^)(PMDayCourseSchedule *dayCourseSchedule))success failure:(void(^)(HCErrorMessage *error))failure;
 

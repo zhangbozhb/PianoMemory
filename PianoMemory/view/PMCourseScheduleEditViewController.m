@@ -22,7 +22,7 @@
 #import "UIView+Extend.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 
-const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始日期早于今天，是否将本课程安排添加到历史数据中?";
+const static NSString *addToHistoryDayCourseScheduleMessage = @"课程安排的开始日期早于今天，是否将本课程安排添加到历史数据中?";
 
 @interface PMCourseScheduleEditViewController () <UITextFieldDelegate, PMCoursePickerDelegate, PMStudentPickerDelgate,PMTimeSchedulePickerDelgate, UIScrollViewDelegate, UIAlertViewDelegate>
 
@@ -126,9 +126,11 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
             [self.delegate courseScheduleEdit:self updateCourseSchedule:self.changedCourseSchedule indexPath:self.indexPath];
         }
     } else {
-        if (self.changedCourseSchedule.effectiveDateTimestamp <= [[NSDate date] zb_timestampOfDay]) {
+        //如果为新增的，则提示是否需要加入到历史数据中
+        if (!self.courseSchedule &&
+            self.changedCourseSchedule.effectiveDateTimestamp <= [[NSDate date] zb_timestampOfDay]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
-                                                                message:[addToHistoryDayCourseSchedule copy]
+                                                                message:[addToHistoryDayCourseScheduleMessage copy]
                                                                delegate:self
                                                       cancelButtonTitle:@"取消"
                                                       otherButtonTitles:@"确定", nil];
@@ -158,7 +160,7 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
             }
 
             if (addToHistoryDayCourseSchedule) {
-                [toast setLabelText:@"正在更新历史课程安排..."];
+                [toast setLabelText:@"正在更新历史排课信息..."];
                 [[PMServerWrapper defaultServer] updateHistoryDayCourseScheduleWithCourseSchedule:courseSchedule success:^{
                     [toast hide:YES];
                     [pSelf.navigationController popViewControllerAnimated:YES];
@@ -188,7 +190,7 @@ const static NSString *addToHistoryDayCourseSchedule = @"课程安排的开始�
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if ([alertView.message isEqualToString:[addToHistoryDayCourseSchedule copy]]) {
+    if ([alertView.message isEqualToString:[addToHistoryDayCourseScheduleMessage copy]]) {
         [self saveCourseSchedule:1==buttonIndex];
     }
 }
