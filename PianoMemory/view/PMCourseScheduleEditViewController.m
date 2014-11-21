@@ -121,10 +121,7 @@ const static NSString *addToHistoryDayCourseScheduleMessage = @"课程安排的�
         return;
     }
     if (PMCourseScheduleRepeatTypeNone == self.changedCourseSchedule.repeatType) {
-        if (self.delegate &&
-            [self.delegate respondsToSelector:@selector(courseScheduleEdit:updateCourseSchedule:indexPath:)]) {
-            [self.delegate courseScheduleEdit:self updateCourseSchedule:self.changedCourseSchedule indexPath:self.indexPath];
-        }
+        [self performCourseScheduleUpdateDelegate];
     } else {
         //如果为新增的，则提示是否需要加入到历史数据中
         if (!self.courseSchedule &&
@@ -154,19 +151,15 @@ const static NSString *addToHistoryDayCourseScheduleMessage = @"课程安排的�
     __weak PMCourseScheduleEditViewController *pSelf = self;
     [[PMServerWrapper defaultServer] updateCourseSchedule:self.changedCourseSchedule success:^(PMCourseSchedule *courseSchedule) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (pSelf.delegate &&
-                [pSelf.delegate respondsToSelector:@selector(courseScheduleEdit:updateCourseSchedule:indexPath:)]) {
-                [pSelf.delegate courseScheduleEdit:pSelf updateCourseSchedule:courseSchedule indexPath:pSelf.indexPath];
-            }
-
+            pSelf.changedCourseSchedule = courseSchedule;
             if (addToHistoryDayCourseSchedule) {
                 [toast setLabelText:@"正在更新历史排课信息..."];
                 [[PMServerWrapper defaultServer] updateHistoryDayCourseScheduleWithCourseSchedule:courseSchedule success:^{
                     [toast hide:YES];
-                    [pSelf.navigationController popViewControllerAnimated:YES];
+                    [pSelf performCourseScheduleUpdateDelegate];
                 } failure:^(HCErrorMessage *error) {
                     [toast hide:YES];
-                    [pSelf.navigationController popViewControllerAnimated:YES];
+                    [pSelf performCourseScheduleUpdateDelegate];
                 }];
             } else {
                 [toast setLabelText:@"课程保存成功"];
@@ -174,7 +167,7 @@ const static NSString *addToHistoryDayCourseScheduleMessage = @"课程安排的�
                     sleep(2);
                 } completionBlock:^{
                     [toast removeFromSuperview];
-                    [pSelf.navigationController popViewControllerAnimated:YES];
+                    [pSelf performCourseScheduleUpdateDelegate];
                 }];
             }
         });
@@ -186,6 +179,14 @@ const static NSString *addToHistoryDayCourseScheduleMessage = @"课程安排的�
             [toast hide:YES afterDelay:2];
         });
     }];
+}
+
+- (void)performCourseScheduleUpdateDelegate
+{
+    if (self.delegate &&
+        [self.delegate respondsToSelector:@selector(courseScheduleEdit:updateCourseSchedule:indexPath:)]) {
+        [self.delegate courseScheduleEdit:self updateCourseSchedule:self.changedCourseSchedule indexPath:self.indexPath];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

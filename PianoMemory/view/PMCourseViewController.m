@@ -72,7 +72,8 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
 {
     if (UITableViewCellEditingStyleDelete == editingStyle) {
         __weak PMCourseViewController *pSelf = self;
-        [self deleteCourse:[self.courseArray objectAtIndex:indexPath.row] block:^{
+        [self deleteCourse:[self.courseArray objectAtIndex:indexPath.row]
+               finishBlock:^{
             [pSelf.courseArray removeObjectAtIndex:indexPath.row];
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }];
@@ -101,18 +102,18 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
 }
 
 
-- (void)deleteCourse:(PMCourse*)course block:(void (^)(void))block
+- (void)deleteCourse:(PMCourse*)course finishBlock:(void (^)(void))finishBlock
 {
     __weak PMCourseViewController *pSelf = self;
-    [[PMServerWrapper defaultServer]  deleteCourse:course success:^(PMCourse *course) {
+    [[PMServerWrapper defaultServer] deleteCourse:course success:^(PMCourse *course) {
         dispatch_async(dispatch_get_main_queue(), ^{
             MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功删除课程"];
             [toast showAnimated:YES whileExecutingBlock:^{
                 sleep(2);
             } completionBlock:^{
                 [toast removeFromSuperview];
-                if (block) {
-                    block();
+                if (finishBlock) {
+                    finishBlock();
                 }
             }];
         });
@@ -123,8 +124,8 @@ static NSString *const courseTableViewCellReuseIdentifier = @"PMCourseTableViewC
                 sleep(2);
             } completionBlock:^{
                 [toast removeFromSuperview];
-                if (block) {
-                    block();
+                if (finishBlock) {
+                    finishBlock();
                 }
             }];
         });

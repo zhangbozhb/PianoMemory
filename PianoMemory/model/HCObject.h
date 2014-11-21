@@ -81,4 +81,11 @@
  */
 - (void)shallowCopyValue:(HCObject *)obj copyClass:(Class)copyClass;
 
+/**
+ *	@brief	更新同步信息
+ *
+ *	@param 	obj 	同步后的信息
+ */
+- (void)updateSyncedInfo:(HCObject*)obj;
+
 @end

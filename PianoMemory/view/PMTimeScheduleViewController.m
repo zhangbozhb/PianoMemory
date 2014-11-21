@@ -76,7 +76,8 @@ static NSString *const timeScheduleTableViewCellReuseIdentifier = @"timeSchedule
 {
     if (UITableViewCellEditingStyleDelete == editingStyle) {
         __weak PMTimeScheduleViewController *pSelf = self;
-        [self deleteTimeSchedule:[self.timeScheduleArray objectAtIndex:indexPath.row] block:^{
+        [self deleteTimeSchedule:[self.timeScheduleArray objectAtIndex:indexPath.row]
+                     finishBlock:^{
             [pSelf.timeScheduleArray removeObjectAtIndex:indexPath.row];
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }];
@@ -105,7 +106,7 @@ static NSString *const timeScheduleTableViewCellReuseIdentifier = @"timeSchedule
 }
 
 
-- (void)deleteTimeSchedule:(PMTimeSchedule*)timeSchedule block:(void (^)(void))block
+- (void)deleteTimeSchedule:(PMTimeSchedule*)timeSchedule finishBlock:(void (^)(void))finishBlock
 {
     __weak PMTimeScheduleViewController *pSelf = self;
     [[PMServerWrapper defaultServer] deleteTimeSchedule:timeSchedule success:^(PMTimeSchedule *timeSchedule) {
@@ -115,8 +116,8 @@ static NSString *const timeScheduleTableViewCellReuseIdentifier = @"timeSchedule
                 sleep(2);
             } completionBlock:^{
                 [toast removeFromSuperview];
-                if (block) {
-                    block();
+                if (finishBlock) {
+                    finishBlock();
                 }
             }];
         });
@@ -127,8 +128,8 @@ static NSString *const timeScheduleTableViewCellReuseIdentifier = @"timeSchedule
                 sleep(2);
             } completionBlock:^{
                 [toast removeFromSuperview];
-                if (block) {
-                    block();
+                if (finishBlock) {
+                    finishBlock();
                 }
             }];
         });

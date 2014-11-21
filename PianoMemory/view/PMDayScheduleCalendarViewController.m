@@ -62,7 +62,7 @@
 - (void)handleDataUpdated:(NSNotification *)notification
 {
     [super handleDataUpdated:notification];
-    if (PMLocalServer_DataUpateType_Student == [PMDataUpdate dataUpdateType:notification.object] ||
+    if (PMLocalServer_DataUpateType_DayCourseSchedule == [PMDataUpdate dataUpdateType:notification.object] ||
         PMLocalServer_DataUpateType_ALL == [PMDataUpdate dataUpdateType:notification.object]) {
         self.shouldFetchData = YES;
     }

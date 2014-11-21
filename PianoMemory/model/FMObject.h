@@ -12,4 +12,5 @@
 @property (nonatomic) NSString *localDBId;
 @property (nonatomic) NSString *remoteDBId;
 - (BOOL)hasBeenSavedToLocalDB;
+- (void)copyDBInfo;
 @end

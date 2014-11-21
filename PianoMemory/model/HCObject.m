@@ -544,4 +544,19 @@ static NSString * const HCRKPropertyInspectionReadOnlyKey = @"isReadOnly";
 {
     return [[[NSUUID alloc] init] UUIDString];
 }
+
+- (void)updateSyncedInfo:(HCObject*)obj
+{
+    if (obj.syncLocalId) {
+        [self setSyncLocalId:obj.syncLocalId];
+    }
+
+    if (obj.syncRemoteId) {
+        [self setSyncRemoteId:obj.syncRemoteId];
+    }
+
+    if (obj.syncVersion) {
+        [self setSyncVersion:obj.syncVersion];
+    }
+}
 @end

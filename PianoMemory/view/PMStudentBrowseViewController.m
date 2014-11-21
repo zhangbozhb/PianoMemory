@@ -100,7 +100,8 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
 {
     if (UITableViewCellEditingStyleDelete == editingStyle) {
         __weak PMStudentBrowseViewController *pSelf = self;
-        [self deleteStudent:[self.studentArray objectAtIndex:indexPath.row] block:^{
+        [self deleteStudent:[self.studentArray objectAtIndex:indexPath.row]
+                finishBlock:^{
             [pSelf.studentArray removeObjectAtIndex:indexPath.row];
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }];
@@ -258,6 +259,7 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
     __weak PMStudentBrowseViewController *pSelf = self;
     [[PMServerWrapper defaultServer] createStudent:student success:^(PMStudent *student) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            pSelf.toSaveStudent = student;
             MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功添加学生"];
             [toast showAnimated:YES whileExecutingBlock:^{
                 sleep(2);
@@ -278,7 +280,7 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
     }];
 }
 
-- (void)deleteStudent:(PMStudent*)student block:(void (^)(void))block
+- (void)deleteStudent:(PMStudent*)student finishBlock:(void (^)(void))finishBlock
 {
     [student updateShortcut];
     __weak PMStudentBrowseViewController *pSelf = self;
@@ -289,8 +291,8 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
                 sleep(2);
             } completionBlock:^{
                 [toast removeFromSuperview];
-                if (block) {
-                    block();
+                if (finishBlock) {
+                    finishBlock();
                 }
             }];
         });
@@ -301,8 +303,8 @@ static NSString *const studentBrowseTableViewCellReuseIdentifier = @"PMStudentBr
                 sleep(2);
             } completionBlock:^{
                 [toast removeFromSuperview];
-                if (block) {
-                    block();
+                if (finishBlock) {
+                    finishBlock();
                 }
             }];
         });

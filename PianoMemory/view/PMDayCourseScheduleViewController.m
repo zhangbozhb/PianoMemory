@@ -95,21 +95,35 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
 #pragma delegate PMCourseScheduleEditProtocol
 - (void)courseScheduleEdit:(PMCourseScheduleEditViewController *)courseScheduleEdit updateCourseSchedule:(PMCourseSchedule *)courseSchedule indexPath:(NSIndexPath *)indexPath
 {
-    if (nil == indexPath &&
-        [self.targetDayCourseSchedule.courseSchedules count] <= indexPath.row) {
-        [self.targetDayCourseSchedule addCourseSchedule:courseSchedule];
-    } else {
+    if (indexPath && [self.targetDayCourseSchedule.courseSchedules count] <= indexPath.row) {
         [self.targetDayCourseSchedule.courseSchedules replaceObjectAtIndex:indexPath.row withObject:courseSchedule];
+    } else {
+        [self.targetDayCourseSchedule addCourseSchedule:courseSchedule];
     }
-    [self saveDayCourseSchedule:self.targetDayCourseSchedule];
+
+    __weak PMDayCourseScheduleViewController *pSelf = self;
+    [self saveDayCourseSchedule:self.targetDayCourseSchedule
+                    finishBlock:^{
+        [pSelf.navigationController popViewControllerAnimated:YES];
+    }];
 }
 
-- (void)saveDayCourseSchedule:(PMDayCourseSchedule *)dayCourseSchedule
+- (void)saveDayCourseSchedule:(PMDayCourseSchedule *)dayCourseSchedule finishBlock:(void (^)(void))finishBlock
 {
     __weak PMDayCourseScheduleViewController *pSelf = self;
     [[PMServerWrapper defaultServer] createDayCourseSchedule:dayCourseSchedule success:^(PMDayCourseSchedule *retDayCourseSchedule) {
-        pSelf.targetDayCourseSchedule = retDayCourseSchedule;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            pSelf.targetDayCourseSchedule = retDayCourseSchedule;
+            if (finishBlock) {
+                finishBlock();
+            }
+        });
     } failure:^(HCErrorMessage *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (finishBlock) {
+                finishBlock();
+            }
+        });
     }];;
 
 }

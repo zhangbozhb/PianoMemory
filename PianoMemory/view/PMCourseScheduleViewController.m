@@ -78,7 +78,8 @@ static NSString *const courseScheduleTableViewCellReuseIdentifier = @"courseSche
 {
     if (UITableViewCellEditingStyleDelete == editingStyle) {
         __weak PMCourseScheduleViewController *pSelf = self;
-        [self deleteCourseSchedule:[self.courseScheduleArray objectAtIndex:indexPath.row] block:^{
+        [self deleteCourseSchedule:[self.courseScheduleArray objectAtIndex:indexPath.row]
+                       finishBlock:^{
             [pSelf.courseScheduleArray removeObjectAtIndex:indexPath.row];
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }];
@@ -107,7 +108,7 @@ static NSString *const courseScheduleTableViewCellReuseIdentifier = @"courseSche
 }
 
 
-- (void)deleteCourseSchedule:(PMCourseSchedule*)courseSchedule block:(void (^)(void))block
+- (void)deleteCourseSchedule:(PMCourseSchedule*)courseSchedule finishBlock:(void (^)(void))finishBlock
 {
     __weak PMCourseScheduleViewController *pSelf = self;
     [[PMServerWrapper defaultServer] deleteCourseSchedule:courseSchedule success:^(PMCourseSchedule *courseSchedule) {
@@ -117,8 +118,8 @@ static NSString *const courseScheduleTableViewCellReuseIdentifier = @"courseSche
                 sleep(2);
             } completionBlock:^{
                 [toast removeFromSuperview];
-                if (block) {
-                    block();
+                if (finishBlock) {
+                    finishBlock();
                 }
             }];
         });
@@ -129,8 +130,8 @@ static NSString *const courseScheduleTableViewCellReuseIdentifier = @"courseSche
                 sleep(2);
             } completionBlock:^{
                 [toast removeFromSuperview];
-                if (block) {
-                    block();
+                if (finishBlock) {
+                    finishBlock();
                 }
             }];
         });
