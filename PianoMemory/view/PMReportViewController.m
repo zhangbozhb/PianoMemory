@@ -12,12 +12,16 @@
 #import "PMWeekDayStat.h"
 #import "PMDayReportView.h"
 #import "UIColor+Extend.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 
 static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCellReuseIdentifier";
 
 @interface PMReportViewController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic) NSArray *weekDayStatArray;
 @property (nonatomic) PMWeekDayStat *totalDayStat;
+@property (nonatomic) NSDate *targetMonth;
+
+@property (nonatomic) MBProgressHUD *toast;
 
 //xib reference
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -28,21 +32,35 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
 @property (weak, nonatomic) IBOutlet PMDayReportView *chartViewContainer;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
-
 @end
 
-
 @implementation PMReportViewController
+- (NSDate *)targetMonth
+{
+    if (!_targetMonth) {
+        _targetMonth = [NSDate date];
+    }
+    return _targetMonth;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
+    //添加手势
+    UISwipeGestureRecognizer *leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(loadNextMonthData)];
+    leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.view addGestureRecognizer:leftSwipeGestureRecognizer];
+    UISwipeGestureRecognizer *rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(loadPreviousMonthData)];
+    rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:rightSwipeGestureRecognizer];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self loadCurrentMonthData];
+    [super viewWillAppear:animated];
+    self.targetMonth = nil;
+    [self loadCustomerData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -70,38 +88,46 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
 }
 
 
-- (void)loadCurrentMonthData
+- (void)loadCustomerData
 {
-    NSDate *currentDate = [NSDate date];
-    [self refreshTitleUIWithDate:currentDate];
     NSDictionary *params = @{@"starttime":[[NSNumber numberWithLong:
-                                            [currentDate zb_timestampOfMonth]] stringValue],
+                                            [self.targetMonth zb_timestampOfMonth]] stringValue],
                              @"endtime":[[NSNumber numberWithLong:
-                                          [[currentDate zb_dateAfterMonth:1] zb_timestampOfMonth]] stringValue]};
+                                          [[self.targetMonth zb_dateAfterMonth:1] zb_timestampOfMonth]] stringValue]};
+
+    __weak PMReportViewController *pSelf = self;
     [[PMServerWrapper defaultServer] queryDayCourseSchedules:params success:^(NSArray *array) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self refreshUIWithDayCourseSchedules:array];
+            [pSelf hideToast];
+            [pSelf updateDatasWithDayCourseSchedules:array];
+            [pSelf refreshUI];
         });
     } failure:^(HCErrorMessage *error) {
-
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [pSelf hideToast];
+        });
     }];
 }
 
-- (void)refreshTitleUIWithDate:(NSDate*)date
+- (void)refreshTitleUI
 {
-    if ([date zb_getMonth] == [[NSDate date] zb_getMonth]) {
+    NSDate *currentDate = [NSDate date];
+    NSInteger year = [self.targetMonth zb_getYear], month = [self.targetMonth zb_getMonth];
+    if (year == [currentDate zb_getMonth]
+        && month == [currentDate zb_getMonth]) {
         [self.navigationItem setTitle:@"本月课时统计"];
     } else {
-        [self.navigationItem setTitle:[NSString stringWithFormat:@"%ld月课时统计", (long)[date zb_getMonth]]];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"YY年MM月"];
+        NSString *titleString = [NSString stringWithFormat:@"%@课时统计",
+                                 [dateFormatter stringFromDate:self.targetMonth]];
+        [self.navigationItem setTitle:titleString];
     }
 }
 
-
-- (void)refreshUIWithDayCourseSchedules:(NSArray*)dayCourseSchedules;
+- (void)updateDatasWithDayCourseSchedules:(NSArray*)dayCourseSchedules;
 {
     NSArray *weekDayStats = [self createWeekDayReportFromDayCourseSchedules:dayCourseSchedules];
-    [self.chartViewContainer updateWithWeekDayStat:weekDayStats];
-
     PMWeekDayStat *totalStat = [[PMWeekDayStat alloc] init];
     for (PMWeekDayStat *weekDayStat in weekDayStats) {
         totalStat.courseCount += weekDayStat.courseCount;
@@ -109,16 +135,22 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
     }
     self.weekDayStatArray = weekDayStats;
     self.totalDayStat = totalStat;
+}
+
+- (void)refreshUI
+{
+    [self refreshTitleUI];
+    [self.chartViewContainer updateWithWeekDayStat:self.weekDayStatArray];
+    [self.totalLabel setText:[NSString stringWithFormat:@"总计:%ld\n时长:%.1f",
+                              (long)self.totalDayStat.courseCount,
+                              self.totalDayStat.durationInHour]];
+
 
     [self.myTableView reloadData];
-    [self.totalLabel setText:[NSString stringWithFormat:@"总计:%ld\n时长:%.1f",
-                             (long)self.totalDayStat.courseCount,
-                             self.totalDayStat.durationInHour]];
-
 
     CGFloat averageHour = (0 != self.totalDayStat.courseCount)? self.totalDayStat.durationInHour/self.totalDayStat.courseCount:0.f;
-     [self.titleLabel setText:[NSString stringWithFormat:@"总计:%ld节\t总课时:%.2f\t平均时长:%.2f",
-                               (long)self.totalDayStat.courseCount, self.totalDayStat.durationInHour,averageHour]];
+    [self.titleLabel setText:[NSString stringWithFormat:@"总计:%ld节\t总课时:%.2f\t平均时长:%.2f",
+                              (long)self.totalDayStat.courseCount, self.totalDayStat.durationInHour,averageHour]];
 }
 
 - (NSArray*)createWeekDayReportFromDayCourseSchedules:(NSArray*)dayCourseSchedules
@@ -152,4 +184,37 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
     return [[weekDayReportDictionary allValues] sortedArrayUsingDescriptors:sortDescriptors];
 }
 
+- (void)showLoadDataToast
+{
+    MBProgressHUD *toast = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:toast];
+    toast.removeFromSuperViewOnHide = YES;
+    toast.mode = MBProgressHUDModeIndeterminate;
+    toast.animationType = MBProgressHUDAnimationFade;
+    [toast setLabelText:@"正在加载数据..."];
+    [toast show:YES];
+    self.toast = toast;
+}
+
+- (void)hideToast
+{
+    if (self.toast) {
+        [self.toast hide:YES afterDelay:0.3f];
+        self.toast = nil;
+    }
+}
+
+- (void)loadNextMonthData
+{
+    self.targetMonth = [self.targetMonth zb_dateAfterMonth:1];
+    [self showLoadDataToast];
+    [self loadCustomerData];
+}
+
+- (void)loadPreviousMonthData
+{
+    self.targetMonth = [self.targetMonth zb_dateAfterMonth:-1];
+    [self showLoadDataToast];
+    [self loadCustomerData];
+}
 @end
