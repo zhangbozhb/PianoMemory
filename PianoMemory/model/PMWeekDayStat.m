@@ -15,6 +15,7 @@
     another.repeatWeekday = self.repeatWeekday;
     another.courseCount = self.courseCount;
     another.durationInHour = self.durationInHour;
+    another.dayColor = self.dayColor;
     return another;
 }
 + (NSArray *)sortDescriptors:(BOOL)ascending

@@ -14,5 +14,6 @@
 @property (nonatomic) PMCourseScheduleRepeatDataWeekDay repeatWeekday;
 @property (nonatomic) NSInteger courseCount;
 @property (nonatomic) CGFloat durationInHour;
+@property (nonatomic) UIColor *dayColor;
 + (NSArray *)sortDescriptors:(BOOL)ascending;
 @end

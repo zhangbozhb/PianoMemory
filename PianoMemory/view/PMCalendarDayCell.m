@@ -77,6 +77,6 @@
     [self.imageView setFrame:CGRectMake(5, 15, self.bounds.size.width-10, self.bounds.size.width-10)];
     [self.dayLabel setFrame:CGRectMake(0, 15, self.bounds.size.width, self.bounds.size.width-10)];
     [self.dayTitleLabel setFrame:CGRectMake(0, self.bounds.size.height-15, self.bounds.size.width, 13)];
-    [self.tipLabel setFrame:CGRectMake(0, 5, self.bounds.size.width, 15)];
+    [self.tipLabel setFrame:CGRectMake(5, 5, self.bounds.size.width-10, 15)];
 }
 @end

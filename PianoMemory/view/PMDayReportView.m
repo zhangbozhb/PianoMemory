@@ -63,8 +63,6 @@
     [self.layer setTransformTitleBlock:^NSString *(PieElement *elem, float percent) {
         PMDayReportPieElement *element = (PMDayReportPieElement*)elem;
         NSString *displayText = [PMCourseScheduleRepeat displayTextOfRepeatWeekDay:element.dayStatistics.repeatWeekday];
-
-        //        return [NSString stringWithFormat:@"%@ 课时:%ld 比例:%.2f%%", displayText,(long)element.dayStatistics.courseCount, percent];
         return [NSString stringWithFormat:@"%@ %ld节", displayText,(long)element.dayStatistics.courseCount];
     }];
 
@@ -109,7 +107,9 @@
     }
     NSMutableArray *targetValues = [NSMutableArray arrayWithCapacity:[weekDayStats count]];
     for (PMWeekDayStat *dayStat in weekDayStats) {
-        PMDayReportPieElement *element = [PMDayReportPieElement pieElementWithValue:dayStat.courseCount+0.1f color:[self randomColor]];
+        UIColor *pieColor = (dayStat.dayColor)?dayStat.dayColor:[self randomColor];
+        PMDayReportPieElement *element = [PMDayReportPieElement pieElementWithValue:dayStat.courseCount+0.1f
+                                                                              color:pieColor];
         element.dayStatistics = dayStat;
         [targetValues addObject:element];
     }

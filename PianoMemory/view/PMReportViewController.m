@@ -11,6 +11,7 @@
 #import "NSDate+Extend.h"
 #import "PMWeekDayStat.h"
 #import "PMDayReportView.h"
+#import "UIColor+Extend.h"
 
 static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCellReuseIdentifier";
 
@@ -58,6 +59,7 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
         CGFloat averageHour = (0 != dayStat.courseCount)? dayStat.durationInHour/dayStat.courseCount:0.f;
         [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld节\t课时:%.2f\t平均时长:%.2f",
                                        (long)dayStat.courseCount, dayStat.durationInHour,averageHour]];
+        cell.textLabel.textColor = cell.detailTextLabel.textColor = (dayStat.dayColor)?dayStat.dayColor:[UIColor blackColor];
     } else {
         [cell.textLabel setText:@"总计"];
         CGFloat averageHour = (0 != self.totalDayStat.courseCount)? self.totalDayStat.durationInHour/self.totalDayStat.courseCount:0.f;
@@ -121,11 +123,14 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
 
 - (NSArray*)createWeekDayReportFromDayCourseSchedules:(NSArray*)dayCourseSchedules
 {
+    NSArray *colorArray = [NSArray arrayWithObjects:@"#C9FFE5", @"#B284BE", @"#5D8AA8",
+                           @"#F19CBB", @"#AB274F",@"#ED872D", @"#3B7A57", nil];
     NSMutableDictionary *weekDayReportDictionary = [NSMutableDictionary dictionaryWithCapacity:7];
     for (NSInteger index = 0; index < 7; ++index) {
         PMWeekDayStat *weekDayStat = [[PMWeekDayStat alloc] init];
         PMCourseScheduleRepeatDataWeekDay repeateWeekDay = [PMCourseScheduleRepeat repeatWeekDayFromDayIndexInWeek:index];
         weekDayStat.repeatWeekday = repeateWeekDay;
+        weekDayStat.dayColor = [UIColor zb_colorWithHexString:[colorArray objectAtIndex:index]];
         [weekDayReportDictionary setObject:weekDayStat
                                     forKey:[NSNumber numberWithLong:repeateWeekDay]];
     }
@@ -141,7 +146,10 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
             }
         }
     }
-    return [[weekDayReportDictionary allValues] sortedArrayUsingDescriptors:[PMWeekDayStat sortDescriptors:NO]];
+
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:
+                                [NSSortDescriptor sortDescriptorWithKey:@"repeatWeekday" ascending:YES], nil];
+    return [[weekDayReportDictionary allValues] sortedArrayUsingDescriptors:sortDescriptors];
 }
 
 @end
