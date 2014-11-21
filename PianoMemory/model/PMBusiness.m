@@ -31,8 +31,10 @@
 {
     PMDayCourseSchedule *dayCourseSchedule = [[PMDayCourseSchedule alloc] init];
     dayCourseSchedule.scheduleTimestamp = [atDate timeIntervalSince1970];
-    dayCourseSchedule.courseSchedules = [NSMutableArray arrayWithArray:courseSchedules];
     dayCourseSchedule.created = [[NSDate date] timeIntervalSince1970];
+    if (courseSchedules) {
+        dayCourseSchedule.courseSchedules = [NSMutableArray arrayWithArray:courseSchedules];
+    }
     return dayCourseSchedule;
 }
 @end

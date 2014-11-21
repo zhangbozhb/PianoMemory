@@ -71,4 +71,15 @@
  */
 - (BOOL)updateHistoryDayCourseScheduleWithCourseSchedule:(PMCourseSchedule*)courseSchedule;
 
+
+/**
+ *	@brief	填充指定时间以前的排课信息(开始时间为排课的最早时间)
+ *
+ *  其他：这个和queryDayCourseSchedulesFrom:toEndTime:fillNotExist很像，主要是为了优化加快速度
+ *
+ *	@param 	endTime 	结束时间
+ */
+- (void)fillNotExsitDayCourseSchedulesFrom:(NSInteger)endTime;
+
+
 @end

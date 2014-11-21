@@ -8,6 +8,7 @@
 
 #import "FMSyncStorage.h"
 #import "PMLocalStorage.h"
+#import "NSDate+Extend.h"
 
 static NSString *const klocal_student_mapping_key = @"org.plam4fun.fm1017.localStudentMappingKey";
 static NSString *const klocal_student_view_key = @"org.plam4fun.fm1017.localStudentViewKey";
@@ -84,7 +85,8 @@ static NSString *const klocal_daycourseschedule_view_key = @"org.plam4fun.fm1017
         return [NSString stringWithFormat:@"%@|%@|%@", name, phone, shortCut];
     } else if ([object isKindOfClass:[PMDayCourseSchedule class]]) {
         PMDayCourseSchedule *dayCourseSchedule = (PMDayCourseSchedule*)object;
-        return [[NSNumber numberWithLong:dayCourseSchedule.scheduleTimestamp] stringValue];
+        NSInteger dayTimestamp = [[NSDate dateWithTimeIntervalSince1970:dayCourseSchedule.scheduleTimestamp] zb_timestampOfDay];
+        return [[NSNumber numberWithLong:dayTimestamp] stringValue];
     }
     return @"";
 }

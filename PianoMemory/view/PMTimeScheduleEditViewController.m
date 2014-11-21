@@ -14,6 +14,8 @@
 #import "PMServerWrapper.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 
+static NSInteger const kDefaultDurationTimestamp = 60 * 40;
+
 @interface PMTimeScheduleEditViewController () <UITextFieldDelegate>
 
 @property (nonatomic, weak) UILabel *targetLabel;
@@ -54,13 +56,7 @@
 - (void)setTimeSchedule:(PMTimeSchedule *)timeSchedule
 {
     _timeSchedule = timeSchedule;
-    if (timeSchedule) {
-        _changedTimeSchedle = [timeSchedule copy];
-    } else {
-        _changedTimeSchedle = [[PMTimeSchedule alloc] init];
-        NSDate *currentDate = [NSDate date];
-        _changedTimeSchedle.startTime = _changedTimeSchedle.endTime = [currentDate timeIntervalSince1970] - [currentDate zb_timestampOfDay];
-    }
+    _changedTimeSchedle = [timeSchedule copy];
 }
 
 - (PMTimeSchedule *)changedTimeSchedle
@@ -71,7 +67,9 @@
         } else {
             _changedTimeSchedle = [[PMTimeSchedule alloc] init];
             NSDate *currentDate = [NSDate date];
-            _changedTimeSchedle.startTime = _changedTimeSchedle.endTime = [currentDate timeIntervalSince1970] - [currentDate zb_timestampOfDay];
+            _changedTimeSchedle.startTime = [currentDate timeIntervalSince1970] - [currentDate zb_timestampOfDay];
+            //默认为40分钟
+            _changedTimeSchedle.endTime = _changedTimeSchedle.startTime + kDefaultDurationTimestamp;
         }
     }
     return _changedTimeSchedle;

@@ -66,6 +66,7 @@
 		9E8AF2C51A19E61F00378B31 /* daycoursescheule-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8AF2C41A19E61F00378B31 /* daycoursescheule-bg.png */; };
 		9E8AF2C71A19EBF000378B31 /* staff-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8AF2C61A19EBF000378B31 /* staff-bg.png */; };
 		9E922B791A1DE1AD00F6AF43 /* PMDayScheduleCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E922B781A1DE1AD00F6AF43 /* PMDayScheduleCalendarViewController.m */; };
+		9E922B7C1A1EF87E00F6AF43 /* PMDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E922B7B1A1EF87E00F6AF43 /* PMDataManager.m */; };
 		9EA0C2B81A038A6C001564BB /* PMReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0C2B71A038A6C001564BB /* PMReportViewController.m */; };
 		9EA48B291A00A928004B03E9 /* PMCourseScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA48B281A00A928004B03E9 /* PMCourseScheduleViewController.m */; };
 		9EA76B7419F4BAA600B5613B /* btn_add_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA76B7219F4BAA600B5613B /* btn_add_green.png */; };
@@ -238,6 +239,8 @@
 		9E8AF2C61A19EBF000378B31 /* staff-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "staff-bg.png"; sourceTree = "<group>"; };
 		9E922B771A1DE1AD00F6AF43 /* PMDayScheduleCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMDayScheduleCalendarViewController.h; sourceTree = "<group>"; };
 		9E922B781A1DE1AD00F6AF43 /* PMDayScheduleCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMDayScheduleCalendarViewController.m; sourceTree = "<group>"; };
+		9E922B7A1A1EF87E00F6AF43 /* PMDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMDataManager.h; sourceTree = "<group>"; };
+		9E922B7B1A1EF87E00F6AF43 /* PMDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMDataManager.m; sourceTree = "<group>"; };
 		9EA0C2B61A038A6C001564BB /* PMReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMReportViewController.h; sourceTree = "<group>"; };
 		9EA0C2B71A038A6C001564BB /* PMReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMReportViewController.m; sourceTree = "<group>"; };
 		9EA48B271A00A928004B03E9 /* PMCourseScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCourseScheduleViewController.h; sourceTree = "<group>"; };
@@ -415,6 +418,8 @@
 			children = (
 				9E08E87219E826F200DFD7CA /* PMBusiness.h */,
 				9E08E87319E826F200DFD7CA /* PMBusiness.m */,
+				9E922B7A1A1EF87E00F6AF43 /* PMDataManager.h */,
+				9E922B7B1A1EF87E00F6AF43 /* PMDataManager.m */,
 			);
 			name = business;
 			sourceTree = "<group>";
@@ -1077,6 +1082,7 @@
 				9E922B791A1DE1AD00F6AF43 /* PMDayScheduleCalendarViewController.m in Sources */,
 				9E5B5C2F1A07E1E400F9E424 /* PMDayReportView.m in Sources */,
 				9EF1314C19E02FF200843F02 /* FMSyncStorage.m in Sources */,
+				9E922B7C1A1EF87E00F6AF43 /* PMDataManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

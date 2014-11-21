@@ -16,6 +16,7 @@
 #import "PMDayCourseSchedule.h"
 #import "PMCourseScheduleEditViewController.h"
 #import "PMDayCourseSchedule+Wrapper.h"
+#import "PMBusiness.h"
 
 static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCourseScheduleTableViewCellReuseIdentifier";
 
@@ -44,7 +45,7 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
     [super viewDidLoad];
     [self registerForDataUpdate];
     self.shouldFetchData = YES;
-    self.targetDayCourseSchedule = [[PMDayCourseSchedule alloc] init];
+    self.targetDayCourseSchedule = [PMBusiness createDayCourseScheduleWithCourseSchedules:nil atDate:self.targetDate];
 }
 
 - (void)viewWillAppear:(BOOL)animated

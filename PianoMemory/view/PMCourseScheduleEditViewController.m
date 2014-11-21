@@ -128,7 +128,7 @@ const static NSString *addToHistoryDayCourseScheduleMessage = @"课程安排的�
     } else {
         //如果为新增的，则提示是否需要加入到历史数据中
         if (!self.courseSchedule &&
-            self.changedCourseSchedule.effectiveDateTimestamp <= [[NSDate date] zb_timestampOfDay]) {
+            self.changedCourseSchedule.effectiveDateTimestamp < [[NSDate date] zb_timestampOfDay]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                 message:[addToHistoryDayCourseScheduleMessage copy]
                                                                delegate:self
