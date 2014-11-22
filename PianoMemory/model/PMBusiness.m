@@ -34,6 +34,8 @@
     dayCourseSchedule.created = [[NSDate date] timeIntervalSince1970];
     if (courseSchedules) {
         dayCourseSchedule.courseSchedules = [NSMutableArray arrayWithArray:courseSchedules];
+    } else {
+        dayCourseSchedule.courseSchedules = [NSMutableArray array];
     }
     return dayCourseSchedule;
 }
