@@ -29,7 +29,9 @@
     // Do any additional setup after loading the view.
     self.calendarView.delegate = self;
     self.shouldFetchData = YES;
-    [self.navigationItem setTitle:@"课程日历"];
+    [self.navigationItem setTitle:@"排课日历"];
+    UIBarButtonItem *todayBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"今" style:UIBarButtonItemStylePlain target:self action:@selector(showTodayCalendar)];
+    [self.navigationItem setRightBarButtonItem:todayBarButtonItem];
     [self registerForDataUpdate];
 }
 
@@ -42,6 +44,11 @@
 {
     [super viewWillAppear:animated];
     [self loadCustomerData];
+}
+
+- (void)showTodayCalendar
+{
+    [self.calendarView scrollToDate:[NSDate date] animated:YES];
 }
 
 #pragma delegate PMCalendarViewDelegate
