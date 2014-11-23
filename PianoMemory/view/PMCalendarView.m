@@ -100,7 +100,11 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
     [calendarDays addObjectsFromArray:dayInCurrentMonth];
     [calendarDays addObjectsFromArray:dayInFollowingMonth];
     [calendarDays enumerateObjectsUsingBlock:^(PMCalendarDayModel* calendarDay, NSUInteger idx, BOOL *stop) {
-        calendarDay.lunaCalendar = [calendarDay.date chineseCalendarDate].DayLunar;
+        LunarCalendar *lunaCalendar = [calendarDay.date chineseCalendarDate];
+        calendarDay.lunaCalendar = [lunaCalendar SolarTermTitle];
+        if (!calendarDay.lunaCalendar || 0 == [calendarDay.lunaCalendar length]) {
+            calendarDay.lunaCalendar = [lunaCalendar DayLunar];
+        }
         calendarDay.holiday = [self holidayOfCalendarDay:calendarDay];
     }];
     return calendarDays;

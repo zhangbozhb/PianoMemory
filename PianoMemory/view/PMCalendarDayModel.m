@@ -35,10 +35,13 @@
 
 - (void)setDate:(NSDate *)date
 {
-    NSDateComponents *components = [date zb_dateComponents];
+
+    NSUInteger unitFlags = NSCalendarUnitYear| NSCalendarUnitMonth | NSCalendarUnitDay |NSCalendarUnitWeekday;
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:unitFlags fromDate:date];
     _year = components.year;
     _month = components.month;
     _day = components.day;
+    _week = components.weekday;
     _date = date;
 }
 @end

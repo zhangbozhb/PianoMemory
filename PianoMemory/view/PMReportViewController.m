@@ -47,6 +47,9 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
 {
     [super viewDidLoad];
 
+    UIBarButtonItem *currentMonthBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"今" style:UIBarButtonItemStylePlain target:self action:@selector(showCurrentMonthReport)];
+    [self.navigationItem setRightBarButtonItem:currentMonthBarButtonItem];
+
     //添加手势
     UISwipeGestureRecognizer *leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(loadNextMonthData)];
     leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -54,6 +57,12 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
     UISwipeGestureRecognizer *rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(loadPreviousMonthData)];
     rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:rightSwipeGestureRecognizer];
+}
+
+- (void)showCurrentMonthReport
+{
+    self.targetMonth = [NSDate date];
+    [self loadCustomerData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
