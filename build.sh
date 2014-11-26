@@ -9,17 +9,16 @@ else
 fi
 
 targetName="PianoMemory"
-version="1.0"
+plistFile="${targetName}/Info.plist"
+version=`/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "${plistFile}"`
+#version="1.1.1"
 dateString=`date +%Y_%m_%d_%H_%M`
 rootDistributeDirectory="dist"
 packageDirectoryName="V${version}_${dateString}"
 distributeDirectory="${rootDistributeDirectory}/${packageDirectoryName}"
-ipaFileName="${targetName}.ipa"
-productName="HairCutSupervisor"
+ipaFileName="V${version}_${dateString}.ipa"
 remoteDirectory="/Users/zhangbo/webserver/apacheRootDirectory"
 remoteDistributeDirectory="${targetName}/V${version}/${configurationName}"
-hostAddress=`ifconfig | grep 'inet' | grep "netmask" | grep -v '127.0.0.1' | cut -d: -f2 | awk '{print $2}'`
-urlHost="http://${hostAddress}:80"
 logFile="build.log"
 
 if [[ "" == "${configurationName}" || "" == "${targetName}" ]];then
@@ -36,6 +35,16 @@ if [ -d ${rootDistributeDirectory} ];then
   `rm -rf ${rootDistributeDirectory}`
 fi
 `mkdir -p ${distributeDirectory}`
+
+# change build version
+buildVersion=`/usr/libexec/PlistBuddy -c "Print CFBundleVersion" ${plistFile}`
+startDateTimestamp=`date -j -f "%Y-%m-%d" 2014-10-01 "+%s"`
+currentTimestamp=`date +%s`
+diffTimestamp=$(($currentTimestamp-$startDateTimestamp))
+diffHour=$(($diffTimestamp/3600/24))
+buildVersion=$diffHour
+#buildVersion=$(($buildVersion + 1))
+`/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildVersion" "${plistFile}"`
 
 # clean
 echo "*** clean ***"
@@ -63,81 +72,6 @@ pushd ${distributeDirectory} >/dev/null 2>&1
 zip -r "${ipaFileName}" Payload >/dev/null 2>&1
 popd >/dev/null 2>&1
 rm -rf ${tmpdir}
-
-# generate html file
-echo "*** generate html file ***"
-cat << EOF > ${distributeDirectory}/index.html
-<!DOCTYPE HTML>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>安装此软件</title>
-</head>
-<body>
-<ul>
-<li>安装此软件:<a href="itms-services://?action=download-manifest&url=${urlHost}/${remoteDistributeDirectory}/${packageDirectoryName}/${targetName}.plist">${targetName}</a></li>
-</ul>
-</div>
-</body>
-</html>
-
-EOF
-
-
-#generater plits
-cat << EOF > ${distributeDirectory}/${targetName}.plist
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>items</key>
-    <array>
-        <dict>
-            <key>assets</key>
-            <array>
-                <dict>
-                    <key>kind</key>
-                    <string>software-package</string>
-                    <key>url</key>
-                    <string>${urlHost}/${remoteDistributeDirectory}/${packageDirectoryName}/${ipaFileName}</string>
-                </dict>
-                <dict>
-                    <key>kind</key>
-                    <string>display-image</string>
-                    <key>needs-shine</key>
-                    <true/>
-                    <key>url</key>
-                    <string>${urlHost}/icon.png</string>
-                </dict>
-                <dict>
-                    <key>kind</key>
-                    <string>full-size-image</string>
-                    <key>needs-shine</key>
-                    <true/>
-                    <key>url</key>
-                    <string>${urlHost}/icon.png</string>
-                </dict>
-            </array>
-            <key>metadata</key>
-            <dict>
-                <key>bundle-identifier</key>
-                <string>com.palm4fun.${productName}</string>
-                <key>bundle-version</key>
-                <string>${version}</string>
-                <key>kind</key>
-                <string>software</string>
-                <key>subtitle</key>
-                <string>${productName}</string>
-                <key>title</key>
-                <string>${productName}</string>
-            </dict>
-        </dict>
-    </array>
-</dict>
-</plist>
-
-
-EOF
 
 
 #copy file to romotedir
