@@ -43,10 +43,7 @@
 - (NSDate *)zb_dateAfterDay:(NSInteger)day
 {
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    // Get the weekday component of the current date
-    // NSDateComponents *weekdayComponents = [[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:self];
     NSDateComponents *componentsToAdd = [[NSDateComponents alloc] init];
-    // to get the end of week for a particular date, add (7 - weekday) days
     [componentsToAdd setDay:day];
     NSDate *dateAfterDay = [calendar dateByAddingComponents:componentsToAdd toDate:self options:0];
 
@@ -133,7 +130,7 @@
 //获取当前月的天数
 - (NSInteger)zb_numberOfDayOfCurrentMonth
 {
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSRange range = [calendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:self];
     return range.length;
 }
@@ -143,7 +140,7 @@
 - (NSDate *)zb_firstDayOfCurrentWeek
 {
     NSDate *startDate = nil;
-    [[NSCalendar currentCalendar] rangeOfUnit:NSWeekdayCalendarUnit startDate:&startDate interval:NULL forDate:self];
+    [[NSCalendar currentCalendar] rangeOfUnit:NSCalendarUnitWeekday startDate:&startDate interval:NULL forDate:self];
     return startDate;
 }
 //本月的第一天

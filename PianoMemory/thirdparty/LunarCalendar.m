@@ -96,8 +96,8 @@ int LunarCalendarInfo[] = {
 	NSDate *startDate = [f dateFromString:start];
 	NSDate *endDate = [f dateFromString:end];
 	
-	NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-	NSDateComponents *components = [gregorianCalendar components:NSDayCalendarUnit fromDate:startDate toDate:endDate options:0];
+	NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+	NSDateComponents *components = [gregorianCalendar components:NSCalendarUnitDay fromDate:startDate toDate:endDate options:0];
 	
 	int dayCyclical=(int)(([components day] + 30)/(86400/(3600*24)))+10;
 
@@ -256,7 +256,7 @@ int LunarCalendarInfo[] = {
 		[components setHour:hour];
 		[components setMinute:minute];
 
-		NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+		NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
 		NSDate *ldate = [gregorian dateFromComponents:components];
 		
 
@@ -456,7 +456,7 @@ int LunarCalendarInfo[] = {
 -(int)Weekday
 {
 	NSCalendar* cal = [NSCalendar currentCalendar];
-	NSDateComponents* weekday = [cal components:NSWeekdayCalendarUnit fromDate:thisdate];
+	NSDateComponents* weekday = [cal components:NSCalendarUnitWeekday fromDate:thisdate];
 	return (int)[weekday weekday];
 }
 
