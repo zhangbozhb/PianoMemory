@@ -13,6 +13,7 @@
 #import "PMDayReportView.h"
 #import "UIColor+Extend.h"
 #import <MBProgressHUD/MBProgressHUD.h>
+#import "CoreAnimationEffect.h"
 
 static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCellReuseIdentifier";
 
@@ -20,7 +21,7 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
 @property (nonatomic) NSArray *weekDayStatArray;
 @property (nonatomic) PMWeekDayStat *totalDayStat;
 @property (nonatomic) NSDate *targetMonth;
-
+@property (nonatomic) NSDate *oldTargetMonth;
 @property (nonatomic) MBProgressHUD *toast;
 
 //xib reference
@@ -35,18 +36,16 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
 @end
 
 @implementation PMReportViewController
-- (NSDate *)targetMonth
+- (void)setTargetMonth:(NSDate *)targetMonth
 {
-    if (!_targetMonth) {
-        _targetMonth = [NSDate date];
-    }
-    return _targetMonth;
+    _oldTargetMonth = _targetMonth;
+    _targetMonth = targetMonth;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.targetMonth = [NSDate date];
     UIBarButtonItem *currentMonthBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"今" style:UIBarButtonItemStylePlain target:self action:@selector(showCurrentMonthReport)];
     [self.navigationItem setRightBarButtonItem:currentMonthBarButtonItem];
 
@@ -68,7 +67,7 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.targetMonth = nil;
+    self.targetMonth = [NSDate date];
     [self loadCustomerData];
 }
 
@@ -160,6 +159,16 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
     CGFloat averageHour = (0 != self.totalDayStat.courseCount)? self.totalDayStat.durationInHour/self.totalDayStat.courseCount:0.f;
     [self.titleLabel setText:[NSString stringWithFormat:@"总计:%ld节\t总课时:%.2f\t平均时长:%.2f",
                               (long)self.totalDayStat.courseCount, self.totalDayStat.durationInHour,averageHour]];
+
+    if (self.oldTargetMonth && self.targetMonth) {
+        NSInteger oldTimestamp = [self.oldTargetMonth zb_timestampOfDay];
+        NSInteger targetTimestamp = [self.targetMonth zb_timestampOfDay];
+        if (oldTimestamp < targetTimestamp) {
+            [CoreAnimationEffect animationCubeFromRight:self.view];
+        } else if (oldTimestamp > targetTimestamp) {
+            [CoreAnimationEffect animationCubeFromLeft:self.view];
+        }
+    }
 }
 
 - (NSArray*)createWeekDayReportFromDayCourseSchedules:(NSArray*)dayCourseSchedules

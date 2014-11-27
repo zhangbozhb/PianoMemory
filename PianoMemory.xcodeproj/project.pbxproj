@@ -30,6 +30,8 @@
 		9E5B5C2F1A07E1E400F9E424 /* PMDayReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C2E1A07E1E400F9E424 /* PMDayReportView.m */; };
 		9E5B5C321A07E36E00F9E424 /* PMDayReportPieElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C311A07E36E00F9E424 /* PMDayReportPieElement.m */; };
 		9E5B5C351A0874D800F9E424 /* PMCourseScheduleRepeat.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C341A0874D800F9E424 /* PMCourseScheduleRepeat.m */; };
+		9E8061831A26F0B400B7416C /* CoreAnimationEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8061821A26F0B400B7416C /* CoreAnimationEffect.m */; };
+		9E8061861A27107A00B7416C /* PMZoomAnimationTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8061851A27107A00B7416C /* PMZoomAnimationTransition.m */; };
 		9E8AF2191A10618D00378B31 /* time_manage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8AF2171A10618D00378B31 /* time_manage@2x.png */; };
 		9E8AF21E1A1073F900378B31 /* calendar_effect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8AF21C1A1073F900378B31 /* calendar_effect@2x.png */; };
 		9E8AF21F1A1073F900378B31 /* calendar_expire@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8AF21D1A1073F900378B31 /* calendar_expire@2x.png */; };
@@ -190,6 +192,10 @@
 		9E5B5C311A07E36E00F9E424 /* PMDayReportPieElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMDayReportPieElement.m; sourceTree = "<group>"; };
 		9E5B5C331A0874D800F9E424 /* PMCourseScheduleRepeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCourseScheduleRepeat.h; sourceTree = "<group>"; };
 		9E5B5C341A0874D800F9E424 /* PMCourseScheduleRepeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMCourseScheduleRepeat.m; sourceTree = "<group>"; };
+		9E8061811A26F0B400B7416C /* CoreAnimationEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreAnimationEffect.h; sourceTree = "<group>"; };
+		9E8061821A26F0B400B7416C /* CoreAnimationEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreAnimationEffect.m; sourceTree = "<group>"; };
+		9E8061841A27107A00B7416C /* PMZoomAnimationTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMZoomAnimationTransition.h; sourceTree = "<group>"; };
+		9E8061851A27107A00B7416C /* PMZoomAnimationTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMZoomAnimationTransition.m; sourceTree = "<group>"; };
 		9E8AF2171A10618D00378B31 /* time_manage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "time_manage@2x.png"; sourceTree = "<group>"; };
 		9E8AF21C1A1073F900378B31 /* calendar_effect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_effect@2x.png"; sourceTree = "<group>"; };
 		9E8AF21D1A1073F900378B31 /* calendar_expire@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_expire@2x.png"; sourceTree = "<group>"; };
@@ -398,6 +404,8 @@
 				9E922B781A1DE1AD00F6AF43 /* PMDayScheduleCalendarViewController.m */,
 				9EF1318B19E1770700843F02 /* PMDayCourseScheduleViewController.h */,
 				9EF1318C19E1770700843F02 /* PMDayCourseScheduleViewController.m */,
+				9E8061841A27107A00B7416C /* PMZoomAnimationTransition.h */,
+				9E8061851A27107A00B7416C /* PMZoomAnimationTransition.m */,
 			);
 			name = daycourseschedule;
 			sourceTree = "<group>";
@@ -736,6 +744,8 @@
 		9EF1318019E103D300843F02 /* thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				9E8061811A26F0B400B7416C /* CoreAnimationEffect.h */,
+				9E8061821A26F0B400B7416C /* CoreAnimationEffect.m */,
 				9EF1318119E103D300843F02 /* LunarCalendar.h */,
 				9EF1318219E103D300843F02 /* LunarCalendar.m */,
 			);
@@ -1010,6 +1020,7 @@
 				9EF1314D19E02FF200843F02 /* HCObject.m in Sources */,
 				9E08E85619E3789E00DFD7CA /* PMCourse+Wrapper.m in Sources */,
 				9E08E84A19E2CF5000DFD7CA /* PMCourseViewController.m in Sources */,
+				9E8061861A27107A00B7416C /* PMZoomAnimationTransition.m in Sources */,
 				9E08E83F19E29E1B00DFD7CA /* UIViewController+Extend.m in Sources */,
 				9EA0C2B81A038A6C001564BB /* PMReportViewController.m in Sources */,
 				9EF1317B19E0C9BA00843F02 /* PMStudentBrowseViewController.m in Sources */,
@@ -1066,6 +1077,7 @@
 				9EA48B291A00A928004B03E9 /* PMCourseScheduleViewController.m in Sources */,
 				9EF1316D19E0323000843F02 /* PMCourse.m in Sources */,
 				9E8AF2AA1A134CAC00378B31 /* PMNavStuduentViewController.m in Sources */,
+				9E8061831A26F0B400B7416C /* CoreAnimationEffect.m in Sources */,
 				9EF1316719E0308900843F02 /* PMLocalStorage.m in Sources */,
 				9EF1316019E02FF200843F02 /* UIView+ScreenShot.m in Sources */,
 				9E08E87419E826F200DFD7CA /* PMBusiness.m in Sources */,

@@ -319,6 +319,7 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
             [cell.dayLabel setTextColor:[UIColor lightGrayColor]];
         } else if (CellDayTypeClick == calendarDayModel.style) {
             [cell.dayLabel setTextColor:[UIColor whiteColor]];
+            cell.dayLabel.transform = CGAffineTransformMakeScale(1.2f,1.2f);
         } else if (CellDayTypeWeek == calendarDayModel.style) {
             [cell.dayLabel setTextColor:[UIColor redColor]];
         } else {

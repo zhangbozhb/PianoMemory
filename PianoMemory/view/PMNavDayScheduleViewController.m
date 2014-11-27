@@ -8,9 +8,11 @@
 
 #import "PMNavDayScheduleViewController.h"
 #import "UITabBarItem+Extend.h"
+#import "PMZoomAnimationTransition.h"
+#import "PMDayScheduleCalendarViewController.h"
 
-@interface PMNavDayScheduleViewController ()
-
+@interface PMNavDayScheduleViewController () <UINavigationControllerDelegate>
+@property (nonatomic) PMZoomAnimationTransition *animator;
 @end
 
 @implementation PMNavDayScheduleViewController
@@ -27,11 +29,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (PMZoomAnimationTransition *)animator
+{
+    if (!_animator) {
+        _animator = [[PMZoomAnimationTransition alloc] init];
+    }
+    return _animator;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
+                                  animationControllerForOperation:(UINavigationControllerOperation)operation
+                                               fromViewController:(UIViewController*)fromVC
+                                                 toViewController:(UIViewController*)toVC
+{
+    if ([fromVC isKindOfClass:[PMDayScheduleCalendarViewController class]] &&
+        operation == UINavigationControllerOperationPush) {
+        return self.animator;
+    }
+    return nil;
 }
 
 @end
