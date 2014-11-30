@@ -14,6 +14,7 @@
 - (NSString*)calendarView:(PMCalendarView*)calendarView tipOfDate:(NSDate*)date;
 @end
 
+IB_DESIGNABLE
 @interface PMCalendarView : UIView
 @property (nonatomic) NSDate *startDate;
 @property (nonatomic) NSDate *endDate;

@@ -12,8 +12,6 @@
 #import "PMCalendarDayCell.h"
 #import "PMCalendarDayModel.h"
 #import "NSDate+Extend.h"
-#import "LunarCalendar.h"
-
 
 static NSString *kmonthHeaderReuseIdentifier = @"monthHeaderReuseIdentifier";
 static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
@@ -99,14 +97,6 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
     [calendarDays addObjectsFromArray:dayInPreviousMonth];
     [calendarDays addObjectsFromArray:dayInCurrentMonth];
     [calendarDays addObjectsFromArray:dayInFollowingMonth];
-    [calendarDays enumerateObjectsUsingBlock:^(PMCalendarDayModel* calendarDay, NSUInteger idx, BOOL *stop) {
-        LunarCalendar *lunaCalendar = [calendarDay.date chineseCalendarDate];
-        calendarDay.lunaCalendar = [lunaCalendar SolarTermTitle];
-        if (!calendarDay.lunaCalendar || 0 == [calendarDay.lunaCalendar length]) {
-            calendarDay.lunaCalendar = [lunaCalendar DayLunar];
-        }
-        calendarDay.holiday = [self holidayOfCalendarDay:calendarDay];
-    }];
     return calendarDays;
 }
 
@@ -151,41 +141,6 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
         [targetArray addObject:calendarDay];
     };
     return targetArray;
-}
-
-- (NSString *)holidayOfCalendarDay:(PMCalendarDayModel *)calendarDay
-{
-    NSString *holiday = nil;
-    //节日设定
-    if (1 ==  calendarDay.month &&
-        1 == calendarDay.day) { //元旦
-        holiday = @"元旦";
-    } else if (2 ==  calendarDay.month &&
-               14 == calendarDay.day) { //情人节
-        holiday = @"情人节";
-    } else if (3 ==  calendarDay.month &&
-               8 == calendarDay.day) { //妇女节
-        holiday = @"妇女节";
-    } else if (5 ==  calendarDay.month &&
-               1 == calendarDay.day) { //劳动节
-        holiday = @"劳动节";
-    } else if (6 ==  calendarDay.month &&
-               1 == calendarDay.day) { //儿童节
-        holiday = @"儿童节";
-    } else if (8 ==  calendarDay.month &&
-               1 == calendarDay.day) { //建军节
-        holiday = @"建军节";
-    } else if (9 ==  calendarDay.month &&
-               10 == calendarDay.day) { //教师节
-        holiday = @"教师节";
-    } else if (10 ==  calendarDay.month &&
-               1 == calendarDay.day) { //国庆节
-        holiday = @"国庆节";
-    } else if (11 ==  calendarDay.month &&
-               11 == calendarDay.day) { //光棍节
-        holiday = @"光棍节";
-    }
-    return holiday;
 }
 
 #pragma set modle style
@@ -270,9 +225,9 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
 
         NSDate *targetMonth = [self calendarMonthDateForSection:indexPath.section];
         NSDateComponents *targetComponent = [targetMonth zb_dateComponents];
-        [monthHeader.masterLabel setText:[NSString stringWithFormat:@"%d年 %d月",
-                                          targetComponent.year,
-                                          targetComponent.month]];
+        [monthHeader.masterLabel setText:[NSString stringWithFormat:@"%ld年 %ld月",
+                                          (long)targetComponent.year,
+                                          (long)targetComponent.month]];
         reusableview = monthHeader;
     }
     return reusableview;
@@ -334,8 +289,8 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
             [cell.dayLabel setText:[NSString stringWithFormat:@"%ld", (long)calendarDayModel.day]];
         }
 
-        if (calendarDayModel.lunaCalendar) {
-            [cell.dayTitleLabel setText:calendarDayModel.lunaCalendar];
+        if (calendarDayModel.lunaDayString) {
+            [cell.dayTitleLabel setText:calendarDayModel.lunaDayString];
         }
 
         if (CellDayTypeClick == calendarDayModel.style) {
@@ -365,13 +320,13 @@ static NSString *kdayCellReuseIdentifier = @"dayCellReuseIdentifier";
 
 - (NSArray*)calendarDaysForSection:(NSInteger)section
 {
-    NSArray *targetClendrDays = [self.monthCalendarDaysMapping objectForKey:[NSNumber numberWithInteger:section]];
-    if (!targetClendrDays) {
+    NSArray *targetCalendarDays = [self.monthCalendarDaysMapping objectForKey:[NSNumber numberWithInteger:section]];
+    if (!targetCalendarDays) {
         NSDate *targetMonth = [self calendarMonthDateForSection:section];
-        targetClendrDays = [self calendarDaysForMonth:targetMonth];
-        [self.monthCalendarDaysMapping setObject:targetClendrDays forKey:[NSNumber numberWithInteger:section]];
+        targetCalendarDays = [self calendarDaysForMonth:targetMonth];
+        [self.monthCalendarDaysMapping setObject:targetCalendarDays forKey:[NSNumber numberWithInteger:section]];
     }
-    return targetClendrDays;
+    return targetCalendarDays;
 }
 
 - (NSIndexPath*)selectedIndexOfDate:(NSDate*)date

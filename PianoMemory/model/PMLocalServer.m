@@ -304,7 +304,7 @@
                                  [NSNumber numberWithInteger:PMCourseScheduleRepeatDataWeekDayStaturday],
                                  nil];
             for (NSNumber *mappingKey in weekDays) {
-                PMCourseScheduleRepeatDataWeekDay repeateWeekDay = [mappingKey longValue];
+                PMCourseScheduleRepeatDataWeekDay repeateWeekDay = (PMCourseScheduleRepeatDataWeekDay)[mappingKey longValue];
                 if ([courseSchdeudle availableForRepeatWeekDay:repeateWeekDay]) {
                     NSMutableArray *weekDayScheudles = [repreatWeekDayMapping objectForKey:mappingKey];
                     if (weekDayScheudles) {

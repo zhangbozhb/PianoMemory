@@ -18,16 +18,20 @@ typedef NS_ENUM(NSInteger, CollectionViewCellDayType) {
 
 @interface PMCalendarDayModel : NSObject
 @property (nonatomic) CollectionViewCellDayType style;//显示的样式
-@property (nonatomic) NSDate *date;
-@property (nonatomic) NSString *holiday;//节日
-@property (nonatomic) NSString *lunaCalendar;//农历
+@property (nonatomic, readonly) NSDate *date;
+@property (nonatomic) NSString *holiday;            //节日
+@property (nonatomic, readonly) NSString *lunaDayString;      //农历日
+@property (nonatomic, readonly) NSString *lunaMonthString;    //农历月
+@property (nonatomic, readonly) NSString *lunaYearString;    //农历年
 
-@property (nonatomic, readonly) NSUInteger day;//天
-@property (nonatomic, readonly) NSUInteger month;//月
-@property (nonatomic, readonly) NSUInteger year;//年
-@property (nonatomic, readonly) NSUInteger week;//周
+@property (nonatomic, readonly) NSUInteger day;         //天
+@property (nonatomic, readonly) NSUInteger month;       //月
+@property (nonatomic, readonly) NSUInteger year;        //年
+@property (nonatomic, readonly) NSUInteger week;        //周
+@property (nonatomic, readonly) NSUInteger lunaDay;     //农历天
+@property (nonatomic, readonly) NSUInteger lunaMonth;   //农历月
+@property (nonatomic, readonly) NSUInteger lunaYear;    //农历年(甲子,...)
 
 
 - (instancetype)initWithDate:(NSDate*)date;
-- (instancetype)initWithYear:(NSUInteger)year month:(NSUInteger)month day:(NSUInteger)day;
 @end
