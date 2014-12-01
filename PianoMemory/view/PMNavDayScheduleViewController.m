@@ -52,6 +52,11 @@
 {
     if ([fromVC isKindOfClass:[PMDayScheduleCalendarViewController class]] &&
         operation == UINavigationControllerOperationPush) {
+        [self.animator setIsZoom:YES];
+        return self.animator;
+    } else if ([toVC isKindOfClass:[PMDayScheduleCalendarViewController class]] &&
+               operation == UINavigationControllerOperationPop) {
+        [self.animator setIsZoom:NO];
         return self.animator;
     }
     return nil;

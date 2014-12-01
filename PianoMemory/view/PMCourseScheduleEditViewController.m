@@ -342,7 +342,7 @@ const static NSString *addToHistoryDayCourseScheduleMessage = @"课程安排的�
         [self.repeatSwitch setOn:YES];
         [self.weekDaySegmentControl setEnabled:YES];
         NSArray *weekDays = [self.changedCourseSchedule getRepeatWeekDays];
-        NSInteger dayIndexInWeek = [PMCourseScheduleRepeat dayIndexInWeekFromRepeatWeekDay:[[weekDays firstObject] longValue]];
+        NSInteger dayIndexInWeek = [PMCourseScheduleRepeat dayIndexInWeekFromRepeatWeekDay:(PMCourseScheduleRepeatDataWeekDay)[[weekDays firstObject] longValue]];
         [self.weekDaySegmentControl setSelectedSegmentIndex:dayIndexInWeek];
     } else  {
         [self.repeatSwitch setOn:NO];

@@ -10,5 +10,5 @@
 #import <UIKit/UIViewControllerTransitioning.h>
 
 @interface PMZoomAnimationTransition : NSObject <UIViewControllerAnimatedTransitioning>
-
+@property (nonatomic) BOOL isZoom;
 @end

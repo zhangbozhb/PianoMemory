@@ -191,7 +191,7 @@
 - (void)updateStudent:(PMStudent *)student
 {
     __weak PMStudentEditViewController *pSelf = self;
-    [[PMServerWrapper defaultServer]  updateStudent:self.changedStudent success:^(PMStudent *student) {
+    [[PMServerWrapper defaultServer] updateStudent:self.changedStudent success:^(PMStudent *student) {
         dispatch_async(dispatch_get_main_queue(), ^{
             pSelf.changedStudent = student;
             MBProgressHUD *toast = [pSelf getSimpleToastWithTitle:@"成功" message:@"已经成功修改学生信息"];
