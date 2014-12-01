@@ -200,16 +200,10 @@ static NSString *const klocal_daycourseschedule_view_key = @"org.plam4fun.fm1017
     if (!dayCourseSchedule) {
         return NO;
     }
-    for (PMCourseSchedule *courseSchedule in dayCourseSchedule.courseSchedules) {
-        [self storeCourseSchedule:courseSchedule];
-    }
     return [self.syncStorage storeHCObject:dayCourseSchedule];
 }
 - (BOOL)removeDayCourseSchedule:(PMDayCourseSchedule*)dayCourseSchedule
 {
-    for (PMCourseSchedule *courseSchedule in dayCourseSchedule.courseSchedules) {
-        [self removeCourseSchedule:courseSchedule];
-    }
     return [self.syncStorage removeHCObject:dayCourseSchedule];
 }
 - (PMDayCourseSchedule*)getDayCourseScheduleWithId:(NSString*)dayCourseScheduleId

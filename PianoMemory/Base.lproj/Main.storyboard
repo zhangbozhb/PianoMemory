@@ -223,9 +223,9 @@
                             <constraint firstItem="yYZ-p4-VvG" firstAttribute="top" secondItem="Hui-ao-FN8" secondAttribute="bottom" id="dDL-uv-Kav"/>
                             <constraint firstItem="yYZ-p4-VvG" firstAttribute="top" secondItem="Pud-dU-9wA" secondAttribute="bottom" id="eSt-yI-AXF"/>
                             <constraint firstItem="Pud-dU-9wA" firstAttribute="top" secondItem="u9s-Xc-zCf" secondAttribute="bottom" id="em8-Yp-WqG"/>
-                            <constraint firstItem="u9s-Xc-zCf" firstAttribute="top" secondItem="fV5-7J-ely" secondAttribute="bottom" id="gW3-QI-jPM"/>
                             <constraint firstItem="Hui-ao-FN8" firstAttribute="leading" secondItem="ejB-LD-Usd" secondAttribute="leading" id="jw4-Av-PO7"/>
                             <constraint firstAttribute="trailing" secondItem="u9s-Xc-zCf" secondAttribute="trailing" id="oSh-tf-GdN"/>
+                            <constraint firstItem="u9s-Xc-zCf" firstAttribute="top" secondItem="fV5-7J-ely" secondAttribute="bottom" id="zA2-AW-Yml"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="今日课程" id="KNO-no-0QF">

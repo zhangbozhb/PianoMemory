@@ -23,6 +23,7 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
 @interface PMDayCourseScheduleViewController () <UITableViewDataSource, UITableViewDelegate, PMCourseScheduleEditProtocol>
 @property (nonatomic) PMDayCourseSchedule *targetDayCourseSchedule;
 @property (nonatomic) BOOL shouldFetchData;
+@property (nonatomic) BOOL shouldRefreshUI;
 
 //xib reference
 @property (weak, nonatomic) IBOutlet UINavigationItem *myNavigationitem;
@@ -45,6 +46,7 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
     [super viewDidLoad];
     [self registerForDataUpdate];
     self.shouldFetchData = YES;
+    self.shouldRefreshUI = NO;
     self.targetDayCourseSchedule = [PMBusiness createDayCourseScheduleWithCourseSchedules:nil atDate:self.targetDate];
 }
 
@@ -52,6 +54,9 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
 {
     [super viewWillAppear:animated];
     [self loadCustomerData];
+    if (self.shouldRefreshUI) {
+        [self refreshUI];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -104,7 +109,8 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
     __weak PMDayCourseScheduleViewController *pSelf = self;
     [self saveDayCourseSchedule:self.targetDayCourseSchedule
                     finishBlock:^{
-        [pSelf.navigationController popViewControllerAnimated:YES];
+                        pSelf.shouldRefreshUI = YES;
+                        [pSelf.navigationController popViewControllerAnimated:YES];
     }];
 }
 
@@ -154,6 +160,7 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
         [self.myNavigationitem setTitle:[dateFormatter stringFromDate:self.targetDate]];
     }
     [self.courseScheduleTableView reloadData];
+    self.shouldRefreshUI = NO;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

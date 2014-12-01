@@ -7,6 +7,7 @@
 //
 
 #import "PMZoomAnimationTransition.h"
+#import <UIKit/UIKit.h>
 
 @implementation PMZoomAnimationTransition
 - (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext
@@ -19,9 +20,15 @@
     UIViewController* fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     [[transitionContext containerView] addSubview:toViewController.view];
 
+    NSInteger systemVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (7 == systemVersion
+        && toViewController.navigationController) {   //iOS 7bug
+        CGRect navigationBarFrame = toViewController.navigationController.navigationBar.frame;
+        toViewController.view.frame = CGRectMake(0, navigationBarFrame.size.height, toViewController.view.frame.size.width, toViewController.view.frame.size.height - navigationBarFrame.size.height);
+    }
     toViewController.view.transform = CGAffineTransformMakeScale(0.1, 0.1);
     [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-        fromViewController.view.transform = CGAffineTransformMakeScale(0.1, 10.1);
+        fromViewController.view.transform = CGAffineTransformMakeScale(0.1, 0.1);
         toViewController.view.transform = CGAffineTransformIdentity;
     } completion:^(BOOL finished) {
         fromViewController.view.transform = CGAffineTransformIdentity;
