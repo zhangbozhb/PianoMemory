@@ -48,6 +48,9 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
     self.shouldFetchData = YES;
     self.shouldRefreshUI = NO;
     self.targetDayCourseSchedule = [PMBusiness createDayCourseScheduleWithCourseSchedules:nil atDate:self.targetDate];
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -14,7 +14,7 @@
 #import "PMServerWrapper.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 
-static NSInteger const kDefaultDurationTimestamp = 60 * 40;
+static NSInteger const kDefaultDurationTimestamp = 60 * 50;
 
 @interface PMTimeScheduleEditViewController () <UITextFieldDelegate>
 
@@ -68,7 +68,7 @@ static NSInteger const kDefaultDurationTimestamp = 60 * 40;
             _changedTimeSchedle = [[PMTimeSchedule alloc] init];
             NSDate *currentDate = [NSDate date];
             _changedTimeSchedle.startTime = [currentDate timeIntervalSince1970] - [currentDate zb_timestampOfDay];
-            //默认为40分钟
+            //默认为50分钟
             _changedTimeSchedle.endTime = _changedTimeSchedle.startTime + kDefaultDurationTimestamp;
         }
     }
@@ -106,12 +106,13 @@ static NSInteger const kDefaultDurationTimestamp = 60 * 40;
     NSTimeInterval timestampInDay = [selectDate timeIntervalSince1970]-[selectDate zb_timestampOfDay];
 
     if (self.targetLabel == self.startTimeLabel) {
-        [self.changedTimeSchedle setStartTime:timestampInDay];
-        self.startTimeLabel.text = [self.changedTimeSchedle getStartTimeWithTimeFormatter:nil];
+        self.changedTimeSchedle.startTime = timestampInDay;
+        //同时更新结束时间
+        self.changedTimeSchedle.endTime = timestampInDay + kDefaultDurationTimestamp;
     } else if (self.targetLabel == self.endTimeLabel) {
-        [self.changedTimeSchedle setEndTime:timestampInDay];
-        self.endTimeLabel.text = [self.changedTimeSchedle getEndTimeWithTimeFormatter:nil];
+        self.changedTimeSchedle.endTime = timestampInDay;
     }
+    [self refreshTimeUI];
 }
 
 - (IBAction)saveTimeScheduleAction:(id)sender {
@@ -165,11 +166,16 @@ static NSInteger const kDefaultDurationTimestamp = 60 * 40;
     self.changedTimeSchedle.name = self.nameTextField.text;
 }
 
+- (void)refreshTimeUI
+{
+    self.startTimeLabel.text = [self.changedTimeSchedle getStartTimeWithTimeFormatter:nil];
+    self.endTimeLabel.text = [self.changedTimeSchedle getEndTimeWithTimeFormatter:nil];
+}
+
 - (void)refreshUI
 {
     self.nameTextField.text = [self.changedTimeSchedle getNotNilName];
-    self.startTimeLabel.text = [self.changedTimeSchedle getStartTimeWithTimeFormatter:nil];
-    self.endTimeLabel.text = [self.changedTimeSchedle getEndTimeWithTimeFormatter:nil];
+    [self refreshTimeUI];
 }
 
 - (NSString *)checkErrorOfCourse:(PMTimeSchedule *)timeSchedule
