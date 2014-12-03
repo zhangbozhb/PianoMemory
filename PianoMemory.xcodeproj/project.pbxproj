@@ -30,6 +30,10 @@
 		9E4C96021A2DEFE100B5FFC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E4C96041A2DEFE100B5FFC4 /* InfoPlist.strings */; };
 		9E4C96071A2DEFF100B5FFC4 /* PMAnniversaryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4C96061A2DEFF100B5FFC4 /* PMAnniversaryManager.m */; };
 		9E4C960C1A2DFF8A00B5FFC4 /* PMSpecialDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4C960B1A2DFF8A00B5FFC4 /* PMSpecialDay.m */; };
+		9E4C96111A2EB90F00B5FFC4 /* PMBirthDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4C960F1A2EB90F00B5FFC4 /* PMBirthDayViewController.m */; };
+		9E4C96121A2EB90F00B5FFC4 /* PMBirthDayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E4C96101A2EB90F00B5FFC4 /* PMBirthDayViewController.xib */; };
+		9E4C96151A2EB96900B5FFC4 /* birthday_guitar.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9E4C96131A2EB96900B5FFC4 /* birthday_guitar.gif */; };
+		9E4C96161A2EB96900B5FFC4 /* birthday_main.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9E4C96141A2EB96900B5FFC4 /* birthday_main.gif */; };
 		9E5B5C281A07CF0100F9E424 /* PMWeekDayStat.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C271A07CF0100F9E424 /* PMWeekDayStat.m */; };
 		9E5B5C2F1A07E1E400F9E424 /* PMDayReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C2E1A07E1E400F9E424 /* PMDayReportView.m */; };
 		9E5B5C321A07E36E00F9E424 /* PMDayReportPieElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C311A07E36E00F9E424 /* PMDayReportPieElement.m */; };
@@ -196,6 +200,11 @@
 		9E4C96091A2DF00900B5FFC4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		9E4C960A1A2DFF8A00B5FFC4 /* PMSpecialDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMSpecialDay.h; sourceTree = "<group>"; };
 		9E4C960B1A2DFF8A00B5FFC4 /* PMSpecialDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMSpecialDay.m; sourceTree = "<group>"; };
+		9E4C960E1A2EB90F00B5FFC4 /* PMBirthDayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMBirthDayViewController.h; sourceTree = "<group>"; };
+		9E4C960F1A2EB90F00B5FFC4 /* PMBirthDayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMBirthDayViewController.m; sourceTree = "<group>"; };
+		9E4C96101A2EB90F00B5FFC4 /* PMBirthDayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PMBirthDayViewController.xib; sourceTree = "<group>"; };
+		9E4C96131A2EB96900B5FFC4 /* birthday_guitar.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = birthday_guitar.gif; sourceTree = "<group>"; };
+		9E4C96141A2EB96900B5FFC4 /* birthday_main.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = birthday_main.gif; sourceTree = "<group>"; };
 		9E5B5C261A07CF0100F9E424 /* PMWeekDayStat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMWeekDayStat.h; sourceTree = "<group>"; };
 		9E5B5C271A07CF0100F9E424 /* PMWeekDayStat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMWeekDayStat.m; sourceTree = "<group>"; };
 		9E5B5C2D1A07E1E400F9E424 /* PMDayReportView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMDayReportView.h; sourceTree = "<group>"; };
@@ -467,6 +476,9 @@
 		9E4C960D1A2EB61D00B5FFC4 /* specialday */ = {
 			isa = PBXGroup;
 			children = (
+				9E4C960E1A2EB90F00B5FFC4 /* PMBirthDayViewController.h */,
+				9E4C960F1A2EB90F00B5FFC4 /* PMBirthDayViewController.m */,
+				9E4C96101A2EB90F00B5FFC4 /* PMBirthDayViewController.xib */,
 			);
 			name = specialday;
 			sourceTree = "<group>";
@@ -617,6 +629,8 @@
 		9EF1310E19E02FF200843F02 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9E4C96131A2EB96900B5FFC4 /* birthday_guitar.gif */,
+				9E4C96141A2EB96900B5FFC4 /* birthday_main.gif */,
 				9EC4A6861A1C958C0089A208 /* calendar_day_selected.png */,
 				9E8AF2C61A19EBF000378B31 /* staff-bg.png */,
 				9E8AF2C41A19E61F00378B31 /* daycoursescheule-bg.png */,
@@ -956,6 +970,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E4C96121A2EB90F00B5FFC4 /* PMBirthDayViewController.xib in Resources */,
 				9E8AF2261A10751800378B31 /* clock_go.png in Resources */,
 				9EC4A6871A1C958C0089A208 /* calendar_day_selected.png in Resources */,
 				9EA76B7419F4BAA600B5613B /* btn_add_green.png in Resources */,
@@ -965,7 +980,9 @@
 				9E8AF2BF1A14895D00378B31 /* launch@2x.png in Resources */,
 				9E8AF2191A10618D00378B31 /* time_manage@2x.png in Resources */,
 				9E8AF2BB1A1484DF00378B31 /* launch.png in Resources */,
+				9E4C96161A2EB96900B5FFC4 /* birthday_main.gif in Resources */,
 				9E8AF27F1A133FCE00378B31 /* button_save.png in Resources */,
+				9E4C96151A2EB96900B5FFC4 /* birthday_guitar.gif in Resources */,
 				9E8AF21F1A1073F900378B31 /* calendar_expire@2x.png in Resources */,
 				9E8AF2271A10751800378B31 /* clock_pause.png in Resources */,
 				9E8AF2241A10751800378B31 /* clock_add.png in Resources */,
@@ -1087,6 +1104,7 @@
 				9E08E87019E825C400DFD7CA /* PMTimeSchedule.m in Sources */,
 				9EF1315919E02FF200843F02 /* UIDevice+Extend.m in Sources */,
 				9E08E84319E2C4B800DFD7CA /* PMCourseScheduleEditViewController.m in Sources */,
+				9E4C96111A2EB90F00B5FFC4 /* PMBirthDayViewController.m in Sources */,
 				9EC9DF9819FF6334008E3499 /* PMDayCourseSchedule+Wrapper.m in Sources */,
 				9EF1318719E1103B00843F02 /* FMWeekCalendarView.m in Sources */,
 				9E4C96071A2DEFF100B5FFC4 /* PMAnniversaryManager.m in Sources */,

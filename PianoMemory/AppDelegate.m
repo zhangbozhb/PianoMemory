@@ -11,8 +11,11 @@
 #import "PMAnniversaryManager.h"
 #import "PMSpecialDay.h"
 
+#import "PMBirthDayViewController.h"
+
 @interface AppDelegate ()
 @property (nonatomic) UIViewController *mainViewController;
+@property (nonatomic) UIViewController *birthDayViewController;
 @end
 
 @implementation AppDelegate
@@ -101,6 +104,14 @@
     return _mainViewController;
 }
 
+- (UIViewController *)birthDayViewController
+{
+    if (!_birthDayViewController) {
+        _birthDayViewController = [[PMBirthDayViewController alloc] init];
+    }
+    return _birthDayViewController;
+}
+
 - (void)updateRootViewController
 {
     UIViewController *targetViewController = nil;
@@ -108,7 +119,7 @@
     if (PMSpecialDayType_Birthday == specialDay) {
         targetViewController = self.mainViewController;
     } else  {
-        targetViewController = self.mainViewController;
+        targetViewController = self.birthDayViewController;
     }
     if (targetViewController != self.window.rootViewController) {
         [self.window setRootViewController:targetViewController];

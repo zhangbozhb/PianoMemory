@@ -16,6 +16,11 @@
 
 static NSString * const HCRKPropertyInspectionReadOnlyKey = @"isReadOnly";
 
+//拷贝自RKPropertyInspector.h
+static NSString * const RKPropertyInspectionNameKey = @"name";
+static NSString * const RKPropertyInspectionKeyValueCodingClassKey = @"keyValueCodingClass";
+static NSString * const RKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
+
 //该类是为了 加快对类的 inspect 速度，借用了 restkit 中的方法
 @interface HCClassInspectorCache : NSObject
 @property (nonatomic) dispatch_queue_t queue;
