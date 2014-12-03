@@ -24,7 +24,7 @@
 
     NSUInteger unitFlags = NSCalendarUnitYear| NSCalendarUnitMonth | NSCalendarUnitDay |NSCalendarUnitWeekday;
     NSDateComponents *components = [[NSCalendar currentCalendar] components:unitFlags fromDate:date];
-    NSDateComponents* lunaComponents = [[[NSCalendar alloc]initWithCalendarIdentifier:NSChineseCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
+    NSDateComponents* lunaComponents = [[[NSCalendar alloc] initWithCalendarIdentifier:NSChineseCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
     _year = components.year;
     _month = components.month;
     _day = components.day;

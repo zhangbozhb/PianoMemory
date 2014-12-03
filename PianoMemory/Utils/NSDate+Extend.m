@@ -99,6 +99,18 @@
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitMinute fromDate:self];
     return [components minute];
 }
+//获取农历日
+- (NSInteger)zb_getLunaDay
+{
+    NSDateComponents *dayComponents = [[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese] components:NSCalendarUnitDay fromDate:self];
+    return [dayComponents day];
+}
+//获取农历月
+- (NSInteger)zb_getLunaMonth
+{
+    NSDateComponents *dayComponents = [[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese] components:NSCalendarUnitMonth fromDate:self];
+    return [dayComponents month];
+}
 
 //获取在 week 中为第几天（周末1...周一2 ...  周六7）
 - (NSInteger)zb_weekDay

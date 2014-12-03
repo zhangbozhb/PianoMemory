@@ -33,6 +33,10 @@
 - (NSInteger)zb_getHour;
 //获取分钟
 - (NSInteger)zb_getMinute;
+//获取农历日
+- (NSInteger)zb_getLunaDay;
+//获取农历月
+- (NSInteger)zb_getLunaMonth;
 
 //获取在 week 中为第几天（周末1...周一2 ...  周六7）
 - (NSInteger)zb_weekDay;

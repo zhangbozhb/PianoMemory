@@ -26,6 +26,10 @@
 		9E08E87B19E8DAFF00DFD7CA /* PMTimeSchedule+Wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E87A19E8DAFF00DFD7CA /* PMTimeSchedule+Wrapper.m */; };
 		9E08E87E19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E87D19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m */; };
 		9E08E88219E92AA100DFD7CA /* PMUISettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E88119E92AA100DFD7CA /* PMUISettings.m */; };
+		9E4C95FF1A2DEFDA00B5FFC4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E4C96011A2DEFDA00B5FFC4 /* Localizable.strings */; };
+		9E4C96021A2DEFE100B5FFC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E4C96041A2DEFE100B5FFC4 /* InfoPlist.strings */; };
+		9E4C96071A2DEFF100B5FFC4 /* PMAnniversaryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4C96061A2DEFF100B5FFC4 /* PMAnniversaryManager.m */; };
+		9E4C960C1A2DFF8A00B5FFC4 /* PMSpecialDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4C960B1A2DFF8A00B5FFC4 /* PMSpecialDay.m */; };
 		9E5B5C281A07CF0100F9E424 /* PMWeekDayStat.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C271A07CF0100F9E424 /* PMWeekDayStat.m */; };
 		9E5B5C2F1A07E1E400F9E424 /* PMDayReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C2E1A07E1E400F9E424 /* PMDayReportView.m */; };
 		9E5B5C321A07E36E00F9E424 /* PMDayReportPieElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C311A07E36E00F9E424 /* PMDayReportPieElement.m */; };
@@ -184,6 +188,14 @@
 		9E08E87D19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMTimeScheduleEditViewController.m; sourceTree = "<group>"; };
 		9E08E88019E92AA100DFD7CA /* PMUISettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUISettings.h; sourceTree = "<group>"; };
 		9E08E88119E92AA100DFD7CA /* PMUISettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMUISettings.m; sourceTree = "<group>"; };
+		9E4C96001A2DEFDA00B5FFC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9E4C96031A2DEFE100B5FFC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9E4C96051A2DEFF100B5FFC4 /* PMAnniversaryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMAnniversaryManager.h; sourceTree = "<group>"; };
+		9E4C96061A2DEFF100B5FFC4 /* PMAnniversaryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMAnniversaryManager.m; sourceTree = "<group>"; };
+		9E4C96081A2DF00900B5FFC4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9E4C96091A2DF00900B5FFC4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		9E4C960A1A2DFF8A00B5FFC4 /* PMSpecialDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMSpecialDay.h; sourceTree = "<group>"; };
+		9E4C960B1A2DFF8A00B5FFC4 /* PMSpecialDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMSpecialDay.m; sourceTree = "<group>"; };
 		9E5B5C261A07CF0100F9E424 /* PMWeekDayStat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMWeekDayStat.h; sourceTree = "<group>"; };
 		9E5B5C271A07CF0100F9E424 /* PMWeekDayStat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMWeekDayStat.m; sourceTree = "<group>"; };
 		9E5B5C2D1A07E1E400F9E424 /* PMDayReportView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMDayReportView.h; sourceTree = "<group>"; };
@@ -452,6 +464,13 @@
 			name = uisettting;
 			sourceTree = "<group>";
 		};
+		9E4C960D1A2EB61D00B5FFC4 /* specialday */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = specialday;
+			sourceTree = "<group>";
+		};
 		9E5B5C251A07B6C300F9E424 /* statistics */ = {
 			isa = PBXGroup;
 			children = (
@@ -464,6 +483,9 @@
 		9E8AF29F1A1346B600378B31 /* more */ = {
 			isa = PBXGroup;
 			children = (
+				9E08E84419E2C70900DFD7CA /* course */,
+				9EA48B261A00A8B7004B03E9 /* courseschedule */,
+				9E08E87519E8D92000DFD7CA /* timeschedule */,
 				9E8AF2B51A135A7500378B31 /* PMNavMoreViewController.h */,
 				9E8AF2B61A135A7500378B31 /* PMNavMoreViewController.m */,
 				9E08E84519E2C88200DFD7CA /* PMMoreViewController.h */,
@@ -553,6 +575,8 @@
 				9EF1311A19E02FF200843F02 /* Utils */,
 				9EF130E919E029A900843F02 /* AppDelegate.h */,
 				9EF130EA19E029A900843F02 /* AppDelegate.m */,
+				9E4C960A1A2DFF8A00B5FFC4 /* PMSpecialDay.h */,
+				9E4C960B1A2DFF8A00B5FFC4 /* PMSpecialDay.m */,
 				9EF130EF19E029AA00843F02 /* Main.storyboard */,
 				9EF130F219E029AA00843F02 /* Images.xcassets */,
 				9EF130F419E029AA00843F02 /* LaunchScreen.xib */,
@@ -565,6 +589,8 @@
 		9EF130E519E029A900843F02 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9E4C96041A2DEFE100B5FFC4 /* InfoPlist.strings */,
+				9E4C96011A2DEFDA00B5FFC4 /* Localizable.strings */,
 				9EF130E619E029A900843F02 /* Info.plist */,
 				9EF130E719E029A900843F02 /* main.m */,
 			);
@@ -632,6 +658,8 @@
 				9EF1319619E229AA00843F02 /* wrapper */,
 				9E5B5C331A0874D800F9E424 /* PMCourseScheduleRepeat.h */,
 				9E5B5C341A0874D800F9E424 /* PMCourseScheduleRepeat.m */,
+				9E4C96051A2DEFF100B5FFC4 /* PMAnniversaryManager.h */,
+				9E4C96061A2DEFF100B5FFC4 /* PMAnniversaryManager.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -713,15 +741,13 @@
 		9EF1317819E0C9BA00843F02 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				9E8AF29F1A1346B600378B31 /* more */,
 				9E08E87F19E928F900DFD7CA /* uisettting */,
 				9EF1319E19E24AB200843F02 /* dataupdate */,
-				9EF1318F19E180E400843F02 /* student */,
-				9E08E84419E2C70900DFD7CA /* course */,
-				9E08E87519E8D92000DFD7CA /* timeschedule */,
-				9EA48B261A00A8B7004B03E9 /* courseschedule */,
 				9E08E84019E2C45100DFD7CA /* daycourseschedule */,
 				9EA0C2B51A038A3D001564BB /* report */,
+				9EF1318F19E180E400843F02 /* student */,
+				9E8AF29F1A1346B600378B31 /* more */,
+				9E4C960D1A2EB61D00B5FFC4 /* specialday */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -912,6 +938,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 9EF130D919E029A900843F02;
 			productRefGroup = 9EF130E319E029A900843F02 /* Products */;
@@ -945,9 +972,11 @@
 				9E8AF2301A107D8C00378B31 /* schedule_manage@2x.png in Resources */,
 				9E8AF2C71A19EBF000378B31 /* staff-bg.png in Resources */,
 				9E8AF2B11A1357CA00378B31 /* tab_statistics@2x.png in Resources */,
+				9E4C95FF1A2DEFDA00B5FFC4 /* Localizable.strings in Resources */,
 				9EF130F119E029AA00843F02 /* Main.storyboard in Resources */,
 				9E8AF2BE1A14895D00378B31 /* launch-4.png in Resources */,
 				9EF130F619E029AA00843F02 /* LaunchScreen.xib in Resources */,
+				9E4C96021A2DEFE100B5FFC4 /* InfoPlist.strings in Resources */,
 				9EA76B7519F4BAA600B5613B /* btn_add_green@2x.png in Resources */,
 				9E8AF2B91A135A8E00378B31 /* tab_more@2x.png in Resources */,
 				9E8AF2C21A19A9B400378B31 /* Icon@2x.png in Resources */,
@@ -1032,6 +1061,7 @@
 				9EF131AE19E27C0000843F02 /* PMServerWrapper.m in Sources */,
 				9EC4A6791A1B149D0089A208 /* PMCalendarDayCell.m in Sources */,
 				9E08E86A19E6C79E00DFD7CA /* PMCourseSchedule+Wrapper.m in Sources */,
+				9E4C960C1A2DFF8A00B5FFC4 /* PMSpecialDay.m in Sources */,
 				9EC4A67C1A1B16130089A208 /* PMCalendarView.m in Sources */,
 				9E8AF2921A133FE500378B31 /* NSData+Extend.m in Sources */,
 				9EC4A6761A1B0FD70089A208 /* PMCalendarMonthHeaderView.m in Sources */,
@@ -1059,6 +1089,7 @@
 				9E08E84319E2C4B800DFD7CA /* PMCourseScheduleEditViewController.m in Sources */,
 				9EC9DF9819FF6334008E3499 /* PMDayCourseSchedule+Wrapper.m in Sources */,
 				9EF1318719E1103B00843F02 /* FMWeekCalendarView.m in Sources */,
+				9E4C96071A2DEFF100B5FFC4 /* PMAnniversaryManager.m in Sources */,
 				9E08E87B19E8DAFF00DFD7CA /* PMTimeSchedule+Wrapper.m in Sources */,
 				9EF1315C19E02FF200843F02 /* UINavigationBar+Extend.m in Sources */,
 				9E08E86419E6B61500DFD7CA /* PMCoursePickerViewController.m in Sources */,
@@ -1117,6 +1148,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		9E4C96011A2DEFDA00B5FFC4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9E4C96001A2DEFDA00B5FFC4 /* Base */,
+				9E4C96091A2DF00900B5FFC4 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		9E4C96041A2DEFE100B5FFC4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9E4C96031A2DEFE100B5FFC4 /* Base */,
+				9E4C96081A2DF00900B5FFC4 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		9EF130EF19E029AA00843F02 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
