@@ -26,6 +26,8 @@
 		9E08E87B19E8DAFF00DFD7CA /* PMTimeSchedule+Wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E87A19E8DAFF00DFD7CA /* PMTimeSchedule+Wrapper.m */; };
 		9E08E87E19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E87D19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m */; };
 		9E08E88219E92AA100DFD7CA /* PMUISettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E88119E92AA100DFD7CA /* PMUISettings.m */; };
+		9E2EFB7A1A318DAE00A2B934 /* PMAppUpdateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E2EFB791A318DAE00A2B934 /* PMAppUpdateInfo.m */; };
+		9E2EFB801A31930700A2B934 /* PMAppConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E2EFB7F1A31930700A2B934 /* PMAppConfig.m */; };
 		9E4C95FF1A2DEFDA00B5FFC4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E4C96011A2DEFDA00B5FFC4 /* Localizable.strings */; };
 		9E4C96021A2DEFE100B5FFC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E4C96041A2DEFE100B5FFC4 /* InfoPlist.strings */; };
 		9E4C96071A2DEFF100B5FFC4 /* PMAnniversaryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4C96061A2DEFF100B5FFC4 /* PMAnniversaryManager.m */; };
@@ -192,6 +194,10 @@
 		9E08E87D19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMTimeScheduleEditViewController.m; sourceTree = "<group>"; };
 		9E08E88019E92AA100DFD7CA /* PMUISettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUISettings.h; sourceTree = "<group>"; };
 		9E08E88119E92AA100DFD7CA /* PMUISettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMUISettings.m; sourceTree = "<group>"; };
+		9E2EFB781A318DAE00A2B934 /* PMAppUpdateInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMAppUpdateInfo.h; sourceTree = "<group>"; };
+		9E2EFB791A318DAE00A2B934 /* PMAppUpdateInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMAppUpdateInfo.m; sourceTree = "<group>"; };
+		9E2EFB7E1A31930700A2B934 /* PMAppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMAppConfig.h; sourceTree = "<group>"; };
+		9E2EFB7F1A31930700A2B934 /* PMAppConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMAppConfig.m; sourceTree = "<group>"; };
 		9E4C96001A2DEFDA00B5FFC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9E4C96031A2DEFE100B5FFC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9E4C96051A2DEFF100B5FFC4 /* PMAnniversaryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMAnniversaryManager.h; sourceTree = "<group>"; };
@@ -473,6 +479,25 @@
 			name = uisettting;
 			sourceTree = "<group>";
 		};
+		9E2EFB771A318D7D00A2B934 /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				9E08E86B19E77CA400DFD7CA /* PMObject.h */,
+				9E08E86C19E77CA400DFD7CA /* PMObject.m */,
+				9EF1316B19E0323000843F02 /* PMCourse.h */,
+				9EF1316C19E0323000843F02 /* PMCourse.m */,
+				9EF1316819E0318000843F02 /* PMStudent.h */,
+				9EF1316919E0318000843F02 /* PMStudent.m */,
+				9E08E86E19E825C400DFD7CA /* PMTimeSchedule.h */,
+				9E08E86F19E825C400DFD7CA /* PMTimeSchedule.m */,
+				9EF1316E19E0357C00843F02 /* PMCourseSchedule.h */,
+				9EF1316F19E0357C00843F02 /* PMCourseSchedule.m */,
+				9E08E85A19E3C9EB00DFD7CA /* PMDayCourseSchedule.h */,
+				9E08E85B19E3C9EB00DFD7CA /* PMDayCourseSchedule.m */,
+			);
+			name = DB;
+			sourceTree = "<group>";
+		};
 		9E4C960D1A2EB61D00B5FFC4 /* specialday */ = {
 			isa = PBXGroup;
 			children = (
@@ -674,6 +699,8 @@
 				9E5B5C341A0874D800F9E424 /* PMCourseScheduleRepeat.m */,
 				9E4C96051A2DEFF100B5FFC4 /* PMAnniversaryManager.h */,
 				9E4C96061A2DEFF100B5FFC4 /* PMAnniversaryManager.m */,
+				9E2EFB7E1A31930700A2B934 /* PMAppConfig.h */,
+				9E2EFB7F1A31930700A2B934 /* PMAppConfig.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -804,18 +831,9 @@
 		9EF1318E19E17E6100843F02 /* entity */ = {
 			isa = PBXGroup;
 			children = (
-				9E08E86B19E77CA400DFD7CA /* PMObject.h */,
-				9E08E86C19E77CA400DFD7CA /* PMObject.m */,
-				9EF1316B19E0323000843F02 /* PMCourse.h */,
-				9EF1316C19E0323000843F02 /* PMCourse.m */,
-				9EF1316819E0318000843F02 /* PMStudent.h */,
-				9EF1316919E0318000843F02 /* PMStudent.m */,
-				9E08E86E19E825C400DFD7CA /* PMTimeSchedule.h */,
-				9E08E86F19E825C400DFD7CA /* PMTimeSchedule.m */,
-				9EF1316E19E0357C00843F02 /* PMCourseSchedule.h */,
-				9EF1316F19E0357C00843F02 /* PMCourseSchedule.m */,
-				9E08E85A19E3C9EB00DFD7CA /* PMDayCourseSchedule.h */,
-				9E08E85B19E3C9EB00DFD7CA /* PMDayCourseSchedule.m */,
+				9E2EFB771A318D7D00A2B934 /* DB */,
+				9E2EFB781A318DAE00A2B934 /* PMAppUpdateInfo.h */,
+				9E2EFB791A318DAE00A2B934 /* PMAppUpdateInfo.m */,
 			);
 			name = entity;
 			sourceTree = "<group>";
@@ -1061,6 +1079,7 @@
 				9EF1315619E02FF200843F02 /* NSDictionary+Extend.m in Sources */,
 				9EA76B7819F5001200B5613B /* PMTimeSchedulePickerViewController.m in Sources */,
 				9EF1315B19E02FF200843F02 /* UIImage+Extend.m in Sources */,
+				9E2EFB7A1A318DAE00A2B934 /* PMAppUpdateInfo.m in Sources */,
 				9EF1315D19E02FF200843F02 /* UINavigationItem+iOS7.m in Sources */,
 				9EF1315F19E02FF200843F02 /* UITableViewCell+SelectedView.m in Sources */,
 				9EF1314D19E02FF200843F02 /* HCObject.m in Sources */,
@@ -1077,6 +1096,7 @@
 				9E8AF2951A133FE500378B31 /* UITabBar+Extend.m in Sources */,
 				9EF131AE19E27C0000843F02 /* PMServerWrapper.m in Sources */,
 				9EC4A6791A1B149D0089A208 /* PMCalendarDayCell.m in Sources */,
+				9E2EFB801A31930700A2B934 /* PMAppConfig.m in Sources */,
 				9E08E86A19E6C79E00DFD7CA /* PMCourseSchedule+Wrapper.m in Sources */,
 				9E4C960C1A2DFF8A00B5FFC4 /* PMSpecialDay.m in Sources */,
 				9EC4A67C1A1B16130089A208 /* PMCalendarView.m in Sources */,

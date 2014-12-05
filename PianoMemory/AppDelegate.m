@@ -10,6 +10,7 @@
 #import "PMDataManager.h"
 #import "PMAnniversaryManager.h"
 #import "PMSpecialDay.h"
+#import "PMAppConfig.h"
 
 #import "PMBirthDayViewController.h"
 
@@ -24,6 +25,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    //初始化配置
+    [PMAppConfig registerDefautConfig];
+
     //初始化数据
     [[PMDataManager defaultDataMananger] initDataManager];
 
@@ -117,9 +121,9 @@
     UIViewController *targetViewController = nil;
     PMSpecialDayType specialDay = [PMSpecialDay specialDayTypeOfToday];
     if (PMSpecialDayType_Birthday == specialDay) {
-        targetViewController = self.mainViewController;
-    } else  {
         targetViewController = self.birthDayViewController;
+    } else  {
+        targetViewController = self.mainViewController;
     }
     if (targetViewController != self.window.rootViewController) {
         [self.window setRootViewController:targetViewController];
