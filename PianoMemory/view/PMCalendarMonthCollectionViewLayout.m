@@ -13,9 +13,11 @@
 {
     self = [super init];
     if (self) {
-        self.headerReferenceSize = CGSizeMake(320.0f, 65.f); //头部视图的框架大小
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        CGFloat screenWith = CGRectGetWidth(screenBounds);
+        self.headerReferenceSize = CGSizeMake(screenWith, 65.f); //头部视图的框架大小
         self.footerReferenceSize = CGSizeZero;
-        self.itemSize = CGSizeMake(floor(320/7.f), 70.0f);  //每个cell的大小
+        self.itemSize = CGSizeMake(floor(screenWith/7.f), 70.0f);  //每个cell的大小
         self.minimumLineSpacing = 0.0f;                     //每行的最小间距
         self.minimumInteritemSpacing = 0.0f;                //每列的最小间距
         self.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);   //网格视图的/上/左/下/右,的边距
