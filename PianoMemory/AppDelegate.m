@@ -123,7 +123,7 @@
     if (PMSpecialDayType_Birthday == specialDay) {
         targetViewController = self.birthDayViewController;
     } else  {
-        targetViewController = self.mainViewController;
+        targetViewController = self.birthDayViewController;
     }
     if (targetViewController != self.window.rootViewController) {
         [self.window setRootViewController:targetViewController];
