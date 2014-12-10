@@ -9,6 +9,8 @@
 #import "PMBirthDayViewController.h"
 #import <FLAnimatedImage/FLAnimatedImage.h>
 #import <FLAnimatedImage/FLAnimatedImageView.h>
+#import "PMSpecialDay.h"
+#import "NSDate+Extend.h"
 
 @interface PMBirthDayViewController ()
 
@@ -16,7 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet FLAnimatedImageView *birthdayImageView;
 @property (weak, nonatomic) IBOutlet FLAnimatedImageView *guitarImageView;
-@property (weak, nonatomic) IBOutlet UIScrollView *sweetWordScrollView;
+@property (weak, nonatomic) IBOutlet UILabel *wordLabel;
 @end
 
 @implementation PMBirthDayViewController
@@ -35,45 +37,12 @@
         FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:gifFile]];
         [self.guitarImageView setAnimatedImage:image];
     }
-}
 
-- (NSTimer *)autoScrollTimer
-{
-    if (!_autoScrollTimer) {
-        _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.3f target:self selector:@selector(scrollSweetWordContent) userInfo:nil repeats:YES];
+    NSInteger birthDayCount = [[NSDate date] zb_getYear] - [[PMSpecialDay birthdayDate] zb_getYear];
+    if (1 == birthDayCount) {
+        @"亲爱的，今天我们在一起后的第一个生日，我想给你一个特别的礼物";
     }
-    return _autoScrollTimer;
-}
 
-- (void)scrollSweetWordContent
-{
-    UIScrollView *scrollView = self.sweetWordScrollView;
-    CGFloat maxOffset = scrollView.contentSize.height-scrollView.frame.size.height;
-    CGFloat curOffset = scrollView.contentOffset.y;
-    CGFloat targetOffset = curOffset;
-    CGFloat scrollSpeed = 2.f;
-    if (curOffset < maxOffset) {
-        if (curOffset + scrollSpeed < maxOffset) {
-            targetOffset = curOffset + scrollSpeed;
-        } else {
-            targetOffset = maxOffset;
-        }
-    } else {
-        targetOffset = 0.f;
-    }
-    [scrollView setContentOffset:CGPointMake(0, targetOffset)];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    [self.autoScrollTimer fire];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [self.autoScrollTimer invalidate];
 }
 
 - (void)didReceiveMemoryWarning {

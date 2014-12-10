@@ -34,8 +34,6 @@
 		9E4C960C1A2DFF8A00B5FFC4 /* PMSpecialDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4C960B1A2DFF8A00B5FFC4 /* PMSpecialDay.m */; };
 		9E4C96111A2EB90F00B5FFC4 /* PMBirthDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4C960F1A2EB90F00B5FFC4 /* PMBirthDayViewController.m */; };
 		9E4C96121A2EB90F00B5FFC4 /* PMBirthDayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E4C96101A2EB90F00B5FFC4 /* PMBirthDayViewController.xib */; };
-		9E4C96151A2EB96900B5FFC4 /* birthday_guitar.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9E4C96131A2EB96900B5FFC4 /* birthday_guitar.gif */; };
-		9E4C96161A2EB96900B5FFC4 /* birthday_main.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9E4C96141A2EB96900B5FFC4 /* birthday_main.gif */; };
 		9E5B5C281A07CF0100F9E424 /* PMWeekDayStat.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C271A07CF0100F9E424 /* PMWeekDayStat.m */; };
 		9E5B5C2F1A07E1E400F9E424 /* PMDayReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C2E1A07E1E400F9E424 /* PMDayReportView.m */; };
 		9E5B5C321A07E36E00F9E424 /* PMDayReportPieElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C311A07E36E00F9E424 /* PMDayReportPieElement.m */; };
@@ -80,7 +78,26 @@
 		9E922B791A1DE1AD00F6AF43 /* PMDayScheduleCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E922B781A1DE1AD00F6AF43 /* PMDayScheduleCalendarViewController.m */; };
 		9E922B7C1A1EF87E00F6AF43 /* PMDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E922B7B1A1EF87E00F6AF43 /* PMDataManager.m */; };
 		9EA0C2B81A038A6C001564BB /* PMReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0C2B71A038A6C001564BB /* PMReportViewController.m */; };
-		9EA23D051A36E1AA009A4A64 /* sweetwordbg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D041A36E1AA009A4A64 /* sweetwordbg.jpg */; };
+		9EA23D091A37326B009A4A64 /* PMSweetWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA23D071A37326B009A4A64 /* PMSweetWordViewController.m */; };
+		9EA23D0A1A37326B009A4A64 /* PMSweetWordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D081A37326B009A4A64 /* PMSweetWordViewController.xib */; };
+		9EA23D291A3824D2009A4A64 /* allseason.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D181A3824D2009A4A64 /* allseason.jpg */; };
+		9EA23D2A1A3824D2009A4A64 /* autumn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D191A3824D2009A4A64 /* autumn.jpg */; };
+		9EA23D2B1A3824D2009A4A64 /* birthday_guitar.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D1A1A3824D2009A4A64 /* birthday_guitar.gif */; };
+		9EA23D2C1A3824D2009A4A64 /* birthday_main.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D1B1A3824D2009A4A64 /* birthday_main.gif */; };
+		9EA23D2D1A3824D2009A4A64 /* city.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D1C1A3824D2009A4A64 /* city.jpg */; };
+		9EA23D2E1A3824D2009A4A64 /* climb_mountain.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D1D1A3824D2009A4A64 /* climb_mountain.jpg */; };
+		9EA23D2F1A3824D2009A4A64 /* dayandlight.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D1E1A3824D2009A4A64 /* dayandlight.jpg */; };
+		9EA23D301A3824D2009A4A64 /* meet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D1F1A3824D2009A4A64 /* meet.jpg */; };
+		9EA23D311A3824D2009A4A64 /* meet_too_late.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D201A3824D2009A4A64 /* meet_too_late.jpg */; };
+		9EA23D321A3824D2009A4A64 /* sea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D211A3824D2009A4A64 /* sea.jpg */; };
+		9EA23D331A3824D2009A4A64 /* spring.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D221A3824D2009A4A64 /* spring.jpg */; };
+		9EA23D341A3824D2009A4A64 /* starsky.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D231A3824D2009A4A64 /* starsky.jpg */; };
+		9EA23D351A3824D2009A4A64 /* summer.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D241A3824D2009A4A64 /* summer.jpg */; };
+		9EA23D361A3824D2009A4A64 /* sunrise.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D251A3824D2009A4A64 /* sunrise.jpg */; };
+		9EA23D371A3824D2009A4A64 /* sunset.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D261A3824D2009A4A64 /* sunset.jpg */; };
+		9EA23D381A3824D2009A4A64 /* sweetwordbg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D271A3824D2009A4A64 /* sweetwordbg.jpg */; };
+		9EA23D391A3824D2009A4A64 /* winter.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA23D281A3824D2009A4A64 /* winter.jpg */; };
+		9EA23D3C1A3825D7009A4A64 /* PMSweetWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA23D3B1A3825D7009A4A64 /* PMSweetWord.m */; };
 		9EA48B291A00A928004B03E9 /* PMCourseScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA48B281A00A928004B03E9 /* PMCourseScheduleViewController.m */; };
 		9EA76B7419F4BAA600B5613B /* btn_add_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA76B7219F4BAA600B5613B /* btn_add_green.png */; };
 		9EA76B7519F4BAA600B5613B /* btn_add_green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA76B7319F4BAA600B5613B /* btn_add_green@2x.png */; };
@@ -210,8 +227,6 @@
 		9E4C960E1A2EB90F00B5FFC4 /* PMBirthDayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMBirthDayViewController.h; sourceTree = "<group>"; };
 		9E4C960F1A2EB90F00B5FFC4 /* PMBirthDayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMBirthDayViewController.m; sourceTree = "<group>"; };
 		9E4C96101A2EB90F00B5FFC4 /* PMBirthDayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PMBirthDayViewController.xib; sourceTree = "<group>"; };
-		9E4C96131A2EB96900B5FFC4 /* birthday_guitar.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = birthday_guitar.gif; sourceTree = "<group>"; };
-		9E4C96141A2EB96900B5FFC4 /* birthday_main.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = birthday_main.gif; sourceTree = "<group>"; };
 		9E5B5C261A07CF0100F9E424 /* PMWeekDayStat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMWeekDayStat.h; sourceTree = "<group>"; };
 		9E5B5C271A07CF0100F9E424 /* PMWeekDayStat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMWeekDayStat.m; sourceTree = "<group>"; };
 		9E5B5C2D1A07E1E400F9E424 /* PMDayReportView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMDayReportView.h; sourceTree = "<group>"; };
@@ -277,7 +292,28 @@
 		9E922B7B1A1EF87E00F6AF43 /* PMDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMDataManager.m; sourceTree = "<group>"; };
 		9EA0C2B61A038A6C001564BB /* PMReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMReportViewController.h; sourceTree = "<group>"; };
 		9EA0C2B71A038A6C001564BB /* PMReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMReportViewController.m; sourceTree = "<group>"; };
-		9EA23D041A36E1AA009A4A64 /* sweetwordbg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sweetwordbg.jpg; sourceTree = "<group>"; };
+		9EA23D061A37326B009A4A64 /* PMSweetWordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMSweetWordViewController.h; sourceTree = "<group>"; };
+		9EA23D071A37326B009A4A64 /* PMSweetWordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMSweetWordViewController.m; sourceTree = "<group>"; };
+		9EA23D081A37326B009A4A64 /* PMSweetWordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PMSweetWordViewController.xib; sourceTree = "<group>"; };
+		9EA23D181A3824D2009A4A64 /* allseason.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = allseason.jpg; sourceTree = "<group>"; };
+		9EA23D191A3824D2009A4A64 /* autumn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = autumn.jpg; sourceTree = "<group>"; };
+		9EA23D1A1A3824D2009A4A64 /* birthday_guitar.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = birthday_guitar.gif; sourceTree = "<group>"; };
+		9EA23D1B1A3824D2009A4A64 /* birthday_main.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = birthday_main.gif; sourceTree = "<group>"; };
+		9EA23D1C1A3824D2009A4A64 /* city.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = city.jpg; sourceTree = "<group>"; };
+		9EA23D1D1A3824D2009A4A64 /* climb_mountain.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = climb_mountain.jpg; sourceTree = "<group>"; };
+		9EA23D1E1A3824D2009A4A64 /* dayandlight.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dayandlight.jpg; sourceTree = "<group>"; };
+		9EA23D1F1A3824D2009A4A64 /* meet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = meet.jpg; sourceTree = "<group>"; };
+		9EA23D201A3824D2009A4A64 /* meet_too_late.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = meet_too_late.jpg; sourceTree = "<group>"; };
+		9EA23D211A3824D2009A4A64 /* sea.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sea.jpg; sourceTree = "<group>"; };
+		9EA23D221A3824D2009A4A64 /* spring.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = spring.jpg; sourceTree = "<group>"; };
+		9EA23D231A3824D2009A4A64 /* starsky.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = starsky.jpg; sourceTree = "<group>"; };
+		9EA23D241A3824D2009A4A64 /* summer.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = summer.jpg; sourceTree = "<group>"; };
+		9EA23D251A3824D2009A4A64 /* sunrise.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sunrise.jpg; sourceTree = "<group>"; };
+		9EA23D261A3824D2009A4A64 /* sunset.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sunset.jpg; sourceTree = "<group>"; };
+		9EA23D271A3824D2009A4A64 /* sweetwordbg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sweetwordbg.jpg; sourceTree = "<group>"; };
+		9EA23D281A3824D2009A4A64 /* winter.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = winter.jpg; sourceTree = "<group>"; };
+		9EA23D3A1A3825D7009A4A64 /* PMSweetWord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMSweetWord.h; sourceTree = "<group>"; };
+		9EA23D3B1A3825D7009A4A64 /* PMSweetWord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMSweetWord.m; sourceTree = "<group>"; };
 		9EA48B271A00A928004B03E9 /* PMCourseScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCourseScheduleViewController.h; sourceTree = "<group>"; };
 		9EA48B281A00A928004B03E9 /* PMCourseScheduleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMCourseScheduleViewController.m; sourceTree = "<group>"; };
 		9EA76B7219F4BAA600B5613B /* btn_add_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_add_green.png; sourceTree = "<group>"; };
@@ -506,6 +542,9 @@
 				9E4C960E1A2EB90F00B5FFC4 /* PMBirthDayViewController.h */,
 				9E4C960F1A2EB90F00B5FFC4 /* PMBirthDayViewController.m */,
 				9E4C96101A2EB90F00B5FFC4 /* PMBirthDayViewController.xib */,
+				9EA23D061A37326B009A4A64 /* PMSweetWordViewController.h */,
+				9EA23D071A37326B009A4A64 /* PMSweetWordViewController.m */,
+				9EA23D081A37326B009A4A64 /* PMSweetWordViewController.xib */,
 			);
 			name = specialday;
 			sourceTree = "<group>";
@@ -546,6 +585,30 @@
 				9EA0C2B71A038A6C001564BB /* PMReportViewController.m */,
 			);
 			name = report;
+			sourceTree = "<group>";
+		};
+		9EA23D171A3824D2009A4A64 /* sepecial */ = {
+			isa = PBXGroup;
+			children = (
+				9EA23D181A3824D2009A4A64 /* allseason.jpg */,
+				9EA23D191A3824D2009A4A64 /* autumn.jpg */,
+				9EA23D1A1A3824D2009A4A64 /* birthday_guitar.gif */,
+				9EA23D1B1A3824D2009A4A64 /* birthday_main.gif */,
+				9EA23D1C1A3824D2009A4A64 /* city.jpg */,
+				9EA23D1D1A3824D2009A4A64 /* climb_mountain.jpg */,
+				9EA23D1E1A3824D2009A4A64 /* dayandlight.jpg */,
+				9EA23D1F1A3824D2009A4A64 /* meet.jpg */,
+				9EA23D201A3824D2009A4A64 /* meet_too_late.jpg */,
+				9EA23D211A3824D2009A4A64 /* sea.jpg */,
+				9EA23D221A3824D2009A4A64 /* spring.jpg */,
+				9EA23D231A3824D2009A4A64 /* starsky.jpg */,
+				9EA23D241A3824D2009A4A64 /* summer.jpg */,
+				9EA23D251A3824D2009A4A64 /* sunrise.jpg */,
+				9EA23D261A3824D2009A4A64 /* sunset.jpg */,
+				9EA23D271A3824D2009A4A64 /* sweetwordbg.jpg */,
+				9EA23D281A3824D2009A4A64 /* winter.jpg */,
+			);
+			path = sepecial;
 			sourceTree = "<group>";
 		};
 		9EA48B261A00A8B7004B03E9 /* courseschedule */ = {
@@ -656,9 +719,7 @@
 		9EF1310E19E02FF200843F02 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				9EA23D041A36E1AA009A4A64 /* sweetwordbg.jpg */,
-				9E4C96131A2EB96900B5FFC4 /* birthday_guitar.gif */,
-				9E4C96141A2EB96900B5FFC4 /* birthday_main.gif */,
+				9EA23D171A3824D2009A4A64 /* sepecial */,
 				9EC4A6861A1C958C0089A208 /* calendar_day_selected.png */,
 				9E8AF2C61A19EBF000378B31 /* staff-bg.png */,
 				9E8AF2C41A19E61F00378B31 /* daycoursescheule-bg.png */,
@@ -704,6 +765,8 @@
 				9E4C96061A2DEFF100B5FFC4 /* PMAnniversaryManager.m */,
 				9E2EFB7E1A31930700A2B934 /* PMAppConfig.h */,
 				9E2EFB7F1A31930700A2B934 /* PMAppConfig.m */,
+				9EA23D3A1A3825D7009A4A64 /* PMSweetWord.h */,
+				9EA23D3B1A3825D7009A4A64 /* PMSweetWord.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -991,8 +1054,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EA23D321A3824D2009A4A64 /* sea.jpg in Resources */,
 				9E4C96121A2EB90F00B5FFC4 /* PMBirthDayViewController.xib in Resources */,
 				9E8AF2261A10751800378B31 /* clock_go.png in Resources */,
+				9EA23D291A3824D2009A4A64 /* allseason.jpg in Resources */,
 				9EC4A6871A1C958C0089A208 /* calendar_day_selected.png in Resources */,
 				9EA76B7419F4BAA600B5613B /* btn_add_green.png in Resources */,
 				9E8AF21E1A1073F900378B31 /* calendar_effect@2x.png in Resources */,
@@ -1000,31 +1065,44 @@
 				9E8AF22C1A1078AF00378B31 /* course_edit@2x.png in Resources */,
 				9E8AF2BF1A14895D00378B31 /* launch@2x.png in Resources */,
 				9E8AF2191A10618D00378B31 /* time_manage@2x.png in Resources */,
+				9EA23D341A3824D2009A4A64 /* starsky.jpg in Resources */,
 				9E8AF2BB1A1484DF00378B31 /* launch.png in Resources */,
-				9E4C96161A2EB96900B5FFC4 /* birthday_main.gif in Resources */,
 				9E8AF27F1A133FCE00378B31 /* button_save.png in Resources */,
-				9E4C96151A2EB96900B5FFC4 /* birthday_guitar.gif in Resources */,
 				9E8AF21F1A1073F900378B31 /* calendar_expire@2x.png in Resources */,
 				9E8AF2271A10751800378B31 /* clock_pause.png in Resources */,
+				9EA23D2C1A3824D2009A4A64 /* birthday_main.gif in Resources */,
 				9E8AF2241A10751800378B31 /* clock_add.png in Resources */,
 				9E8AF2301A107D8C00378B31 /* schedule_manage@2x.png in Resources */,
 				9E8AF2C71A19EBF000378B31 /* staff-bg.png in Resources */,
+				9EA23D301A3824D2009A4A64 /* meet.jpg in Resources */,
 				9E8AF2B11A1357CA00378B31 /* tab_statistics@2x.png in Resources */,
-				9EA23D051A36E1AA009A4A64 /* sweetwordbg.jpg in Resources */,
+				9EA23D391A3824D2009A4A64 /* winter.jpg in Resources */,
 				9E4C95FF1A2DEFDA00B5FFC4 /* Localizable.strings in Resources */,
 				9EF130F119E029AA00843F02 /* Main.storyboard in Resources */,
 				9E8AF2BE1A14895D00378B31 /* launch-4.png in Resources */,
+				9EA23D331A3824D2009A4A64 /* spring.jpg in Resources */,
+				9EA23D351A3824D2009A4A64 /* summer.jpg in Resources */,
+				9EA23D371A3824D2009A4A64 /* sunset.jpg in Resources */,
+				9EA23D2A1A3824D2009A4A64 /* autumn.jpg in Resources */,
+				9EA23D2F1A3824D2009A4A64 /* dayandlight.jpg in Resources */,
 				9EF130F619E029AA00843F02 /* LaunchScreen.xib in Resources */,
 				9E4C96021A2DEFE100B5FFC4 /* InfoPlist.strings in Resources */,
 				9EA76B7519F4BAA600B5613B /* btn_add_green@2x.png in Resources */,
+				9EA23D2D1A3824D2009A4A64 /* city.jpg in Resources */,
 				9E8AF2B91A135A8E00378B31 /* tab_more@2x.png in Resources */,
 				9E8AF2C21A19A9B400378B31 /* Icon@2x.png in Resources */,
+				9EA23D0A1A37326B009A4A64 /* PMSweetWordViewController.xib in Resources */,
 				9E8AF2C51A19E61F00378B31 /* daycoursescheule-bg.png in Resources */,
+				9EA23D2B1A3824D2009A4A64 /* birthday_guitar.gif in Resources */,
 				9E8AF2C31A19A9B400378B31 /* Icon@3x.png in Resources */,
 				9E8AF2801A133FCE00378B31 /* tab_user@2x.png in Resources */,
+				9EA23D361A3824D2009A4A64 /* sunrise.jpg in Resources */,
 				9EF130F319E029AA00843F02 /* Images.xcassets in Resources */,
+				9EA23D311A3824D2009A4A64 /* meet_too_late.jpg in Resources */,
 				9E8AF22E1A107B5C00378B31 /* course_manage@2x.png in Resources */,
+				9EA23D2E1A3824D2009A4A64 /* climb_mountain.jpg in Resources */,
 				9E8AF2251A10751800378B31 /* clock_delete.png in Resources */,
+				9EA23D381A3824D2009A4A64 /* sweetwordbg.jpg in Resources */,
 				9E8AF22A1A10763600378B31 /* users_edit@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1113,6 +1191,7 @@
 				9EF1315719E02FF200843F02 /* NSString+Extend.m in Sources */,
 				9E8AF2941A133FE500378B31 /* UINavigationItem+Extend.m in Sources */,
 				9E8AF2961A133FE500378B31 /* UITabBarItem+Extend.m in Sources */,
+				9EA23D3C1A3825D7009A4A64 /* PMSweetWord.m in Sources */,
 				9E08E86719E6C04400DFD7CA /* PMStudentPickerViewController.m in Sources */,
 				9EF131A719E24B9300843F02 /* PMDataUpdate.m in Sources */,
 				9EF1318D19E1770700843F02 /* PMDayCourseScheduleViewController.m in Sources */,
@@ -1123,6 +1202,7 @@
 				9E8AF2971A133FE500378B31 /* UIToolbar+Extend.m in Sources */,
 				9E08E85319E2E3C700DFD7CA /* UIView+Extend.m in Sources */,
 				9EF130EB19E029A900843F02 /* AppDelegate.m in Sources */,
+				9EA23D091A37326B009A4A64 /* PMSweetWordViewController.m in Sources */,
 				9EF131B119E27D0A00843F02 /* HCErrorMessage.m in Sources */,
 				9E8AF2981A133FE500378B31 /* ZBUtils.m in Sources */,
 				9E08E87019E825C400DFD7CA /* PMTimeSchedule.m in Sources */,
