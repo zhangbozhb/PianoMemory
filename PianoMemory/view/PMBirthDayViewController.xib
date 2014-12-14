@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="birthdayImageView" destination="qr8-68-Mhk" id="P7V-b9-xO1"/>
                 <outlet property="guitarImageView" destination="dTc-Wh-xJk" id="l6w-1n-zyL"/>
+                <outlet property="titleLabel" destination="EO1-bh-ZhX" id="MeX-2t-UGD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="wordLabel" destination="e4U-lJ-pme" id="9RY-dS-7s2"/>
             </connections>
@@ -19,12 +20,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="生日快乐" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="EO1-bh-ZhX">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="悦，生日快乐" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="EO1-bh-ZhX" customClass="FXLabel">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="bZT-TK-SyC"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -37,10 +38,10 @@
                 <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sweetwordbg.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="jaa-E6-LuB">
                     <rect key="frame" x="0.0" y="221" width="320" height="259"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="亲爱的，今天我们在一起后的第一个生日，我想给你一个特别的礼物" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="320" translatesAutoresizingMaskIntoConstraints="NO" id="e4U-lJ-pme">
-                    <rect key="frame" x="0.0" y="221" width="320" height="259"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="亲爱的，今天我们在一起后的第一个生日，我想给你一个特别的礼物" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="320" translatesAutoresizingMaskIntoConstraints="NO" id="e4U-lJ-pme" customClass="FXLabel">
+                    <rect key="frame" x="10" y="221" width="300" height="190"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="birthday_guitar.gif" translatesAutoresizingMaskIntoConstraints="NO" id="dTc-Wh-xJk" customClass="FLAnimatedImageView">
@@ -50,18 +51,39 @@
                         <constraint firstAttribute="width" constant="100" id="k9K-c2-MMr"/>
                     </constraints>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d5a-yM-MHe">
+                    <rect key="frame" x="0.0" y="420" width="320" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="AN5-2p-5f9"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                    <state key="normal" title="接受礼物">
+                        <color key="titleColor" red="0.99302393634490649" green="0.53957305159515179" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="acceptGiftAction:" destination="-1" eventType="touchUpInside" id="Imt-jT-SwH"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="qr8-68-Mhk" secondAttribute="trailing" constant="20" id="2Yy-WD-RNC"/>
                 <constraint firstItem="EO1-bh-ZhX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3Cy-ae-sPW"/>
+                <constraint firstItem="e4U-lJ-pme" firstAttribute="top" secondItem="qr8-68-Mhk" secondAttribute="bottom" id="4DG-iF-86n"/>
+                <constraint firstAttribute="trailing" secondItem="d5a-yM-MHe" secondAttribute="trailing" id="8AP-Y2-b5Y"/>
                 <constraint firstItem="jaa-E6-LuB" firstAttribute="top" secondItem="qr8-68-Mhk" secondAttribute="bottom" id="Byl-rg-duk"/>
                 <constraint firstAttribute="trailing" secondItem="EO1-bh-ZhX" secondAttribute="trailing" id="HbZ-hN-8NN"/>
+                <constraint firstAttribute="bottom" secondItem="d5a-yM-MHe" secondAttribute="bottom" constant="20" id="Ksh-8v-cNa"/>
                 <constraint firstItem="qr8-68-Mhk" firstAttribute="top" secondItem="EO1-bh-ZhX" secondAttribute="bottom" id="NP2-5J-o18"/>
+                <constraint firstItem="d5a-yM-MHe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="WGQ-uA-pfm"/>
                 <constraint firstAttribute="bottom" secondItem="dTc-Wh-xJk" secondAttribute="bottom" constant="10" id="WO7-V4-onG"/>
+                <constraint firstItem="e4U-lJ-pme" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="XxL-Jd-cah"/>
                 <constraint firstAttribute="bottom" secondItem="jaa-E6-LuB" secondAttribute="bottom" id="aKZ-mw-miP"/>
+                <constraint firstItem="d5a-yM-MHe" firstAttribute="top" secondItem="e4U-lJ-pme" secondAttribute="bottom" constant="9" id="nSQ-Z5-F9w"/>
                 <constraint firstAttribute="trailing" secondItem="jaa-E6-LuB" secondAttribute="trailing" id="qSE-Ki-1dX"/>
                 <constraint firstAttribute="trailing" secondItem="dTc-Wh-xJk" secondAttribute="trailing" id="roU-5I-xe4"/>
+                <constraint firstAttribute="trailing" secondItem="e4U-lJ-pme" secondAttribute="trailing" constant="10" id="uCJ-tx-z92"/>
                 <constraint firstItem="qr8-68-Mhk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="xWE-zL-lD7"/>
                 <constraint firstItem="EO1-bh-ZhX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xaO-wv-LBq"/>
                 <constraint firstItem="jaa-E6-LuB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xgV-u8-qBL"/>
@@ -71,7 +93,7 @@
     </objects>
     <resources>
         <image name="birthday_guitar.gif" width="200" height="200"/>
-        <image name="birthday_main.gif" width="400" height="230"/>
+        <image name="birthday_main.gif" width="398" height="229"/>
         <image name="sweetwordbg.jpg" width="650" height="520"/>
     </resources>
 </document>

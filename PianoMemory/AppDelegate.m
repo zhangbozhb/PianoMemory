@@ -13,7 +13,6 @@
 #import "PMAppConfig.h"
 
 #import "PMBirthDayViewController.h"
-#import "PMSweetWordViewController.h"
 
 @interface AppDelegate ()
 @property (nonatomic) UIViewController *mainViewController;
@@ -124,8 +123,16 @@
     if (PMSpecialDayType_Birthday == specialDay) {
         targetViewController = self.birthDayViewController;
     } else  {
-        targetViewController = [[PMSweetWordViewController alloc] init];
+        targetViewController = self.mainViewController;
     }
+    if (targetViewController != self.window.rootViewController) {
+        [self.window setRootViewController:targetViewController];
+    }
+}
+
+- (void)switchRootViewControllerToMain
+{
+    UIViewController *targetViewController = self.mainViewController;
     if (targetViewController != self.window.rootViewController) {
         [self.window setRootViewController:targetViewController];
     }

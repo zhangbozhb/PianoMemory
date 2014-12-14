@@ -22,7 +22,7 @@
                 <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sweetwordbg.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="KJ4-7l-s9u">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="跳过" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="50" translatesAutoresizingMaskIntoConstraints="NO" id="4wp-I9-FEz">
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="跳过" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="50" translatesAutoresizingMaskIntoConstraints="NO" id="4wp-I9-FEz">
                     <rect key="frame" x="270" y="8" width="50" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="Ppr-Kk-g5N"/>
@@ -32,8 +32,8 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="320" translatesAutoresizingMaskIntoConstraints="NO" id="1eY-d0-6IE" customClass="FXLabel">
-                    <rect key="frame" x="0.0" y="324" width="320" height="36"/>
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="320" translatesAutoresizingMaskIntoConstraints="NO" id="1eY-d0-6IE" customClass="FXLabel">
+                    <rect key="frame" x="10" y="324" width="300" height="36"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="36" id="uHd-X1-BrB"/>
                     </constraints>
@@ -41,7 +41,7 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="zne-pR-RDU" customClass="FXLabel">
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="zne-pR-RDU" customClass="FXLabel">
                     <rect key="frame" x="20" y="360" width="280" height="80"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="80" id="Ydh-G7-wFg"/>
@@ -55,7 +55,7 @@
             <constraints>
                 <constraint firstItem="zne-pR-RDU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="2Dq-ls-d0q"/>
                 <constraint firstAttribute="trailing" secondItem="4wp-I9-FEz" secondAttribute="trailing" id="CFb-kW-gGR"/>
-                <constraint firstAttribute="trailing" secondItem="1eY-d0-6IE" secondAttribute="trailing" id="EWt-2U-2tq"/>
+                <constraint firstAttribute="trailing" secondItem="1eY-d0-6IE" secondAttribute="trailing" constant="10" id="EWt-2U-2tq"/>
                 <constraint firstItem="KJ4-7l-s9u" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="M5I-xF-skw"/>
                 <constraint firstAttribute="trailing" secondItem="zne-pR-RDU" secondAttribute="trailing" constant="20" id="MDf-vD-HkE"/>
                 <constraint firstAttribute="bottom" secondItem="KJ4-7l-s9u" secondAttribute="bottom" id="WpK-S3-GKP"/>
@@ -64,7 +64,7 @@
                 <constraint firstItem="4wp-I9-FEz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="dVg-22-Nfi"/>
                 <constraint firstAttribute="trailing" secondItem="KJ4-7l-s9u" secondAttribute="trailing" id="mMv-M4-yTi"/>
                 <constraint firstItem="zne-pR-RDU" firstAttribute="top" secondItem="1eY-d0-6IE" secondAttribute="bottom" id="t4M-Y5-o5y"/>
-                <constraint firstItem="1eY-d0-6IE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="utV-ow-umt"/>
+                <constraint firstItem="1eY-d0-6IE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="utV-ow-umt"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>

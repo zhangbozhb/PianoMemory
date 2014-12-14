@@ -10,9 +10,10 @@
 #import <FXLabel/FXLabel.h>
 #import "PMSweetWord.h"
 #import "CoreAnimationEffect.h"
+#import "AppDelegate.h"
 
 @interface PMSweetWordViewController ()
-@property (nonatomic) NSUInteger currentIndex;
+@property (nonatomic) NSInteger currentIndex;
 @property (nonatomic) NSTimer *autoSwitchTimer;
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
@@ -35,6 +36,16 @@
     UISwipeGestureRecognizer *rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(loadPrevious)];
     rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:rightSwipeGestureRecognizer];
+
+    UITapGestureRecognizer *skipGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(skipThisViewControllerToMain)];
+    [self.skipLabel addGestureRecognizer:skipGestureRecognizer];
+
+    UITapGestureRecognizer *playAgainGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(replayThisViewController)];
+    [self.titleLabel addGestureRecognizer:playAgainGestureRecognizer];
+
+    UITapGestureRecognizer *startToUseGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startToUseApp)];
+    [self.detailLabel addGestureRecognizer:startToUseGestureRecognizer];
+
 
     self.titleLabel.shadowColor = [UIColor grayColor];
     self.titleLabel.shadowOffset = CGSizeMake(1.f, 1.f);
@@ -61,10 +72,11 @@
     PMSweetWord *sweetWord14 = [[PMSweetWord alloc] initWithTitle:nil sweetWord:@"我想和你一起仰望星空，感受那无尽星空的深邃" image:@"starsky.jpg"];
     PMSweetWord *sweetWord15 = [[PMSweetWord alloc] initWithTitle:nil sweetWord:@"我只是想陪伴你日日夜夜..." image:@"dayandlight.jpg"];
     PMSweetWord *sweetWord16 = [[PMSweetWord alloc] initWithTitle:@"我想的还有很多..." sweetWord:@"我最想的还是和你一起慢慢变老" image:@"getting_old.jpg"];
+    PMSweetWord *sweetWord17 = [[PMSweetWord alloc] initWithTitle:@"在放一遍" sweetWord:@"开始使用" image:@"getting_old.jpg"];
 
     self.sweetWords = [NSArray arrayWithObjects:sweetWord1, sweetWord2, sweetWord3, sweetWord4, sweetWord5,
                        sweetWord6, sweetWord7, sweetWord8,sweetWord9, sweetWord10, sweetWord11, sweetWord12,
-                       sweetWord13, sweetWord14, sweetWord15, sweetWord16, nil];
+                       sweetWord13, sweetWord14, sweetWord15, sweetWord16, sweetWord17, nil];
 
 }
 
@@ -83,14 +95,13 @@
 
 - (void)switchSweetWord
 {
-    self.currentIndex = self.currentIndex + 1;
-    if (self.currentIndex < [self.sweetWords count]) {
+    NSInteger maxIndex = [self.sweetWords count] - 1;
+    if (self.currentIndex < maxIndex) {
+        self.currentIndex = self.currentIndex + 1;
         PMSweetWord *sweetWord = [self.sweetWords objectAtIndex:self.currentIndex];
         [self refreshUIWithSweetWord:sweetWord];
-    } else {
-        self.currentIndex = 0;
+        [CoreAnimationEffect animationCubeFromRight:self.view];
     }
-    [CoreAnimationEffect animationCubeFromRight:self.view];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -118,25 +129,50 @@
 
 - (void)loadNext
 {
-    if (self.currentIndex < [self.sweetWords count] - 1) {
+    NSInteger maxIndex = [self.sweetWords count] - 1;
+    if (self.currentIndex < maxIndex) {
         self.currentIndex = self.currentIndex + 1;
         PMSweetWord *sweetWord = [self.sweetWords objectAtIndex:self.currentIndex];
         [self refreshUIWithSweetWord:sweetWord];
+        [CoreAnimationEffect animationCubeFromRight:self.view];
     }
-    [CoreAnimationEffect animationCubeFromRight:self.view];
 
 }
 
 - (void)loadPrevious
 {
+    NSInteger maxIndex = [self.sweetWords count] - 1;
     self.currentIndex = self.currentIndex - 1;
-    if (self.currentIndex < [self.sweetWords count]) {
+    if (self.currentIndex <= maxIndex) {
         PMSweetWord *sweetWord = [self.sweetWords objectAtIndex:self.currentIndex];
         [self refreshUIWithSweetWord:sweetWord];
     } else {
         self.currentIndex = 0;
     }
     [CoreAnimationEffect animationCubeFromLeft:self.view];
+}
+
+- (void)skipThisViewControllerToMain
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate switchRootViewControllerToMain];
+}
+
+- (void)replayThisViewController
+{
+    NSInteger maxIndex = [self.sweetWords count] - 1;
+    if (maxIndex == self.currentIndex) {
+        self.currentIndex = -1;
+        [self.autoSwitchTimer fire];
+    }
+}
+
+- (void)startToUseApp
+{
+    NSInteger maxIndex = [self.sweetWords count] - 1;
+    if (maxIndex == self.currentIndex) {
+        [self skipThisViewControllerToMain];
+    }
 }
 
 @end
