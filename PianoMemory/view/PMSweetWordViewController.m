@@ -54,10 +54,10 @@
     self.detailLabel.shadowBlur = 20.0f;
 
 
-    PMSweetWord *sweetWord1 = [[PMSweetWord alloc] initWithTitle:nil sweetWord:@"遇到你一场场美丽的意外，那天你白衣斯雪，似那误入凡尘的精灵，出现在我面前，出现在我的心里" image:@"meet.jpg"];
+    PMSweetWord *sweetWord1 = [[PMSweetWord alloc] initWithTitle:nil sweetWord:@"遇到你一场美丽的意外，那天你白衣似雪，似那误入凡尘的精灵，出现在我面前，出现在我的心里" image:@"meet.jpg"];
     PMSweetWord *sweetWord2 = [[PMSweetWord alloc] initWithTitle:nil sweetWord:@"都说无论多早遇到那个对的人，都会嫌太迟，而你就是那个让我始终觉得相遇太迟的人" image:@"meet_too_late.jpg"];
 
-    PMSweetWord *sweetWord3 = [[PMSweetWord alloc] initWithTitle:nil sweetWord:@"那个金色的秋天，银杏飞舞的季节，认识你就是我最大的收获" image:@"autumn.jpg"];
+    PMSweetWord *sweetWord3 = [[PMSweetWord alloc] initWithTitle:nil sweetWord:@"那个金色的秋天，银杏飞舞的季节，认识你是我最大的收获" image:@"autumn.jpg"];
     PMSweetWord *sweetWord4 = [[PMSweetWord alloc] initWithTitle:nil sweetWord:@"这个银色的冬天，白雪纷飞的季节，你的陪伴给了我最多的温暖" image:@"winter.jpg"];
     PMSweetWord *sweetWord5 = [[PMSweetWord alloc] initWithTitle:nil sweetWord:@"即将到来的生命的春天，万物复苏的季节，你给我的人生注入了新的活力" image:@"spring.jpg"];
     PMSweetWord *sweetWord6 = [[PMSweetWord alloc] initWithTitle:nil sweetWord:@"还会经历热烈夏天，绚烂的季节，感受生命的炽热与激情" image:@"summer.jpg"];
@@ -72,7 +72,7 @@
     PMSweetWord *sweetWord14 = [[PMSweetWord alloc] initWithTitle:nil sweetWord:@"我想和你一起仰望星空，感受那无尽星空的深邃" image:@"starsky.jpg"];
     PMSweetWord *sweetWord15 = [[PMSweetWord alloc] initWithTitle:nil sweetWord:@"我只是想陪伴你日日夜夜..." image:@"dayandlight.jpg"];
     PMSweetWord *sweetWord16 = [[PMSweetWord alloc] initWithTitle:@"我想的还有很多..." sweetWord:@"我最想的还是和你一起慢慢变老" image:@"getting_old.jpg"];
-    PMSweetWord *sweetWord17 = [[PMSweetWord alloc] initWithTitle:@"在放一遍" sweetWord:@"开始使用" image:@"getting_old.jpg"];
+    PMSweetWord *sweetWord17 = [[PMSweetWord alloc] initWithTitle:@"再放一遍" sweetWord:@"关闭" image:@"getting_old.jpg"];
 
     self.sweetWords = [NSArray arrayWithObjects:sweetWord1, sweetWord2, sweetWord3, sweetWord4, sweetWord5,
                        sweetWord6, sweetWord7, sweetWord8,sweetWord9, sweetWord10, sweetWord11, sweetWord12,

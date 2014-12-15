@@ -66,6 +66,7 @@
                         [weekDayScheudles addObject:courseSchdeudle];
                     } else {
                         weekDayScheudles = [NSMutableArray arrayWithObject:courseSchdeudle];
+                        [repreatWeekDayMapping setObject:weekDayScheudles forKey:mappingKey];
                     }
                 }
             }

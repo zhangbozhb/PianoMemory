@@ -37,7 +37,7 @@
         dayType = PMSpecialDayType_LoveDay1000;
     }
 
-    return PMSpecialDayType_None;
+    return dayType;
 }
 
 + (NSDate*)birthdayDate

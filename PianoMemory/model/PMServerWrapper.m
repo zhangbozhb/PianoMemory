@@ -409,8 +409,8 @@
             targetDate = [NSDate date];
         }
 
-        NSInteger startTime = [date zb_timestampOfDay];
-        NSInteger endTime = [[date zb_dateAfterDay:1] zb_timestampOfDay];
+        NSInteger startTime = [targetDate zb_timestampOfDay];
+        NSInteger endTime = [[targetDate zb_dateAfterDay:1] zb_timestampOfDay];
         NSArray *dayCourseScheduleArray = [self.localServer queryDayCourseSchedulesFrom:startTime toEndTime:endTime fillNotExist:YES];
         if (success) {
             success([dayCourseScheduleArray firstObject]);

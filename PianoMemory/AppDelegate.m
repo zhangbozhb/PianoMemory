@@ -53,6 +53,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [self clearBadgeNumber];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -63,39 +64,15 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)testNotification
-{
-    UILocalNotification *notification=[[UILocalNotification alloc] init];
-    NSDate *now = [NSDate new];
-    notification.fireDate = [now dateByAddingTimeInterval:6]; //触发通知的时间
-    notification.repeatInterval = kCFCalendarUnitMinute; //循环次数，kCFCalendarUnitWeekday一周一次
-
-    notification.alertBody=@"顶部提示内容，通知时间到啦";
-    //通知提示音 使用默认的
-    notification.soundName= UILocalNotificationDefaultSoundName;
-    notification.alertAction=NSLocalizedString(@"你锁屏啦，通知时间到啦", nil);
-
-    notification.applicationIconBadgeNumber = 10; //设置app图标右上角的数字
-
-    //下面设置本地通知发送的消息，这个消息可以接受
-    NSDictionary* infoDic = [NSDictionary dictionaryWithObject:@"value" forKey:@"key"];
-    notification.userInfo = infoDic;
-    //发送通知
-    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-}
-
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification*)notification{
 
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"LocalNotification" message:notification.alertBody delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"今天是什么日子呢" message:notification.alertBody delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
     [alert show];
+}
 
-    NSDictionary* dic = [[NSDictionary alloc]init];
-    //这里可以接受到本地通知中心发送的消息
-    dic = notification.userInfo;
-    NSLog(@"user info = %@",[dic objectForKey:@"key"]);
-
-    // 图标上的数字减1
-    application.applicationIconBadgeNumber -= 1;
+- (void)clearBadgeNumber
+{
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 #pragma view controllers

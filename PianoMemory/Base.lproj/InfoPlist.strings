@@ -1,7 +1,9 @@
-/* 
-  InfoPlist.strings
-  PianoMemory
+/*
+ InfoPlist.strings
+ PianoMemory
 
-  Created by 张 波 on 14/12/2.
-  Copyright (c) 2014年 yue. All rights reserved.
-*/
+ Created by 张 波 on 14/12/2.
+ Copyright (c) 2014年 yue. All rights reserved.
+ */
+/* Localized versions of Info.plist keys */
+CFBundleDisplayName="悦课表";
