@@ -25,9 +25,12 @@
 
     NSDate *meetDate = [self firstMeetDate];
     if ([[meetDate zb_dateAfterDay:100] zb_timestampOfDay] == todayTimestamp) {
-        dayType = PMSpecialDayType_ForegatherDay100;
+        dayType = PMSpecialDayType_MeetDay100;
     } else if ([[meetDate zb_dateAfterDay:1000] zb_timestampOfDay] == todayTimestamp) {
-        dayType = PMSpecialDayType_ForegatherDay1000;
+        dayType = PMSpecialDayType_MeetDay1000;
+    } else if ([meetDate zb_getMonth] ==  [todayDate zb_getMonth]
+               && [meetDate zb_getDay] ==  [todayDate zb_getDay]) {
+        dayType = PMSpecialDayType_MeetDay;
     }
 
     NSDate *loveDate = [self failInLoveDate];
@@ -35,6 +38,9 @@
         dayType = PMSpecialDayType_LoveDay100;
     } else if ([[loveDate zb_dateAfterDay:1000] zb_timestampOfDay] == todayTimestamp) {
         dayType = PMSpecialDayType_LoveDay1000;
+    } else if ([loveDate zb_getMonth] ==  [todayDate zb_getMonth]
+               && [loveDate zb_getDay] ==  [todayDate zb_getDay]) {
+        dayType = PMSpecialDayType_LoveDay;
     }
 
     return dayType;
@@ -75,13 +81,13 @@
         case PMSpecialDayType_Birthday:
             specailDate = [self birthdayDate];
             break;
-        case PMSpecialDayType_ForegatherDay:
+        case PMSpecialDayType_MeetDay:
             specailDate = [self firstMeetDate];
             break;
-        case PMSpecialDayType_ForegatherDay100:
+        case PMSpecialDayType_MeetDay100:
             specailDate = [[self firstMeetDate] zb_dateAfterDay:100];
             break;
-        case PMSpecialDayType_ForegatherDay1000:
+        case PMSpecialDayType_MeetDay1000:
             specailDate = [[self firstMeetDate] zb_dateAfterDay:1000];
             break;
         case PMSpecialDayType_LoveDay:

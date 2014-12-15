@@ -27,29 +27,29 @@
     //取消原来的所有通知
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 
-    [self startForegatherNotification];
+    [self startMeetNotification];
 
     [self startLoveNotification];
 }
 
 //相识通知
-- (void)startForegatherNotification
+- (void)startMeetNotification
 {
     NSArray *timeTrigerDayArray = [NSArray arrayWithObjects:
-                                   [PMSpecialDay specialDateOfType:PMSpecialDayType_ForegatherDay100],
-                                   [PMSpecialDay specialDateOfType:PMSpecialDayType_ForegatherDay1000],
+                                   [PMSpecialDay specialDateOfType:PMSpecialDayType_MeetDay100],
+                                   [PMSpecialDay specialDateOfType:PMSpecialDayType_MeetDay1000],
                                    nil];
     NSArray *timeTrigerBriefArray = [NSArray arrayWithObjects:
-                                     NSLocalizedString(@"foregatherDay100Brief", @"foregatherDay100Brief"),
-                                     NSLocalizedString(@"foregatherDay1000Brief", @"foregatherDay1000Brief"),
+                                     NSLocalizedString(@"x", @"meetDay100Brief"),
+                                     NSLocalizedString(@"meetDay1000Brief", @"meetDay1000Brief"),
                                      nil];
     NSArray *timeTrigerDayTypeArray = [NSArray arrayWithObjects:
-                                   [NSNumber numberWithInteger:PMSpecialDayType_ForegatherDay100],
-                                   [NSNumber numberWithInteger:PMSpecialDayType_ForegatherDay1000],
+                                   [NSNumber numberWithInteger:PMSpecialDayType_MeetDay100],
+                                   [NSNumber numberWithInteger:PMSpecialDayType_MeetDay1000],
                                    nil];
     NSArray *timeTrigerDetailArray = [NSArray arrayWithObjects:
-                                      NSLocalizedString(@"foregatherDay100Detail", @"foregatherDay100Detail"),
-                                      NSLocalizedString(@"foregatherDay1000Detail", @"foregatherDay1000Detail"),
+                                      NSLocalizedString(@"meetDay100Detail", @"meetDay100Detail"),
+                                      NSLocalizedString(@"meetDay1000Detail", @"meetDay1000Detail"),
                                       nil];
     NSDate *currentDate = [NSDate date];
     for (NSInteger index = 0, count = [timeTrigerDayArray count]; index < count; ++index) {
@@ -61,7 +61,7 @@
         notification.alertBody = [timeTrigerBriefArray objectAtIndex:index];
 
         notification.soundName = UILocalNotificationDefaultSoundName;   //通知提示音 使用默认的
-        notification.alertAction = NSLocalizedString(@"foregatherDayAction", @"foregatherDayAction");
+        notification.alertAction = NSLocalizedString(@"meetDayAction", @"meetDayAction");
         notification.applicationIconBadgeNumber = 1; //设置app图标右上角的数字
 
         //下面设置本地通知发送的消息，这个消息可以接受
@@ -75,16 +75,16 @@
     }
 
     //周年提醒
-    NSDate *foregatherDay = [PMSpecialDay specialDateOfType:PMSpecialDayType_ForegatherDay100];
-    while (NSOrderedAscending == [foregatherDay compare:currentDate]) {
-        foregatherDay = [foregatherDay zb_dateAfterYear:1];
+    NSDate *meetDay = [PMSpecialDay specialDateOfType:PMSpecialDayType_MeetDay100];
+    while (NSOrderedAscending == [meetDay compare:currentDate]) {
+        meetDay = [meetDay zb_dateAfterYear:1];
     }
     UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.fireDate = foregatherDay; //触发通知的时间
+    notification.fireDate = meetDay; //触发通知的时间
     notification.repeatInterval = NSCalendarUnitYear; //循环次数
-    notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"foregatherDayBrief", @"foregatherDayBrief"), (long)([currentDate zb_getYear]-[foregatherDay zb_getYear])];
+    notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"meetDayBrief", @"meetDayBrief"), (long)([currentDate zb_getYear]-[meetDay zb_getYear])];
     notification.soundName = UILocalNotificationDefaultSoundName;   //通知提示音 使用默认的
-    notification.alertAction = NSLocalizedString(@"foregatherDayAction", @"foregatherDayAction");
+    notification.alertAction = NSLocalizedString(@"meetDayAction", @"meetDayAction");
     notification.applicationIconBadgeNumber = 1; //设置app图标右上角的数字
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
@@ -133,14 +133,14 @@
     }
 
     //周年提醒
-    NSDate *foregatherDay = [PMSpecialDay specialDateOfType:PMSpecialDayType_LoveDay];
-    while (NSOrderedAscending ==  [foregatherDay compare:currentDate]) {
-        foregatherDay = [foregatherDay zb_dateAfterYear:1];
+    NSDate *meetDay = [PMSpecialDay specialDateOfType:PMSpecialDayType_LoveDay];
+    while (NSOrderedAscending ==  [meetDay compare:currentDate]) {
+        meetDay = [meetDay zb_dateAfterYear:1];
     }
     UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.fireDate = foregatherDay; //触发通知的时间
+    notification.fireDate = meetDay; //触发通知的时间
     notification.repeatInterval = NSCalendarUnitYear; //循环次数
-    notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"loveDayBrief", @"loveDayBrief"), (long)([currentDate zb_getYear]-[foregatherDay zb_getYear])];
+    notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"loveDayBrief", @"loveDayBrief"), (long)([currentDate zb_getYear]-[meetDay zb_getYear])];
     notification.soundName = UILocalNotificationDefaultSoundName;   //通知提示音 使用默认的
     notification.alertAction = NSLocalizedString(@"loveDayAction", @"loveDayAction");
     notification.applicationIconBadgeNumber = 1; //设置app图标右上角的数字

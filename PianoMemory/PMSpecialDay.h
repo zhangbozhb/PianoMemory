@@ -11,9 +11,9 @@
 typedef enum {
     PMSpecialDayType_None = 0,
     PMSpecialDayType_Birthday,
-    PMSpecialDayType_ForegatherDay,
-    PMSpecialDayType_ForegatherDay100,
-    PMSpecialDayType_ForegatherDay1000,
+    PMSpecialDayType_MeetDay,
+    PMSpecialDayType_MeetDay100,
+    PMSpecialDayType_MeetDay1000,
     PMSpecialDayType_LoveDay,
     PMSpecialDayType_LoveDay100,
     PMSpecialDayType_LoveDay1000,
