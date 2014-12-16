@@ -100,7 +100,7 @@
         self.currentIndex = self.currentIndex + 1;
         PMSweetWord *sweetWord = [self.sweetWords objectAtIndex:self.currentIndex];
         [self refreshUIWithSweetWord:sweetWord];
-        [CoreAnimationEffect animationCubeFromRight:self.view];
+        [CoreAnimationEffect animationCurlUp:self.view];
     }
 }
 
@@ -134,7 +134,7 @@
         self.currentIndex = self.currentIndex + 1;
         PMSweetWord *sweetWord = [self.sweetWords objectAtIndex:self.currentIndex];
         [self refreshUIWithSweetWord:sweetWord];
-        [CoreAnimationEffect animationCubeFromRight:self.view];
+        [CoreAnimationEffect animationCurlUp:self.view];
     }
 
 }
@@ -149,7 +149,7 @@
     } else {
         self.currentIndex = 0;
     }
-    [CoreAnimationEffect animationCubeFromLeft:self.view];
+    [CoreAnimationEffect animationCurlDown:self.view];
 }
 
 - (void)skipThisViewControllerToMain
