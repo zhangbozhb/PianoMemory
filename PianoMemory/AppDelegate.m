@@ -11,6 +11,7 @@
 #import "PMAnniversaryManager.h"
 #import "PMSpecialDay.h"
 #import "PMAppConfig.h"
+#import "UIView+ScreenShot.h"
 
 #import "PMBirthDayViewController.h"
 
@@ -111,7 +112,37 @@
 {
     UIViewController *targetViewController = self.mainViewController;
     if (targetViewController != self.window.rootViewController) {
+        UIImage *image = [self.window zb_screenshot:YES];
+        CGSize imageSize = image.size;
+        CGRect leftImageFrame = CGRectMake(0, 0, imageSize.width/2.f, imageSize.height);
+        CGRect rightImageFrame = CGRectMake(imageSize.width/2.f, 0, imageSize.width/2.f, imageSize.height);
+        CGImageRef leftImageRef = CGImageCreateWithImageInRect(image.CGImage, leftImageFrame);
+        CGImageRef rightImageRef = CGImageCreateWithImageInRect(image.CGImage, rightImageFrame);
+        UIImage *leftImage = [UIImage imageWithCGImage:leftImageRef];
+        UIImage *rightImage = [UIImage imageWithCGImage:rightImageRef];
+        CGImageRelease(leftImageRef);
+        CGImageRelease(rightImageRef);
+
         [self.window setRootViewController:targetViewController];
+        UIImageView *leftImageView = [[UIImageView alloc] initWithImage:leftImage];
+        UIImageView *rightImageView = [[UIImageView alloc] initWithImage:rightImage];
+        [self.window addSubview:leftImageView];
+        [self.window addSubview:rightImageView];
+        [leftImageView setFrame:leftImageFrame];
+        [rightImageView setFrame:rightImageFrame];
+
+        leftImageView.transform = CGAffineTransformIdentity;
+        rightImageView.transform = CGAffineTransformIdentity;
+        UIView *rootView = targetViewController.view;
+        rootView.alpha = 0.5f;
+        [UIView animateWithDuration:2.f animations:^{
+            leftImageView.transform = CGAffineTransformMakeTranslation(-160 ,0);
+            rightImageView.transform = CGAffineTransformMakeTranslation(160 ,0);
+            rootView.alpha = 1.f;
+        } completion:^(BOOL finished) {
+            [leftImageView removeFromSuperview];
+            [rightImageView removeFromSuperview];
+        }];
     }
 }
 @end
