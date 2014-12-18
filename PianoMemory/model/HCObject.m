@@ -17,9 +17,9 @@
 static NSString * const HCRKPropertyInspectionReadOnlyKey = @"isReadOnly";
 
 //拷贝自RKPropertyInspector.h
-static NSString * const RKPropertyInspectionNameKey = @"name";
-static NSString * const RKPropertyInspectionKeyValueCodingClassKey = @"keyValueCodingClass";
-static NSString * const RKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
+static NSString * const HCRKPropertyInspectionNameKey = @"name";
+static NSString * const HCRKPropertyInspectionKeyValueCodingClassKey = @"keyValueCodingClass";
+static NSString * const HCRKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
 
 //该类是为了 加快对类的 inspect 速度，借用了 restkit 中的方法
 @interface HCClassInspectorCache : NSObject
@@ -103,9 +103,9 @@ static NSString * const RKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
                                 }
                             }
 
-                            NSDictionary *propertyInspection = @{ RKPropertyInspectionNameKey: propNameString,
-                                                                  RKPropertyInspectionKeyValueCodingClassKey: aClass,
-                                                                  RKPropertyInspectionIsPrimitiveKey: @(isPrimitive) };
+                            NSDictionary *propertyInspection = @{ HCRKPropertyInspectionNameKey: propNameString,
+                                                                  HCRKPropertyInspectionKeyValueCodingClassKey: aClass,
+                                                                  HCRKPropertyInspectionIsPrimitiveKey: @(isPrimitive) };
                             [inspection setObject:propertyInspection forKey:propNameString];
                         }
                     }
@@ -169,9 +169,9 @@ static NSString * const RKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
                                 }
                             }
                             if (!isReadOnly) {
-                                NSDictionary *propertyInspection = @{ RKPropertyInspectionNameKey: propNameString,
-                                                                      RKPropertyInspectionKeyValueCodingClassKey: aClass,
-                                                                      RKPropertyInspectionIsPrimitiveKey: @(isPrimitive) ,
+                                NSDictionary *propertyInspection = @{ HCRKPropertyInspectionNameKey: propNameString,
+                                                                      HCRKPropertyInspectionKeyValueCodingClassKey: aClass,
+                                                                      HCRKPropertyInspectionIsPrimitiveKey: @(isPrimitive) ,
                                                                       HCRKPropertyInspectionReadOnlyKey: @(isReadOnly)};
                                 [inspection setObject:propertyInspection forKey:propNameString];
                             }
@@ -192,26 +192,15 @@ static NSString * const RKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
     });
     return inspection;
 }
-
-+ (BOOL)getPropertyIsReadOnly:(NSString*)propertyName inspection:(NSDictionary *)inspection
-{
-    NSDictionary *propertyInspection = [inspection objectForKey:propertyName];
-    NSNumber *readOnlyNumber = [propertyInspection objectForKey:HCRKPropertyInspectionReadOnlyKey];
-    return [readOnlyNumber boolValue];
-}
-
-+ (Class)getPropertyClass:(NSString*)propertyName inspection:(NSDictionary *)inspection
-{
-    NSDictionary *propertyInspection = [inspection objectForKey:propertyName];
-    Class propertyClass = [propertyInspection objectForKey:RKPropertyInspectionKeyValueCodingClassKey];
-    return propertyClass;
-}
 @end
 
 
 
 @implementation HCObject
-/* 获取 property inspect 结果*/
+/**
+ * 获取对象inspection 结果
+ * 返回 propertyName:  inspection(dictionary)
+ **/
 + (NSDictionary*)classPropertyInspections
 {
     NSDictionary *inspection = [[HCClassInspectorCache sharedInspector] propertyInspectionForClass:[self class]];
@@ -222,89 +211,59 @@ static NSString * const RKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
     NSDictionary *inspection = [[HCClassInspectorCache sharedInspector] mutablePropertyInspectionForClass:[self class]];
     return inspection;
 }
-/*自 propertyInpection 获取 property 类型*/
-+ (Class)getPropertyClass:(NSString*)propertyName propertyInspections:(NSDictionary *)propertyInspections
-{
-    return [HCClassInspectorCache getPropertyClass:propertyName inspection:propertyInspections];
-}
 
-+ (NSArray*)classPropertyNames
+#pragma HCInspectProtocol
++ (NSArray*)propertyNamesOfThisClass
 {
     return [[self classPropertyInspections] allKeys];
 }
 
-+ (NSArray*)classMutablePropertyNames
++ (NSArray*)mutablePropertyNamesOfThisClass
 {
     return [[self classMutablePropertyInspections] allKeys];
 }
 
-+ (NSString *)convertPropertyName:(NSString *)string
++ (Class)propertyClassOfPropertyName:(NSString*)propertyName
 {
-    return string;
-}
+    NSDictionary *propertyInspection = [[self classPropertyInspections] objectForKey:propertyName];
+    Class propertyClass = [propertyInspection objectForKey:HCRKPropertyInspectionKeyValueCodingClassKey];
+    return propertyClass;
 
-/* 获取列表中未转换前的 propertyName（如果对应的 propertyName 不存在，则不放回该 propertyName） */
-+ (NSArray *)propertyNamesBeforeConvert:(NSArray*)convertedPropetyNames
-{
-    NSMutableDictionary *convertedPropetyNameMapping = [NSMutableDictionary dictionary];
-    [convertedPropetyNames enumerateObjectsUsingBlock:^(NSString *propertyName, NSUInteger idx, BOOL *stop) {
-        [convertedPropetyNameMapping setObject:propertyName forKey:propertyName];
-    }];
-
-    NSMutableArray *propertyNames = [NSMutableArray array];
-    NSDictionary *inspection = [self classMutablePropertyInspections];
-    [inspection enumerateKeysAndObjectsUsingBlock:^(NSString *propertyName, id obj, BOOL *stop) {
-        NSString *convertedPropertyName = [self convertPropertyName:propertyName];
-        if ([convertedPropetyNameMapping objectForKey:convertedPropertyName]) {
-            [propertyNames addObject:propertyName];
-        }
-    }];
-    return propertyNames;
-}
-
-/*将 property 转化为 restkit 使用的 mapping dict*/
-+ (NSDictionary *)convertToRestKitMappingDictionary:(NSArray *)properties isRequest:(BOOL)isRequest
-{
-    NSMutableDictionary *props = [NSMutableDictionary dictionary];
-    [properties enumerateObjectsUsingBlock:^(NSString *propertyName, NSUInteger idx, BOOL *stop) {
-        NSString *convertedPropertyName = [self convertPropertyName:propertyName];
-        if (isRequest) {
-            [props setObject:convertedPropertyName forKey:propertyName];
-        } else {
-            [props setObject:propertyName forKey:convertedPropertyName];
-        }
-    }];
-    return props;
-}
-
-+ (NSDictionary *)restkitMappingDictionaryForRequestFromRequestParams:(NSArray *)params
-{
-    NSArray *propertyNames = [self classMutablePropertyNames];
-    NSMutableArray *targetPropertyName = [NSMutableArray array];
-
-    if (nil == params || 0 == [params count]) {
-        [targetPropertyName addObjectsFromArray:propertyNames];
-    } else {
-        NSMutableDictionary *reversePropertyNameMapping = [NSMutableDictionary dictionary];
-        [propertyNames enumerateObjectsUsingBlock:^(NSString *propertyName, NSUInteger idx, BOOL *stop) {
-            NSString *convertedPropertyName = [self convertPropertyName:propertyName];
-            [reversePropertyNameMapping setObject:propertyName forKey:convertedPropertyName];
-        }];
-
-        [params enumerateObjectsUsingBlock:^(NSString *convertedPropertyName, NSUInteger idx, BOOL *stop) {
-            NSString *propertyName = [reversePropertyNameMapping valueForKey:convertedPropertyName];
-            if (propertyName) {
-                [targetPropertyName addObject:propertyName];
-            }
-        }];
-    }
-
-    NSDictionary *mappingDictnary = [self convertToRestKitMappingDictionary:targetPropertyName
-                                                                  isRequest:YES];
-    return mappingDictnary;
 }
 
 #pragma delegate HCRKProtocol
++ (NSDictionary*)rkSpecialPropertyNameRKNameMapping
+{
+    return nil;
+}
+
++ (NSString *)rkNameForPropertyName:(NSString *)propertyName
+{
+    NSString *rkName = [[self rkSpecialPropertyNameRKNameMapping] objectForKey:propertyName];
+    return (nil != rkName)? rkName:propertyName;
+}
+
+/* 获取列表中未转换前的 propertyName（如果对应的 propertyName 不存在，则不放回该 propertyName） */
++ (NSArray *)propertyNamesOfRKNames:(NSArray*)rkNames
+{
+    NSMutableDictionary *rkNameMapping = [NSMutableDictionary dictionary];
+    NSArray *propertyNames = [self mutablePropertyNamesOfThisClass];
+    [propertyNames enumerateObjectsUsingBlock:^(NSString *propertyName, NSUInteger idx, BOOL *stop) {
+        NSString *rkName = [self rkNameForPropertyName:propertyName];
+        if (rkName) {
+            [rkNameMapping setObject:propertyName forKey:rkName];
+        }
+    }];
+    NSMutableArray *targetPropertyNames = [NSMutableArray arrayWithCapacity:[rkNames count]];
+    [rkNames enumerateObjectsUsingBlock:^(NSString * rkName, NSUInteger idx, BOOL *stop) {
+        NSString *propertyName = [rkNameMapping objectForKey:rkName];
+        if (propertyName) {
+            [targetPropertyNames addObject:propertyName];
+        }
+    }];
+    return targetPropertyNames;
+}
+
 /*restkit object mapping*/
 + (id)rkObjectMapping
 {
@@ -328,41 +287,35 @@ static NSString * const RKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
     } else {
          mapping = [RKObjectMapping requestMapping];
     }
-
-    NSDictionary *inspection = [self classMutablePropertyInspections];
-    if (propertyNames) {
-        NSMutableDictionary *matchedInspection = [NSMutableDictionary dictionary];
-        [propertyNames enumerateObjectsUsingBlock:^(NSString *propertyName, NSUInteger idx, BOOL *stop) {
-            id inspectionValue = [inspection objectForKey:propertyName];
-            if(inspectionValue) {
-                [matchedInspection setObject:inspectionValue forKey:propertyName];
-            }
-        }];
-        inspection = matchedInspection;
+    if (!propertyNames) {
+        propertyNames = [self mutablePropertyNamesOfThisClass];
     }
-    for (NSString *propertyName in inspection) {
-        NSString *sourceKeyPath = nil;
-        NSString *destinationKeyPath = nil;
-        if (isResponse) {
-            sourceKeyPath = [self convertPropertyName:propertyName];
-            destinationKeyPath = propertyName;
-        } else {
-            sourceKeyPath = propertyName;
-            destinationKeyPath = [self convertPropertyName:propertyName];
-        }
+    for (NSString *propertyName in propertyNames) {
+        NSString *rkName = [self rkNameForPropertyName:propertyName];
+        if (rkName) {
+            NSString *sourceKeyPath = nil;
+            NSString *destinationKeyPath = nil;
+            if (isResponse) {
+                sourceKeyPath = rkName;
+                destinationKeyPath = propertyName;
+            } else {
+                sourceKeyPath = propertyName;
+                destinationKeyPath = rkName;
+            }
 
-        Class propertyClass = [HCClassInspectorCache getPropertyClass:propertyName inspection:inspection];
-        RKPropertyMapping *propertyMapping = nil;
-        if (propertyClass != [HCObject class] &&
-            [propertyClass isSubclassOfClass:[HCObject class]]) {
-            propertyMapping = [RKRelationshipMapping relationshipMappingFromKeyPath:sourceKeyPath
-                                                                          toKeyPath:destinationKeyPath
-                                                                        withMapping:[propertyClass rkObjectMapping:isResponse propertyNames:nil]];
-        } else {
-            propertyMapping = [RKAttributeMapping attributeMappingFromKeyPath:sourceKeyPath
-                                                                    toKeyPath:destinationKeyPath];
+            Class propertyClass = [self propertyClassOfPropertyName:propertyName];
+            RKPropertyMapping *propertyMapping = nil;
+            if (propertyClass != [HCObject class] &&
+                [propertyClass isSubclassOfClass:[HCObject class]]) {
+                propertyMapping = [RKRelationshipMapping relationshipMappingFromKeyPath:sourceKeyPath
+                                                                              toKeyPath:destinationKeyPath
+                                                                            withMapping:[propertyClass rkObjectMapping:isResponse propertyNames:nil]];
+            } else {
+                propertyMapping = [RKAttributeMapping attributeMappingFromKeyPath:sourceKeyPath
+                                                                        toKeyPath:destinationKeyPath];
+            }
+            [mapping addPropertyMapping:propertyMapping];
         }
-        [mapping addPropertyMapping:propertyMapping];
     }
     return mapping;
 }
@@ -375,6 +328,34 @@ static NSString * const RKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
 + (NSArray *)rkRequestDescriptors
 {
     return [NSArray array];
+}
+
++ (NSDictionary *)rkMappingDictionaryWithProperties:(NSArray *)properties isDecode:(BOOL)isDecode
+{
+    NSMutableDictionary *mappingDictionary = [NSMutableDictionary dictionary];
+    if (!properties) {
+        properties = [self mutablePropertyNamesOfThisClass];
+    }
+    [properties enumerateObjectsUsingBlock:^(NSString *propertyName, NSUInteger idx, BOOL *stop) {
+        NSString *rkName = [self rkNameForPropertyName:propertyName];
+        if (rkName) {
+            if (isDecode) {
+                [mappingDictionary setObject:propertyName forKey:rkName];
+            } else {
+                [mappingDictionary setObject:rkName forKey:propertyName];
+            }
+        }
+    }];
+    return mappingDictionary;
+}
+
++ (NSDictionary *)rkRequestMappingDictionaryWthRKNames:(NSArray *)rkNames
+{
+    NSArray *targetPropertyNames = nil;
+    if (rkNames) {
+        targetPropertyNames = [self propertyNamesOfRKNames:rkNames];
+    }
+    return [self rkMappingDictionaryWithProperties:targetPropertyNames isDecode:NO];
 }
 
 + (id)rkParseJsonData:(NSData *)jsonData
@@ -414,33 +395,37 @@ static NSString * const RKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
     return jsonData;
 }
 
+#pragma HCCodingProtocol coding
++ (NSArray *)encodePropertyNames
+{
+    return [self mutablePropertyNamesOfThisClass];
+}
+
++ (NSArray *)dencodePropertyNames
+{
+    return [self mutablePropertyNamesOfThisClass];
+}
 
 #pragma coding
-- (NSArray*)classProperties
-{
-    return [[[self class] classPropertyInspections] allKeys];
-}
-
-- (NSArray *)classMutableProperties
-{
-    return [[[self class] classMutablePropertyInspections] allKeys];
-}
 // 这两个函数：是完成对象的序列化的反序列化。继承该对象的类可以不需要实现该函数
 //不过性能方面不是太好
 //关于性能的几点总结：
 //1,使用 setValue 和直接 property 赋值性能是一样的，没有区别
-//2,如果实现classMutableProperties，返回固定的数组，性能比默认的会号很多。与1比较会多花费20%的时间
+//2,如果实现classMutableProperties，返回固定的数组，性能比默认的会好很多。与1比较会多花费20%的时间
 //3，initWithCoder，encodeWithCoder中直接使用数组性能比2好一些。可以认为没啥区别，不到3%左右的差距
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [self init];
     if (self) {
-        NSArray *properties = [self classMutableProperties];
+        NSArray *properties = [[self class] encodePropertyNames];
         for (NSString *propertyName in properties) {
             id propertyValue = [aDecoder decodeObjectForKey:propertyName];
             if (propertyValue &&
                 ![propertyValue isEqual:[NSNull null]]) {
-                [self setValue:propertyValue forKey:propertyName];
+                NSError *error = nil;
+                if ([self validateValue:&propertyValue forKey:propertyName error:&error]){
+                    [self setValue:propertyValue forKey:propertyName];
+                }
             }
         }
     }
@@ -449,7 +434,7 @@ static NSString * const RKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    NSArray *properties = [self classMutableProperties];
+    NSArray *properties = [[self class] dencodePropertyNames];
     for (NSString *propertyName in properties) {
         id propertyValue = [self valueForKey:propertyName];
         if (propertyValue &&
@@ -459,27 +444,35 @@ static NSString * const RKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
     }
 }
 
-#pragma copy
-- (id)copyWithZone:(NSZone *)zone
+#pragma HCCopyingProtocol
++ (NSArray *)copyingPropertyNames
 {
-    // We'll ignore the zone for now
-    return [[[self class] allocWithZone:zone] init];
+    return [self mutablePropertyNamesOfThisClass];
 }
 
-- (void)shallowCopyValue:(HCObject *)obj
+- (void)shallowCopyValue:(NSObject *)obj
 {
-    if (obj) {
+    if (obj
+        && [obj isKindOfClass:[HCObject class]]
+        && ([self isKindOfClass:[obj class]] || [obj isKindOfClass:[self class]])
+        ) {
         NSArray *inspection = nil;
         if ([self isKindOfClass:[obj class]]) {
-            inspection = [[obj class] classMutablePropertyNames];
+            inspection = [[obj class] copyingPropertyNames];
         } else if ([obj isKindOfClass:[self class]]) {
-            inspection = [[self class] classMutablePropertyNames];
+            inspection = [[self class] copyingPropertyNames];
         }
-        if (inspection) {
-            for (NSString *propertyName in inspection) {
+
+        if (!inspection) {
+            return;
+        }
+        for (NSString *propertyName in inspection) {
+            id propertyValue = [obj valueForKey:propertyName];
+            if (propertyValue &&
+                ![propertyValue isEqual:[NSNull null]]) {
                 id propertyValue = [obj valueForKey:propertyName];
-                if (propertyValue &&
-                    ![propertyValue isEqual:[NSNull null]]) {
+                NSError *error = nil;
+                if ([self validateValue:&propertyValue forKey:propertyName error:&error]){
                     if ([propertyValue conformsToProtocol:@protocol(NSCopying)]) {
                         [self setValue:[propertyValue copy] forKey:propertyName];
                     } else {
@@ -491,30 +484,47 @@ static NSString * const RKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
     }
 }
 
-- (void)shallowCopyValue:(HCObject *)obj copyClass:(Class)copyClass
+- (void)shallowCopyValue:(NSObject *)obj copyClass:(Class)copyClass
 {
-    if (obj &&
-        [obj isKindOfClass:copyClass] &&
-        [copyClass isSubclassOfClass:[HCObject class]]) {
+    if (obj
+        && [obj isKindOfClass:copyClass]
+        && [obj isKindOfClass:[HCObject class]]
+        && ([self isKindOfClass:[obj class]] || [obj isKindOfClass:[self class]])
+        ) {
         NSArray *inspection = nil;
         if ([self isKindOfClass:[obj class]]) {
-            inspection = [copyClass classMutablePropertyNames];
+            inspection = [copyClass copyingPropertyNames];
         } else if ([obj isKindOfClass:[self class]]) {
-            inspection = [[self class] classMutablePropertyNames];
+            inspection = [[self class] copyingPropertyNames];
         }
-        if (inspection) {
-            for (NSString *propertyName in inspection) {
+
+        if (!inspection) {
+            return;
+        }
+        for (NSString *propertyName in inspection) {
+            id propertyValue = [obj valueForKey:propertyName];
+            if (propertyValue &&
+                ![propertyValue isEqual:[NSNull null]]) {
                 id propertyValue = [obj valueForKey:propertyName];
-                if ([propertyValue conformsToProtocol:@protocol(NSCopying)]) {
-                    [self setValue:[propertyValue copy] forKey:propertyName];
-                } else {
-                    [self setValue:propertyValue forKey:propertyName];
+                NSError *error = nil;
+                if ([self validateValue:&propertyValue forKey:propertyName error:&error]){
+                    if ([propertyValue conformsToProtocol:@protocol(NSCopying)]) {
+                        [self setValue:[propertyValue copy] forKey:propertyName];
+                    } else {
+                        [self setValue:propertyValue forKey:propertyName];
+                    }
                 }
             }
         }
     }
 }
 
+#pragma copy
+- (id)copyWithZone:(NSZone *)zone
+{
+    // We'll ignore the zone for now
+    return [[[self class] allocWithZone:zone] init];
+}
 
 #pragma HCSyncProtocol
 - (NSString *)syncLocalId
@@ -532,11 +542,11 @@ static NSString * const RKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
     return 0;
 }
 
-- (void )setSyncLocalId:(NSString *)localId
+- (void)setSyncLocalId:(NSString *)localId
 {
 
 }
-- (void )setSyncRemoteId:(NSString *)remoteId
+- (void)setSyncRemoteId:(NSString *)remoteId
 {
 
 }
@@ -545,23 +555,28 @@ static NSString * const RKPropertyInspectionIsPrimitiveKey = @"isPrimitive";
 
 }
 
-- (NSString *)syncCreateLocalId
+- (void)updateSyncedInfo:(NSObject*)obj
+{
+    if (obj
+        && [obj conformsToProtocol:@protocol(HCSyncProtocol)]) {
+        id <HCSyncProtocol> syncObject = (id <HCSyncProtocol>)obj;
+        if ([syncObject syncLocalId]) {
+            [self setSyncLocalId:[syncObject syncLocalId]];
+        }
+
+        if ([syncObject syncRemoteId]) {
+            [self setSyncRemoteId:[syncObject syncRemoteId ]];
+        }
+
+        if ([syncObject syncVersion]) {
+            [self setSyncVersion:[syncObject syncVersion ]];
+        }
+    }
+}
+
+- (NSString *)generateUUID
 {
     return [[[NSUUID alloc] init] UUIDString];
 }
 
-- (void)updateSyncedInfo:(HCObject*)obj
-{
-    if (obj.syncLocalId) {
-        [self setSyncLocalId:obj.syncLocalId];
-    }
-
-    if (obj.syncRemoteId) {
-        [self setSyncRemoteId:obj.syncRemoteId];
-    }
-
-    if (obj.syncVersion) {
-        [self setSyncVersion:obj.syncVersion];
-    }
-}
 @end

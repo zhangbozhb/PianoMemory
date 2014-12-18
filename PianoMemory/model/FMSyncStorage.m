@@ -334,7 +334,7 @@
 #pragma encapsulate HCObject storage
 - (NSString*)createLocalId:(HCObject *)object
 {
-    return [object syncCreateLocalId];
+    return [object generateUUID];
 }
 
 - (BOOL)storeHCObject:(HCObject *)object

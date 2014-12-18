@@ -38,26 +38,20 @@
 }
 
 /* 将字符串转化为 db 列名字符串(将 "大写字母" 换成 "_小写字母" */
-+ (NSString *)convertPropertyName:(NSString *)string
++ (NSString *)rkNameForPropertyName:(NSString *)propertyName
 {
-    static NSDictionary *specailKeys = nil;
-    static dispatch_once_t specailKeysToken;
-    dispatch_once(&specailKeysToken, ^{
-        specailKeys = [NSDictionary dictionaryWithObjects:
-                       [NSArray arrayWithObjects:@"id", nil]
-                                                  forKeys:
-                       [NSArray arrayWithObjects:@"remoteDBId", nil]];
-    });
-    NSString *dbColumnString = [specailKeys objectForKey:string];
+    NSDictionary *specailKeys = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"id", nil]
+                                                            forKeys:[NSArray arrayWithObjects:@"remoteDBId", nil]];
+    NSString *dbColumnString = [specailKeys objectForKey:propertyName];
     if (dbColumnString) {
         return dbColumnString;
     }
 
     NSMutableString *newString = [NSMutableString stringWithString:@""];
-    for (NSInteger i = 0,length = string.length; i < length; i++) {
+    for (NSInteger i = 0,length = propertyName.length; i < length; i++) {
         NSRange range = NSMakeRange(i, 1);
         //截取字符串中的每一个字符
-        NSString *charString = [string substringWithRange:range];
+        NSString *charString = [propertyName substringWithRange:range];
         if (![[charString lowercaseString] isEqualToString:charString]) {
             [newString appendString:@"_"];
             [newString appendString:[charString lowercaseString]];
