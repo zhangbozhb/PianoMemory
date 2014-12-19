@@ -26,6 +26,8 @@
 		9E08E87B19E8DAFF00DFD7CA /* PMTimeSchedule+Wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E87A19E8DAFF00DFD7CA /* PMTimeSchedule+Wrapper.m */; };
 		9E08E87E19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E87D19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m */; };
 		9E08E88219E92AA100DFD7CA /* PMUISettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E88119E92AA100DFD7CA /* PMUISettings.m */; };
+		9E0936D41A43C40B007390B3 /* HCObject+Restkit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0936D31A43C40B007390B3 /* HCObject+Restkit.m */; };
+		9E0936D71A43C850007390B3 /* HCObject+DBWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0936D61A43C850007390B3 /* HCObject+DBWrapper.m */; };
 		9E2EFB7A1A318DAE00A2B934 /* PMAppUpdateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E2EFB791A318DAE00A2B934 /* PMAppUpdateInfo.m */; };
 		9E2EFB801A31930700A2B934 /* PMAppConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E2EFB7F1A31930700A2B934 /* PMAppConfig.m */; };
 		9E4C95FF1A2DEFDA00B5FFC4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E4C96011A2DEFDA00B5FFC4 /* Localizable.strings */; };
@@ -212,6 +214,10 @@
 		9E08E87D19E8DF9200DFD7CA /* PMTimeScheduleEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMTimeScheduleEditViewController.m; sourceTree = "<group>"; };
 		9E08E88019E92AA100DFD7CA /* PMUISettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUISettings.h; sourceTree = "<group>"; };
 		9E08E88119E92AA100DFD7CA /* PMUISettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMUISettings.m; sourceTree = "<group>"; };
+		9E0936D21A43C40B007390B3 /* HCObject+Restkit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HCObject+Restkit.h"; sourceTree = "<group>"; };
+		9E0936D31A43C40B007390B3 /* HCObject+Restkit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HCObject+Restkit.m"; sourceTree = "<group>"; };
+		9E0936D51A43C850007390B3 /* HCObject+DBWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HCObject+DBWrapper.h"; sourceTree = "<group>"; };
+		9E0936D61A43C850007390B3 /* HCObject+DBWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HCObject+DBWrapper.m"; sourceTree = "<group>"; };
 		9E2EFB781A318DAE00A2B934 /* PMAppUpdateInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMAppUpdateInfo.h; sourceTree = "<group>"; };
 		9E2EFB791A318DAE00A2B934 /* PMAppUpdateInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMAppUpdateInfo.m; sourceTree = "<group>"; };
 		9E2EFB7E1A31930700A2B934 /* PMAppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMAppConfig.h; sourceTree = "<group>"; };
@@ -870,6 +876,10 @@
 				9EF1311919E02FF200843F02 /* HCObject.m */,
 				9EF1311219E02FF200843F02 /* FMObject.h */,
 				9EF1311319E02FF200843F02 /* FMObject.m */,
+				9E0936D21A43C40B007390B3 /* HCObject+Restkit.h */,
+				9E0936D31A43C40B007390B3 /* HCObject+Restkit.m */,
+				9E0936D51A43C850007390B3 /* HCObject+DBWrapper.h */,
+				9E0936D61A43C850007390B3 /* HCObject+DBWrapper.m */,
 			);
 			name = base;
 			sourceTree = "<group>";
@@ -1166,6 +1176,7 @@
 				9EF1315F19E02FF200843F02 /* UITableViewCell+SelectedView.m in Sources */,
 				9EF1314D19E02FF200843F02 /* HCObject.m in Sources */,
 				9E08E85619E3789E00DFD7CA /* PMCourse+Wrapper.m in Sources */,
+				9E0936D71A43C850007390B3 /* HCObject+DBWrapper.m in Sources */,
 				9E08E84A19E2CF5000DFD7CA /* PMCourseViewController.m in Sources */,
 				9E8061861A27107A00B7416C /* PMZoomAnimationTransition.m in Sources */,
 				9E08E83F19E29E1B00DFD7CA /* UIViewController+Extend.m in Sources */,
@@ -1209,6 +1220,7 @@
 				9EF1315919E02FF200843F02 /* UIDevice+Extend.m in Sources */,
 				9E08E84319E2C4B800DFD7CA /* PMCourseScheduleEditViewController.m in Sources */,
 				9E4C96111A2EB90F00B5FFC4 /* PMBirthDayViewController.m in Sources */,
+				9E0936D41A43C40B007390B3 /* HCObject+Restkit.m in Sources */,
 				9EC9DF9819FF6334008E3499 /* PMDayCourseSchedule+Wrapper.m in Sources */,
 				9EF1318719E1103B00843F02 /* FMWeekCalendarView.m in Sources */,
 				9E4C96071A2DEFF100B5FFC4 /* PMAnniversaryManager.m in Sources */,
