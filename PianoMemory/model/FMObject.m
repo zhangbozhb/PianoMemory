@@ -66,4 +66,18 @@
 {
     return (nil != self.localDBId) && 0 != [self.localDBId length];
 }
+
++ (NSString *)primaryKeyPropertyName
+{
+    return @"localDBId";
+}
+
++ (NSString *)columnNameForPropertyName:(NSString *)propertyName
+{
+    if ([propertyName isEqualToString:@"localDBId"]
+        || [propertyName isEqualToString:@"remoteDBId"]) {
+        return propertyName;
+    }
+    return [super columnNameForPropertyName:propertyName];
+}
 @end

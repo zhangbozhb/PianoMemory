@@ -7,6 +7,8 @@
 //
 
 #import "HCObject.h"
+#import "HCObject+Restkit.h"
+#import "HCObject+DBWrapper.h"
 
 @interface FMObject : HCObject <NSCopying>
 @property (nonatomic) NSString *localDBId;
