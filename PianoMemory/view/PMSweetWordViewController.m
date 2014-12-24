@@ -53,7 +53,9 @@
     self.detailLabel.shadowOffset = CGSizeMake(1.f, 1.f);
     self.detailLabel.shadowBlur = 20.0f;
 
+    self.titleLabel.text = @"那是一个正在发生的故事...";
 
+    PMSweetWord *sweetWord0 = [[PMSweetWord alloc] initWithTitle:@"一个人" sweetWord:@"茫茫人海，热闹而孤独..." image:@"crowd_people.jpg"];
     PMSweetWord *sweetWord1 = [[PMSweetWord alloc] initWithTitle:nil sweetWord:@"遇到你一场美丽的意外，那天你白衣似雪，似那误入凡尘的精灵，出现在我面前，出现在我的心里" image:@"meet.jpg"];
     PMSweetWord *sweetWord2 = [[PMSweetWord alloc] initWithTitle:nil sweetWord:@"都说无论多早遇到那个对的人，都会嫌太迟，而你就是那个让我始终觉得相遇太迟的人" image:@"meet_too_late.jpg"];
 
@@ -74,9 +76,9 @@
     PMSweetWord *sweetWord16 = [[PMSweetWord alloc] initWithTitle:@"我想的还有很多..." sweetWord:@"我最想的还是和你一起慢慢变老" image:@"getting_old.jpg"];
     PMSweetWord *sweetWord17 = [[PMSweetWord alloc] initWithTitle:@"再放一遍" sweetWord:@"关闭" image:@"getting_old.jpg"];
 
-    self.sweetWords = [NSArray arrayWithObjects:sweetWord1, sweetWord2, sweetWord3, sweetWord4, sweetWord5,
-                       sweetWord6, sweetWord7, sweetWord8,sweetWord9, sweetWord10, sweetWord11, sweetWord12,
-                       sweetWord13, sweetWord14, sweetWord15, sweetWord16, sweetWord17, nil];
+    self.sweetWords = [NSArray arrayWithObjects:sweetWord0, sweetWord1, sweetWord2, sweetWord3, sweetWord4, sweetWord5,
+                       sweetWord6, sweetWord7, sweetWord8,sweetWord9, sweetWord10, sweetWord11, sweetWord12, sweetWord13,
+                       sweetWord14, sweetWord15, sweetWord16, sweetWord17, nil];
 
 }
 
@@ -104,15 +106,20 @@
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-    [self.autoSwitchTimer fire];
+    [super viewDidAppear:animated];
+    [self performSelector:@selector(startAutoSwitchTimer) withObject:nil afterDelay:5.f];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self.autoSwitchTimer invalidate];
+}
+
+- (void)startAutoSwitchTimer
+{
+    [self.autoSwitchTimer fire];
 }
 
 - (void)refreshUIWithSweetWord:(PMSweetWord*)sweetword
@@ -142,14 +149,14 @@
 - (void)loadPrevious
 {
     NSInteger maxIndex = [self.sweetWords count] - 1;
-    self.currentIndex = self.currentIndex - 1;
-    if (self.currentIndex <= maxIndex) {
-        PMSweetWord *sweetWord = [self.sweetWords objectAtIndex:self.currentIndex];
-        [self refreshUIWithSweetWord:sweetWord];
-    } else {
-        self.currentIndex = 0;
+    if (0 < self.currentIndex) {
+        self.currentIndex = self.currentIndex - 1;
+        if (self.currentIndex <= maxIndex) {
+            PMSweetWord *sweetWord = [self.sweetWords objectAtIndex:self.currentIndex];
+            [self refreshUIWithSweetWord:sweetWord];
+            [CoreAnimationEffect animationCurlDown:self.view];
+        }
     }
-    [CoreAnimationEffect animationCurlDown:self.view];
 }
 
 - (void)skipThisViewControllerToMain

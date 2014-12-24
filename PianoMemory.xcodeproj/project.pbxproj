@@ -159,6 +159,9 @@
 		9EF131AB19E2656900843F02 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EF131AA19E2656900843F02 /* AddressBook.framework */; };
 		9EF131AE19E27C0000843F02 /* PMServerWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF131AD19E27C0000843F02 /* PMServerWrapper.m */; };
 		9EF131B119E27D0A00843F02 /* HCErrorMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF131B019E27D0A00843F02 /* HCErrorMessage.m */; };
+		9EFD541F1A4AE261003617D5 /* iwant.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EFD541E1A4AE261003617D5 /* iwant.jpg */; };
+		9EFD54211A4AE433003617D5 /* getting_old.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EFD54201A4AE433003617D5 /* getting_old.jpg */; };
+		9EFD54231A4AE662003617D5 /* crowd_people.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EFD54221A4AE662003617D5 /* crowd_people.jpg */; };
 		C0601CA3FA524D3EB97B1A2F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39148A87FCEC484AB9A68338 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -429,6 +432,9 @@
 		9EF131AD19E27C0000843F02 /* PMServerWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMServerWrapper.m; sourceTree = "<group>"; };
 		9EF131AF19E27D0A00843F02 /* HCErrorMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCErrorMessage.h; sourceTree = "<group>"; };
 		9EF131B019E27D0A00843F02 /* HCErrorMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCErrorMessage.m; sourceTree = "<group>"; };
+		9EFD541E1A4AE261003617D5 /* iwant.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iwant.jpg; sourceTree = "<group>"; };
+		9EFD54201A4AE433003617D5 /* getting_old.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = getting_old.jpg; sourceTree = "<group>"; };
+		9EFD54221A4AE662003617D5 /* crowd_people.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crowd_people.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -602,9 +608,12 @@
 				9EA23D1B1A3824D2009A4A64 /* birthday_main.gif */,
 				9EA23D1C1A3824D2009A4A64 /* city.jpg */,
 				9EA23D1D1A3824D2009A4A64 /* climb_mountain.jpg */,
+				9EFD54221A4AE662003617D5 /* crowd_people.jpg */,
 				9EA23D1E1A3824D2009A4A64 /* dayandlight.jpg */,
-				9EA23D1F1A3824D2009A4A64 /* meet.jpg */,
+				9EFD54201A4AE433003617D5 /* getting_old.jpg */,
+				9EFD541E1A4AE261003617D5 /* iwant.jpg */,
 				9EA23D201A3824D2009A4A64 /* meet_too_late.jpg */,
+				9EA23D1F1A3824D2009A4A64 /* meet.jpg */,
 				9EA23D211A3824D2009A4A64 /* sea.jpg */,
 				9EA23D221A3824D2009A4A64 /* spring.jpg */,
 				9EA23D231A3824D2009A4A64 /* starsky.jpg */,
@@ -1078,12 +1087,14 @@
 				9EA23D341A3824D2009A4A64 /* starsky.jpg in Resources */,
 				9E8AF2BB1A1484DF00378B31 /* launch.png in Resources */,
 				9E8AF27F1A133FCE00378B31 /* button_save.png in Resources */,
+				9EFD54211A4AE433003617D5 /* getting_old.jpg in Resources */,
 				9E8AF21F1A1073F900378B31 /* calendar_expire@2x.png in Resources */,
 				9E8AF2271A10751800378B31 /* clock_pause.png in Resources */,
 				9EA23D2C1A3824D2009A4A64 /* birthday_main.gif in Resources */,
 				9E8AF2241A10751800378B31 /* clock_add.png in Resources */,
 				9E8AF2301A107D8C00378B31 /* schedule_manage@2x.png in Resources */,
 				9E8AF2C71A19EBF000378B31 /* staff-bg.png in Resources */,
+				9EFD541F1A4AE261003617D5 /* iwant.jpg in Resources */,
 				9EA23D301A3824D2009A4A64 /* meet.jpg in Resources */,
 				9E8AF2B11A1357CA00378B31 /* tab_statistics@2x.png in Resources */,
 				9EA23D391A3824D2009A4A64 /* winter.jpg in Resources */,
@@ -1100,6 +1111,7 @@
 				9EA76B7519F4BAA600B5613B /* btn_add_green@2x.png in Resources */,
 				9EA23D2D1A3824D2009A4A64 /* city.jpg in Resources */,
 				9E8AF2B91A135A8E00378B31 /* tab_more@2x.png in Resources */,
+				9EFD54231A4AE662003617D5 /* crowd_people.jpg in Resources */,
 				9E8AF2C21A19A9B400378B31 /* Icon@2x.png in Resources */,
 				9EA23D0A1A37326B009A4A64 /* PMSweetWordViewController.xib in Resources */,
 				9E8AF2C51A19E61F00378B31 /* daycoursescheule-bg.png in Resources */,
