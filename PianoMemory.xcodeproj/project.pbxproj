@@ -40,6 +40,10 @@
 		9E5B5C2F1A07E1E400F9E424 /* PMDayReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C2E1A07E1E400F9E424 /* PMDayReportView.m */; };
 		9E5B5C321A07E36E00F9E424 /* PMDayReportPieElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C311A07E36E00F9E424 /* PMDayReportPieElement.m */; };
 		9E5B5C351A0874D800F9E424 /* PMCourseScheduleRepeat.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5B5C341A0874D800F9E424 /* PMCourseScheduleRepeat.m */; };
+		9E785B381AC140B200FF077E /* PgySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E785B371AC140B200FF077E /* PgySDK.framework */; };
+		9E785B3A1AC140DB00FF077E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E785B391AC140DB00FF077E /* OpenGLES.framework */; };
+		9E785B3C1AC140E700FF077E /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E785B3B1AC140E700FF077E /* CoreMotion.framework */; };
+		9E785B3E1AC140F000FF077E /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E785B3D1AC140F000FF077E /* SceneKit.framework */; };
 		9E8061831A26F0B400B7416C /* CoreAnimationEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8061821A26F0B400B7416C /* CoreAnimationEffect.m */; };
 		9E8061861A27107A00B7416C /* PMZoomAnimationTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8061851A27107A00B7416C /* PMZoomAnimationTransition.m */; };
 		9E8AF2191A10618D00378B31 /* time_manage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8AF2171A10618D00378B31 /* time_manage@2x.png */; };
@@ -244,6 +248,10 @@
 		9E5B5C311A07E36E00F9E424 /* PMDayReportPieElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMDayReportPieElement.m; sourceTree = "<group>"; };
 		9E5B5C331A0874D800F9E424 /* PMCourseScheduleRepeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCourseScheduleRepeat.h; sourceTree = "<group>"; };
 		9E5B5C341A0874D800F9E424 /* PMCourseScheduleRepeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMCourseScheduleRepeat.m; sourceTree = "<group>"; };
+		9E785B371AC140B200FF077E /* PgySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PgySDK.framework; sourceTree = "<group>"; };
+		9E785B391AC140DB00FF077E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		9E785B3B1AC140E700FF077E /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		9E785B3D1AC140F000FF077E /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		9E8061811A26F0B400B7416C /* CoreAnimationEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreAnimationEffect.h; sourceTree = "<group>"; };
 		9E8061821A26F0B400B7416C /* CoreAnimationEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreAnimationEffect.m; sourceTree = "<group>"; };
 		9E8061841A27107A00B7416C /* PMZoomAnimationTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMZoomAnimationTransition.h; sourceTree = "<group>"; };
@@ -442,12 +450,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E785B3E1AC140F000FF077E /* SceneKit.framework in Frameworks */,
+				9E785B3C1AC140E700FF077E /* CoreMotion.framework in Frameworks */,
+				9E785B3A1AC140DB00FF077E /* OpenGLES.framework in Frameworks */,
 				9EF131AB19E2656900843F02 /* AddressBook.framework in Frameworks */,
 				9EF131A919E2507400843F02 /* AddressBookUI.framework in Frameworks */,
 				9EF1317619E0477D00843F02 /* UIKit.framework in Frameworks */,
 				9EF1317419E0476F00843F02 /* Foundation.framework in Frameworks */,
 				9EF1317219E0471700843F02 /* CoreGraphics.framework in Frameworks */,
 				C0601CA3FA524D3EB97B1A2F /* libPods.a in Frameworks */,
+				9E785B381AC140B200FF077E /* PgySDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -896,6 +908,7 @@
 		9EF1318019E103D300843F02 /* thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				9E785B371AC140B200FF077E /* PgySDK.framework */,
 				9E8061811A26F0B400B7416C /* CoreAnimationEffect.h */,
 				9E8061821A26F0B400B7416C /* CoreAnimationEffect.m */,
 				9EF1318119E103D300843F02 /* LunarCalendar.h */,
@@ -982,6 +995,9 @@
 		D11BAA47944B499889871634 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9E785B3D1AC140F000FF077E /* SceneKit.framework */,
+				9E785B3B1AC140E700FF077E /* CoreMotion.framework */,
+				9E785B391AC140DB00FF077E /* OpenGLES.framework */,
 				9EF131AA19E2656900843F02 /* AddressBook.framework */,
 				9EF131A819E2507400843F02 /* AddressBookUI.framework */,
 				39148A87FCEC484AB9A68338 /* libPods.a */,
@@ -1415,6 +1431,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PianoMemory/thirdparty",
+				);
 				INFOPLIST_FILE = PianoMemory/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1429,6 +1449,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PianoMemory/thirdparty",
+				);
 				INFOPLIST_FILE = PianoMemory/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

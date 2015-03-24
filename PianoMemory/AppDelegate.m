@@ -14,6 +14,7 @@
 #import "UIView+ScreenShot.h"
 
 #import "PMBirthDayViewController.h"
+#import <PgySDK/PgyManager.h>
 
 @interface AppDelegate ()
 @property (nonatomic) UIViewController *mainViewController;
@@ -37,6 +38,9 @@
 
     //加载root viewcontroller
     [self updateRootViewController];
+
+    [[PgyManager sharedPgyManager] startManagerWithAppId:@"e3dec585173cf2a3e3f77ec1405a1940"];
+    [[PgyManager sharedPgyManager] setEnableFeedback:NO];
 
     [self.window makeKeyAndVisible];
     return YES;
