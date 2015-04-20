@@ -15,7 +15,7 @@
 {
     PMSpecialDayType dayType = PMSpecialDayType_None;
     NSDate *todayDate = [NSDate date];
-    NSInteger todayTimestamp = [todayDate zb_timestampOfDay];
+    NSInteger todayTimestamp = [todayDate zb_timestampOfBeginDay];
 
     NSDate *birthDay = [self birthdayDate];
     if ([todayDate zb_getLunaDay] == [birthDay zb_getLunaDay]
@@ -24,9 +24,9 @@
     }
 
     NSDate *meetDate = [self firstMeetDate];
-    if ([[meetDate zb_dateAfterDay:100] zb_timestampOfDay] == todayTimestamp) {
+    if ([[meetDate zb_dateAfterDay:100] zb_timestampOfBeginDay] == todayTimestamp) {
         dayType = PMSpecialDayType_MeetDay100;
-    } else if ([[meetDate zb_dateAfterDay:1000] zb_timestampOfDay] == todayTimestamp) {
+    } else if ([[meetDate zb_dateAfterDay:1000] zb_timestampOfBeginDay] == todayTimestamp) {
         dayType = PMSpecialDayType_MeetDay1000;
     } else if ([meetDate zb_getMonth] ==  [todayDate zb_getMonth]
                && [meetDate zb_getDay] ==  [todayDate zb_getDay]) {
@@ -34,9 +34,9 @@
     }
 
     NSDate *loveDate = [self failInLoveDate];
-    if ([[loveDate zb_dateAfterDay:100] zb_timestampOfDay] == todayTimestamp) {
+    if ([[loveDate zb_dateAfterDay:100] zb_timestampOfBeginDay] == todayTimestamp) {
         dayType = PMSpecialDayType_LoveDay100;
-    } else if ([[loveDate zb_dateAfterDay:1000] zb_timestampOfDay] == todayTimestamp) {
+    } else if ([[loveDate zb_dateAfterDay:1000] zb_timestampOfBeginDay] == todayTimestamp) {
         dayType = PMSpecialDayType_LoveDay1000;
     } else if ([loveDate zb_getMonth] ==  [todayDate zb_getMonth]
                && [loveDate zb_getDay] ==  [todayDate zb_getDay]) {

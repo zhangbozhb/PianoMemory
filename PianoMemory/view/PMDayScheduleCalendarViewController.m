@@ -60,7 +60,7 @@
 
 - (NSString *)calendarView:(PMCalendarView *)calendarView tipOfDate:(NSDate *)date
 {
-    NSInteger timestamp = [date zb_timestampOfDay];
+    NSInteger timestamp = [date zb_timestampOfBeginDay];
     return [self.tipOfDateMapping objectForKey:[NSNumber numberWithInteger:timestamp]];
 }
 
@@ -96,9 +96,9 @@
     //加载最近3个月的排课
     NSDate *currentDate = [NSDate date];
     NSDictionary *params = @{@"starttime":[[NSNumber numberWithLong:
-                                            [[currentDate zb_dateAfterMonth:-1] zb_timestampOfMonth]] stringValue],
+                                            [[currentDate zb_dateAfterMonth:-1] zb_timestampOfBeginMonth]] stringValue],
                              @"endtime":[[NSNumber numberWithLong:
-                                          [[currentDate zb_dateAfterMonth:2] zb_timestampOfMonth]] stringValue]};
+                                          [[currentDate zb_dateAfterMonth:2] zb_timestampOfBeginMonth]] stringValue]};
     __weak PMDayScheduleCalendarViewController *pSelf = self;
     [[PMServerWrapper defaultServer] queryDayCourseSchedules:params success:^(NSArray *array) {
         pSelf.shouldFetchData = NO;
@@ -116,7 +116,7 @@
     NSMutableDictionary *tipMapping = [NSMutableDictionary dictionaryWithCapacity:90];
     for (PMDayCourseSchedule *dayCourseSchedule in dayCourseSchedules) {
         NSString *tipMappingValue = [NSString stringWithFormat:@"%ld", (long)[dayCourseSchedule.courseSchedules count]];
-        NSInteger scheduleTimestamp = [[NSDate dateWithTimeIntervalSince1970:dayCourseSchedule.scheduleTimestamp] zb_timestampOfDay];
+        NSInteger scheduleTimestamp = [[NSDate dateWithTimeIntervalSince1970:dayCourseSchedule.scheduleTimestamp] zb_timestampOfBeginDay];
         [tipMapping setObject:tipMappingValue forKey:[NSNumber numberWithInteger:scheduleTimestamp]];
     }
     self.tipOfDateMapping = tipMapping;

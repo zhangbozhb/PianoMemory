@@ -99,9 +99,9 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
 - (void)loadCustomerData
 {
     NSDictionary *params = @{@"starttime":[[NSNumber numberWithLong:
-                                            [self.targetMonth zb_timestampOfMonth]] stringValue],
+                                            [self.targetMonth zb_timestampOfBeginMonth]] stringValue],
                              @"endtime":[[NSNumber numberWithLong:
-                                          [[self.targetMonth zb_dateAfterMonth:1] zb_timestampOfMonth]] stringValue]};
+                                          [[self.targetMonth zb_dateAfterMonth:1] zb_timestampOfBeginMonth]] stringValue]};
 
     __weak PMReportViewController *pSelf = self;
     [[PMServerWrapper defaultServer] queryDayCourseSchedules:params success:^(NSArray *array) {
@@ -161,8 +161,8 @@ static NSString *const reportTableViewCellReuseIdentifier = @"reportTableViewCel
                               (long)self.totalDayStat.courseCount, self.totalDayStat.durationInHour,averageHour]];
 
     if (self.oldTargetMonth && self.targetMonth) {
-        NSInteger oldTimestamp = [self.oldTargetMonth zb_timestampOfDay];
-        NSInteger targetTimestamp = [self.targetMonth zb_timestampOfDay];
+        NSInteger oldTimestamp = [self.oldTargetMonth zb_timestampOfBeginDay];
+        NSInteger targetTimestamp = [self.targetMonth zb_timestampOfBeginDay];
         if (oldTimestamp < targetTimestamp) {
             [CoreAnimationEffect animationCubeFromRight:self.view];
         } else if (oldTimestamp > targetTimestamp) {

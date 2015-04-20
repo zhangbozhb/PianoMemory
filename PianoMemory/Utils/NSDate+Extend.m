@@ -15,7 +15,7 @@
     return [[NSCalendar currentCalendar] components:unitFlags fromDate:self];
 }
 
-- (NSInteger)zb_timestampOfDay
+- (NSInteger)zb_timestampOfBeginDay
 {
     NSCalendar *currentCalendar = [NSCalendar currentCalendar];
     NSDateComponents *comps = [currentCalendar components:
@@ -24,14 +24,14 @@
     return [[currentCalendar dateFromComponents:comps] timeIntervalSince1970];
 }
 
-- (NSInteger)zb_timestampOfMonth
+- (NSInteger)zb_timestampOfBeginMonth
 {
     NSCalendar *currentCalendar = [NSCalendar currentCalendar];
     NSDateComponents *comps = [currentCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth
                                                   fromDate:self];
     return [[currentCalendar dateFromComponents:comps] timeIntervalSince1970];
 }
-- (NSInteger)zb_timestampOfYear
+- (NSInteger)zb_timestampOfBeginYear
 {
     NSCalendar *currentCalendar = [NSCalendar currentCalendar];
     NSDateComponents *comps = [currentCalendar components:NSCalendarUnitYear

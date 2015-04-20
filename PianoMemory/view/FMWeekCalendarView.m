@@ -133,8 +133,8 @@
     }
     NSDate *startDate = [self.weekDays firstObject];
     NSDate *endDate = [self.weekDays lastObject];
-    if ([date zb_timestampOfDay] < [startDate zb_timestampOfDay] ||
-        [date zb_timestampOfDay] > [endDate zb_timestampOfDay]) {
+    if ([date zb_timestampOfBeginDay] < [startDate zb_timestampOfBeginDay] ||
+        [date zb_timestampOfBeginDay] > [endDate zb_timestampOfBeginDay]) {
         return NO;
     }
     return YES;
@@ -283,7 +283,7 @@
 {
     CGPoint tapPoint = [tap locationInView:self];
     NSDate *selectedDate = [self.weekDays objectAtIndex:[self positionOfWeekDayIndex:tapPoint]];
-    if ([self.selectedDate zb_timestampOfDay] != [selectedDate zb_timestampOfDay]) {
+    if ([self.selectedDate zb_timestampOfBeginDay] != [selectedDate zb_timestampOfBeginDay]) {
         self.selectedDate = selectedDate;
         [self setNeedsDisplay];
     }

@@ -85,7 +85,7 @@ static NSString *const klocal_daycourseschedule_view_key = @"org.plam4fun.fm1017
         return [NSString stringWithFormat:@"%@|%@|%@", name, phone, shortCut];
     } else if ([object isKindOfClass:[PMDayCourseSchedule class]]) {
         PMDayCourseSchedule *dayCourseSchedule = (PMDayCourseSchedule*)object;
-        NSInteger dayTimestamp = [[NSDate dateWithTimeIntervalSince1970:dayCourseSchedule.scheduleTimestamp] zb_timestampOfDay];
+        NSInteger dayTimestamp = [[NSDate dateWithTimeIntervalSince1970:dayCourseSchedule.scheduleTimestamp] zb_timestampOfBeginDay];
         return [[NSNumber numberWithLong:dayTimestamp] stringValue];
     }
     return @"";

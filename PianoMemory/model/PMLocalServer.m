@@ -322,8 +322,8 @@
 }
 - (NSArray *)queryCourseScheduleOfDate:(NSDate*)date
 {
-    NSInteger startTime = [date zb_timestampOfDay];
-    NSInteger endTime = [[date zb_dateAfterDay:1] zb_timestampOfDay];
+    NSInteger startTime = [date zb_timestampOfBeginDay];
+    NSInteger endTime = [[date zb_dateAfterDay:1] zb_timestampOfBeginDay];
     //1,获取周一，周二..每天的 courseMapping
     NSDictionary *repreatWeekDayMapping = [self queryCourseScheduleMapingOfRepeatWeekDay:startTime endTime:endTime];
 
@@ -385,7 +385,7 @@
         }
     }
     //检查是否需要 fill, 或者直接返回
-    NSInteger endTime1 = [[NSDate dateWithTimeIntervalSince1970:endTime] zb_timestampOfDay];
+    NSInteger endTime1 = [[NSDate dateWithTimeIntervalSince1970:endTime] zb_timestampOfBeginDay];
     if (!fillNotExist
         || startTime + 3600 * 24 * [dayCourseScheduleArray count] >= endTime1) {
         return dayCourseScheduleArray;
@@ -397,13 +397,13 @@
     //2, 构建dayCourseScheduleMapping
     NSMutableDictionary *dayCourseScheduleMapping = [NSMutableDictionary dictionaryWithCapacity:[dayCourseScheduleArray count]];
     for (PMDayCourseSchedule *dayCourseSchedule in dayCourseScheduleArray) {
-        NSTimeInterval scheduleTimestamp = [[NSDate dateWithTimeIntervalSince1970:dayCourseSchedule.scheduleTimestamp] zb_timestampOfDay];
+        NSTimeInterval scheduleTimestamp = [[NSDate dateWithTimeIntervalSince1970:dayCourseSchedule.scheduleTimestamp] zb_timestampOfBeginDay];
         [dayCourseScheduleMapping setObject:dayCourseSchedule forKey:[NSNumber numberWithLong:scheduleTimestamp]];
     }
 
     //3, 递归每天的dayCourseSchedule
     NSDate *targetDay = [NSDate dateWithTimeIntervalSince1970:startTime];
-    NSInteger targetDayTimestamp = [targetDay zb_timestampOfDay];
+    NSInteger targetDayTimestamp = [targetDay zb_timestampOfBeginDay];
     while (targetDayTimestamp < endTime) {
         PMDayCourseSchedule *dayCourseSchedule = [dayCourseScheduleMapping objectForKey:[NSNumber numberWithLong:targetDayTimestamp]];
         if (!dayCourseSchedule) {   //填充缺失的 排课信息
@@ -420,7 +420,7 @@
             [dayCourseScheduleArray addObject:createdDayCourseSchedule];
         }
         targetDay = [targetDay zb_dateAfterDay:1];
-        targetDayTimestamp = [targetDay zb_timestampOfDay];
+        targetDayTimestamp = [targetDay zb_timestampOfBeginDay];
     }
     return dayCourseScheduleArray;
 }
@@ -431,7 +431,7 @@
         courseSchedule.localDBId) {
         return YES;
     }
-    NSArray *dayCourseScheduleArray =[self queryDayCourseSchedulesFrom:courseSchedule.effectiveDateTimestamp toEndTime:[[[NSDate date] zb_dateAfterDay:1] zb_timestampOfDay] fillNotExist:YES];
+    NSArray *dayCourseScheduleArray =[self queryDayCourseSchedulesFrom:courseSchedule.effectiveDateTimestamp toEndTime:[[[NSDate date] zb_dateAfterDay:1] zb_timestampOfBeginDay] fillNotExist:YES];
     for (PMDayCourseSchedule *dayCourseSchedule in dayCourseScheduleArray) {
         if ([dayCourseSchedule hasBeenSavedToLocalDB]) {    //只更新已经 save 到 db 的排课
             BOOL isExist = NO;
@@ -464,7 +464,7 @@
     for (NSString *dayCourseScheduleId in viewDayCourseSchedule) {
         NSString *scheduleTimestampString = [viewDayCourseSchedule objectForKey:dayCourseScheduleId];
         NSInteger scheduleTimestamp = [scheduleTimestampString integerValue];
-        scheduleTimestamp = [[NSDate dateWithTimeIntervalSince1970:scheduleTimestamp] zb_timestampOfDay];
+        scheduleTimestamp = [[NSDate dateWithTimeIntervalSince1970:scheduleTimestamp] zb_timestampOfBeginDay];
         if (startTimestampInDB > scheduleTimestamp) {
             startTimestampInDB = scheduleTimestamp;
         }
@@ -472,7 +472,7 @@
     }
 
     //检查是否需要填充
-    NSInteger endTime1 = [[NSDate dateWithTimeIntervalSince1970:endTime] zb_timestampOfDay];
+    NSInteger endTime1 = [[NSDate dateWithTimeIntervalSince1970:endTime] zb_timestampOfBeginDay];
     if (startTimestampInDB + 3600 * 24 * [dayCourseScheduleArray count] >= endTime1) {
         return;
     }
@@ -483,7 +483,7 @@
 
     //2, 遍历填充dayCourseSchedule
     NSDate *targetDay = [NSDate dateWithTimeIntervalSince1970:startTimestampInDB];
-    NSInteger targetDayTimestamp = [targetDay zb_timestampOfDay];
+    NSInteger targetDayTimestamp = [targetDay zb_timestampOfBeginDay];
     while (targetDayTimestamp < endTime) {
         if (![dayCourseScheduleMapping objectForKey:[NSNumber numberWithLong:targetDayTimestamp]]) {
             PMCourseScheduleRepeatDataWeekDay repeatWeekDay = [PMCourseScheduleRepeat repeatWeekDayFromDate:targetDay];
@@ -500,7 +500,7 @@
             [self saveDayCourseSchedule:createdDayCourseSchedule];
         }
         targetDay = [targetDay zb_dateAfterDay:1];
-        targetDayTimestamp = [targetDay zb_timestampOfDay];
+        targetDayTimestamp = [targetDay zb_timestampOfBeginDay];
     }
 }
 @end

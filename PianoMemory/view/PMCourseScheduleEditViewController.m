@@ -87,8 +87,8 @@ const static NSString *addToHistoryDayCourseScheduleMessage = @"课程安排的�
 {
     if (!_changedCourseSchedule) {
         _changedCourseSchedule = [[PMCourseSchedule alloc] init];
-        _changedCourseSchedule.effectiveDateTimestamp = [[NSDate date] zb_timestampOfDay];
-        _changedCourseSchedule.expireDateTimestamp = [[[NSDate date] zb_dateAfterYear:100] zb_timestampOfDay] - 1;
+        _changedCourseSchedule.effectiveDateTimestamp = [[NSDate date] zb_timestampOfBeginDay];
+        _changedCourseSchedule.expireDateTimestamp = [[[NSDate date] zb_dateAfterYear:100] zb_timestampOfBeginDay] - 1;
     }
     return _changedCourseSchedule;
 }
@@ -125,7 +125,7 @@ const static NSString *addToHistoryDayCourseScheduleMessage = @"课程安排的�
     } else {
         //如果为新增的，则提示是否需要加入到历史数据中
         if (!self.courseSchedule &&
-            self.changedCourseSchedule.effectiveDateTimestamp < [[NSDate date] zb_timestampOfDay]) {
+            self.changedCourseSchedule.effectiveDateTimestamp < [[NSDate date] zb_timestampOfBeginDay]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                 message:[addToHistoryDayCourseScheduleMessage copy]
                                                                delegate:self
@@ -228,10 +228,10 @@ const static NSString *addToHistoryDayCourseScheduleMessage = @"课程安排的�
 
 - (IBAction)dateTimePickerValueChangeAction:(id)sender {
     if (self.currentDateField == self.effectiveDateLabel) {
-        self.changedCourseSchedule.effectiveDateTimestamp = [self.myDatePicker.date zb_timestampOfDay];
+        self.changedCourseSchedule.effectiveDateTimestamp = [self.myDatePicker.date zb_timestampOfBeginDay];
         [self refreshEffectiveExpireTimeUI];
     } else if (self.currentDateField == self.expirationDateLabel) {
-        self.changedCourseSchedule.expireDateTimestamp = [[self.myDatePicker.date zb_dateAfterDay:1] zb_timestampOfDay] - 1;
+        self.changedCourseSchedule.expireDateTimestamp = [[self.myDatePicker.date zb_dateAfterDay:1] zb_timestampOfBeginDay] - 1;
         [self refreshEffectiveExpireTimeUI];
     }
 }

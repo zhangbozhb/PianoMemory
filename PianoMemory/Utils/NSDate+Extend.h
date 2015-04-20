@@ -12,9 +12,9 @@
 
 - (NSDateComponents*)zb_dateComponents;
 
-- (NSInteger)zb_timestampOfDay;
-- (NSInteger)zb_timestampOfMonth;
-- (NSInteger)zb_timestampOfYear;
+- (NSInteger)zb_timestampOfBeginDay;
+- (NSInteger)zb_timestampOfBeginMonth;
+- (NSInteger)zb_timestampOfBeginYear;
 
 //返回day天后的日期(若day为负数,则为|day|天前的日期)
 - (NSDate *)zb_dateAfterDay:(NSInteger)day;

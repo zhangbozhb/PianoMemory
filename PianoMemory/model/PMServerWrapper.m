@@ -391,7 +391,7 @@
         endtime = [endtimeString integerValue];
     }
     if (starttime >= endtime) {
-        endtime = [[[NSDate dateWithTimeIntervalSince1970:starttime] zb_dateAfterDay:1] zb_timestampOfDay];
+        endtime = [[[NSDate dateWithTimeIntervalSince1970:starttime] zb_dateAfterDay:1] zb_timestampOfBeginDay];
     }
 
     [self asyncProcessing:^{
@@ -409,8 +409,8 @@
             targetDate = [NSDate date];
         }
 
-        NSInteger startTime = [targetDate zb_timestampOfDay];
-        NSInteger endTime = [[targetDate zb_dateAfterDay:1] zb_timestampOfDay];
+        NSInteger startTime = [targetDate zb_timestampOfBeginDay];
+        NSInteger endTime = [[targetDate zb_dateAfterDay:1] zb_timestampOfBeginDay];
         NSArray *dayCourseScheduleArray = [self.localServer queryDayCourseSchedulesFrom:startTime toEndTime:endTime fillNotExist:YES];
         if (success) {
             success([dayCourseScheduleArray firstObject]);

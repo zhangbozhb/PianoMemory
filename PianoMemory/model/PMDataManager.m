@@ -39,7 +39,7 @@ static NSInteger kdefaultFillDayCourseScheduleTimeInterval = 60;
 - (void)fillNotExsitDayCourseSchedule
 {
     dispatch_async(self.localServerQueue, ^{
-        NSInteger endTimestamp = [[[NSDate date] zb_dateAfterDay:1] zb_timestampOfDay];
+        NSInteger endTimestamp = [[[NSDate date] zb_dateAfterDay:1] zb_timestampOfBeginDay];
         [self.localServer fillNotExsitDayCourseSchedulesFrom:endTimestamp];
     });
 }

@@ -155,7 +155,7 @@ static NSString *const dayCourseScheduleTableViewCellReuseIdentifier = @"dayCour
 
 - (void)refreshUI
 {
-    if ([self.targetDate zb_timestampOfDay] == [[NSDate date] zb_timestampOfDay]) {
+    if ([self.targetDate zb_timestampOfBeginDay] == [[NSDate date] zb_timestampOfBeginDay]) {
         [self.myNavigationitem setTitle:@"今日课程"];
     } else {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
